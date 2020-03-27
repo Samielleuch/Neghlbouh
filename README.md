@@ -7,12 +7,13 @@ Our project contains two main  components  the platform and the electronic gps b
 
 
 The basic functionalities of this application are :
-Create an account ( each account is identified by the National Identification Number ):
-An account for the citizen
-An account for the administrator
-Fill the form to ask for an authorization to go out ( Reason - Destination .. )
-Visualize the distribution of the accepted authorizations
-Accept or refuse the demand by the administrator
-Obtaining the authorization code ( Temporary validation of this code. It expires after a certain time demanded )
-Alerting users in case of a containment break ( If a quarantined person goes out of his authorized zone [ tracked by a bracelet: documented in the second part ] ). These alerts are sent to the administrators in order to localize and stop the authorizations in that zone.
-Generating statistics of people under control ( with the help of the bracelets ) ( Only an administrator can track the quarantined people with the use of a gps system) .
+- Create an account ( each account is identified by the National Identification Number ): 
+- An account for the citizen
+- An account for the administrator
+- Fill the form to ask for an authorization to go out ( Reason - Destination .. )
+- Visualize the distribution of the accepted authorizations
+- Accept or refuse the demand by the administrator
+- Obtaining the authorization code ( Temporary validation of this code. It expires after a certain time demanded )
+- Alerting users in case of a containment break ( If a quarantined person goes out of his authorized zone [ tracked by a bracelet: documented in the second part ] ).
+These alerts are sent to the administrators in order to localize and stop the authorizations in that zone.
+- Generating statistics of people under control ( with the help of the bracelets ) ( Only an administrator can track the quarantined people with the use of a gps system) .
