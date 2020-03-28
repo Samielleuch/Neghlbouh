@@ -1,11 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
     <br>
-    <h1> this is the Develop branch !</h1> <br/>
-    <strong>
-      branch into a feature branch with the number of your User Story
-    </strong>
+    <h1> this is My feature branch go away ! (sami) </h1> <br/>
+
   </div>
 </template>
 
