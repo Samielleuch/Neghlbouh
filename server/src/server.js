@@ -5,6 +5,7 @@ const cors = require("cors");
 const config = require('./config/config')
 const logger = require("morgan");
 
+
 //Middlewares
 app.use(logger("dev"));
 app.use(cors());
