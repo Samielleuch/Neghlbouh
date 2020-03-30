@@ -1,18 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <br>
-    <h1> this is the Develop branch !</h1> <br/>
-    <strong>
-      branch into a feature branch with the number of your User Story
-    </strong>
+  <div>
+    <v-row align-content="center" justify="center">
+      <v-col align-content="center " cols="5">
+        <h1>this is My feature branch go away ! (sami)</h1>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   name: "Home",
   components: {}
