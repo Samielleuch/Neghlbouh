@@ -4,7 +4,7 @@
       :value="isLoginPressed"
       color="red darken-4"
       :dark="false"
-      opacity="0.8"
+      :class="isLoginPressed ? 'background-img' : ''"
     >
       <v-card
         shaped
@@ -103,7 +103,9 @@
                   height="225%"
                   width="100%"
                 >
-                  <span class="font-login-white"> {{ text.submitField }} </span>
+                  <span class="font-login-white">
+                    {{ text.submitField }}
+                  </span>
                 </v-btn>
               </v-hover>
             </v-col>
@@ -181,5 +183,8 @@ export default {
 >>> .glowing-border {
   box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
     /* middle magenta */ 0 0 10px 1px #6b2028 !important ;
+}
+>>> .background-img {
+  background-image: url("../assets/Loginbackground.png");
 }
 </style>
