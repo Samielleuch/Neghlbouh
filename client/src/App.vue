@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- navbar here-->
-    <div style="height:90px"></div>
+    <div style="height:56px; background:#E45E54;"></div>
     
     <Home />
   </v-app>
