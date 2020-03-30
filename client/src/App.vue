@@ -1,32 +1,44 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div>
+    <v-app>
+      <!--the button to show the Sign in modal -->
+      <v-row justify="center">
+        <v-col align="center">
+          <v-btn @click="pressLogin(true)">
+            <span class="mr-2">LOGIN</span>
+            <v-icon>mdi-open-in-new</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-content>
+        <!-- the actual page that the router shows-->
+        <router-view />
+        <!-- my sign up modal that gets rendered on top of the page -->
+        <Sign_In />
+      </v-content>
+    </v-app>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Sign_In from "./components/Sign_In";
+import { mapActions, mapState } from "vuex";
+export default {
+  name: "App",
 
-#nav {
-  padding: 30px;
-}
+  components: {
+    Sign_In
+  },
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    //
+  }),
+  computed: {
+    ...mapState(["isLoginPressed"])
+  },
+  methods: {
+    ...mapActions(["pressLogin"])
+  }
+};
+</script>
