@@ -10,7 +10,6 @@
           </v-btn>
         </v-col>
       </v-row>
-
       <v-content>
         <!-- the actual page that the router shows-->
         <router-view />
@@ -25,11 +24,9 @@ import Sign_In from "./components/Sign_In";
 import { mapActions, mapState } from "vuex";
 export default {
   name: "App",
-
   components: {
     Sign_In
   },
-
   data: () => ({
     //
   }),
