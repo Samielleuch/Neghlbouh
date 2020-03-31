@@ -20,7 +20,6 @@
     </v-app>
   </div>
 </template>
-
 <script>
 import Sign_In from "./components/Sign_In";
 import { mapActions, mapState } from "vuex";
@@ -42,3 +41,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
+</style>
