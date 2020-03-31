@@ -12,6 +12,10 @@
             :minZoom="minZoom"
             :maxBounds="maxBounds"
           >
+            <MglGeolocateControl position="top-right" />
+            <MglNavigationControl position="top-right" />
+            <MglGeolocateControl position="top-right" />
+            <MglScaleControl />
             <MglMarker :coordinates.sync="markerCoordinates" color="red" />
             <MglGeojsonLayer
               :sourceId="geoJsonSource.data.id"
@@ -35,11 +39,25 @@
 
 <script>
 import Mapbox from "mapbox-gl";
-import { MglMap, MglMarker, MglGeojsonLayer } from "vue-mapbox";
+import {
+  MglMap,
+  MglMarker,
+  MglGeojsonLayer,
+  MglNavigationControl,
+  MglGeolocateControl,
+  MglScaleControl
+} from "vue-mapbox";
 
 export default {
   name: "LiveMap",
-  components: { MglMap, MglMarker, MglGeojsonLayer },
+  components: {
+    MglMap,
+    MglMarker,
+    MglGeojsonLayer,
+    MglNavigationControl,
+    MglGeolocateControl,
+    MglScaleControl
+  },
   data() {
     return {
       myCoordinate: [10.4, 35.8],
@@ -83,14 +101,13 @@ export default {
           features: [
             {
               type: "Feature",
-              minFeatureSize: 5000,
               geometry: {
                 type: "Point",
                 coordinates: this.myCoordinate
               },
               properties: {
-                id: "value0",
-                minFeatureSize: 1000
+                description: "Ford's Theater",
+                id: "value0"
               }
             }
           ]
@@ -104,7 +121,6 @@ export default {
   }
 };
 </script>
-
 <style>
 #map {
   border: 3px red solid;
@@ -112,3 +128,6 @@ export default {
   height: 900px;
 }
 </style>
+//TO DO ADD TEXT LAYER !
+//https://stackoverflow.com/questions/56762563/how-to-add-a-text-inside-a-circle-in-mapbox-gl-js
+//https://soal.github.io/vue-mapbox/api/controls.html#navigationcontrol
