@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-col cols="7">
+      <v-col cols="9">
         <div id="map" class="mapboxgl-map">
           <MglMap
             container="map"
@@ -42,6 +42,7 @@ export default {
   components: { MglMap, MglMarker, MglGeojsonLayer },
   data() {
     return {
+      myCoordinate: [10.4, 35.8],
       accessToken:
         "pk.eyJ1Ijoic2FtaWVsbGV1Y2giLCJhIjoiY2s4ZmYxanp5MDA5MDNmcWowY3FuZm1tbSJ9.neFuBaRgOGr8khOj2FGweA",
       mapStyle: "mapbox://styles/mapbox/light-v10",
@@ -50,10 +51,31 @@ export default {
       zoom: 6,
       minZoom: 0,
       maxBounds: [
-        [6.9, 28.8869],
+        [6.5, 28.8869],
         [12.5375, 38.1]
       ],
-      geoJsonSource: {
+      geoJsonLayer: {
+        type: "circle",
+        paint: {
+          "circle-color": "red",
+          "circle-radius": {
+            stops: [
+              [0, 0],
+              [20, 100000]
+              //distance here
+            ],
+            base: 2
+          },
+          "circle-stroke-color": "white",
+          "circle-opacity": 0.3,
+          "circle-pitch-scale": "viewport"
+        }
+      }
+    };
+  },
+  computed: {
+    geoJsonSource() {
+      return {
         type: "geojson",
         data: {
           id: "thisIsMySource",
@@ -61,24 +83,20 @@ export default {
           features: [
             {
               type: "Feature",
+              minFeatureSize: 5000,
               geometry: {
                 type: "Point",
-                coordinates: [10.4, 36.8]
+                coordinates: this.myCoordinate
               },
               properties: {
-                id: "value0"
+                id: "value0",
+                minFeatureSize: 1000
               }
             }
           ]
         }
-      },
-      geoJsonLayer: {
-        type: "circle",
-        paint: {
-          "circle-color": "red"
-        }
-      }
-    };
+      };
+    }
   },
   created() {
     // We need to set mapbox-gl library here in order to use it in template
@@ -89,6 +107,7 @@ export default {
 
 <style>
 #map {
+  border: 3px red solid;
   width: 100%;
   height: 900px;
 }
