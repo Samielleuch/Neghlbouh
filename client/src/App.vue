@@ -1,33 +1,43 @@
 <template>
-  <v-app>
-    <!-- navbar here-->
-    <div style="height:56px; background:white;"></div>
-    <!-- Home Page
-    <Home />
-    -->
-    <FAQ />
-  </v-app>
+  <div>
+    <v-app>
+      <!--the button to show the Sign in modal -->
+      <v-row justify="center">
+        <v-col align="center">
+          <v-btn @click="pressLogin(true)">
+            <span class="mr-2">LOGIN</span>
+            <v-icon>mdi-open-in-new</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-content>
+        <!-- the actual page that the router shows-->
+        <router-view />
+        <!-- my sign up modal that gets rendered on top of the page -->
+        <Sign_In />
+      </v-content>
+    </v-app>
+  </div>
 </template>
-<style>
-@import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
-/* [DEL] to be deleted, just for testing */
-body {
-  height: 100%;
-}
-</style>
 <script>
-/*import Home from "@/views/Home.vue";*/
-import FAQ from "@/views/FAQ.vue";
-
+import Sign_In from "./components/Sign_In";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "App",
-
   components: {
-    FAQ
+    Sign_In
   },
-
   data: () => ({
     //
-  })
+  }),
+  computed: {
+    ...mapState(["isLoginPressed"])
+  },
+  methods: {
+    ...mapActions(["pressLogin"])
+  }
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
+</style>

@@ -1,21 +1,17 @@
 <template>
   <div>
-    <MainBanner />
-    <Steps />
+    <v-row>
+      <v-col cols="12"> </v-col>
+    </v-row>
   </div>
 </template>
-<style scoped>
-
-</style>
+<style scoped></style>
 <script>
 // @ is an alias to /src
-import MainBanner from "@/components/MainBanner.vue";
-import Steps from "@/components/Steps.vue";
+// import MainBanner from "@/components/MainBanner.vue";
+// import Steps from "@/components/Steps.vue";
 export default {
   name: "Home",
-  components: {
-    MainBanner,
-    Steps
-  }
+  components: {}
 };
 </script>
