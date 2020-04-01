@@ -4,7 +4,7 @@
 
 
       <!--the button to show the Sign in modal -->
-      <!--
+
       <v-row justify="center">
         <v-col align="center">
           <v-btn @click="pressLogin(true)">
@@ -13,7 +13,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      -->
+      
       <v-content>
         <!-- the actual page that the router shows-->
         <router-view />
