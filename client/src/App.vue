@@ -1,19 +1,28 @@
 <template>
   <div>
     <v-app>
+
+
       <!--the button to show the Sign in modal -->
-   <div>
-     <v-btn @click="pressLogin(true)">
-       <span class="mr-2">LOGIN</span>
-       <v-icon>mdi-open-in-new</v-icon>
-     </v-btn>
-   </div>
+
+      <v-row justify="center">
+        <v-col align="center">
+          <v-btn @click="pressLogin(true)">
+            <span class="mr-2">LOGIN</span>
+            <v-icon>mdi-open-in-new</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+      
       <v-content>
         <!-- the actual page that the router shows-->
         <router-view />
         <!-- my sign up modal that gets rendered on top of the page -->
         <Sign_In />
       </v-content>
+      
+
+      
     </v-app>
   </div>
 </template>
