@@ -9,7 +9,7 @@ const logger = require("morgan");
 //Middlewares
 app.use(logger("dev"));
 app.use(cors());
-
+app.use(express.json())
 //our routes are located in /api/v1/{routefilename}
 const route = require('./routers/router')(app);
 
