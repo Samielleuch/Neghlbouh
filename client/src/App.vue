@@ -2,15 +2,12 @@
   <div>
     <v-app>
       <!--the button to show the Sign in modal -->
-      <v-row justify="center">
-        <v-col align="center">
-          <v-btn @click="pressLogin(true)">
-            <span class="mr-2">LOGIN</span>
-            <v-icon>mdi-open-in-new</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-
+   <div>
+     <v-btn @click="pressLogin(true)">
+       <span class="mr-2">LOGIN</span>
+       <v-icon>mdi-open-in-new</v-icon>
+     </v-btn>
+   </div>
       <v-content>
         <!-- the actual page that the router shows-->
         <router-view />
@@ -20,17 +17,14 @@
     </v-app>
   </div>
 </template>
-
 <script>
 import Sign_In from "./components/Sign_In";
 import { mapActions, mapState } from "vuex";
 export default {
   name: "App",
-
   components: {
     Sign_In
   },
-
   data: () => ({
     //
   }),
@@ -42,3 +36,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
+</style>
