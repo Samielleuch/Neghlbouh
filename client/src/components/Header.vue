@@ -1,77 +1,58 @@
 <template>
   <div dir="rtl" style="padding-bottom: 30px;height: 40px">
-    <template>
-      <v-tabs style="padding-top: 20px">
-        <v-img
-          style="margin-left: 20px"
-          alt="Neghlbouh"
-          class="shrink mr-1"
-          contain
-          src="../assets/LOGO PNG.png"
-          transition="scale-transition"
-          width="150"
-        />
-        <v-tab to="/FAQ" class="title" style="color:black"> ارشادات</v-tab>
-        <v-tab href="#seven" class="title" style="color:black"
-          >اسئلة متداولة</v-tab
+    <v-app-bar color="white">
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-img
+        style="margin-left: 20px"
+        alt="Neghlbouh"
+        class="shrink mr-1"
+        contain
+        src="../assets/logo.png"
+        transition="scale-transition"
+        width="150"
+      />
+      <v-toolbar-title>
+        <v-hover
+          v-slot:default="{ hover }"
+          v-for="(item, index) in HeaderMenu"
+          :key="index"
         >
-        <v-tab href="#six" class="title" style="color:black">خريطة</v-tab>
-        <v-tab href="#five" class="title" style="color:black">تعمير مطلب</v-tab>
-        <v-tab href="#four" class="title" style="color:black"
-          >الإجراءات المُتّخذة</v-tab
-        >
-        <v-tab href="#three" class="title" style="color:black"
-          >الصّفحة الرّئيسيّة
-        </v-tab>
-
-        <v-tab href="#two" class="title" style="color:black">تسجيل</v-tab>
-        <v-tab href="/CLIENT" class="title" style="color:black">دخول</v-tab>
-        <v-tabs-slider color="red"></v-tabs-slider>
-      </v-tabs>
-    </template>
-    <v-app-bar app color="white" dark class="hidden-lg-and-up">
-      <v-menu bottom offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-app-bar-nav-icon color="black"></v-app-bar-nav-icon>
-          </v-btn>
-        </template>
-        <v-card style="padding-top: 10px ;padding-bottom: 10px ; width:200px">
-          <v-list>
-            <v-list-item>
-              <v-spacer></v-spacer>
-              <v-btn href="/#" text color="black">
-                <span class="title">تسجيل</span>
-              </v-btn>
-            </v-list-item>
-            <v-list-item class="align-content-center">
-              <v-spacer></v-spacer>
-              <v-btn href="/#" text color="black">
-                <span class="title">دخول</span>
-              </v-btn>
-            </v-list-item>
-            <v-list-item>
-              <v-spacer></v-spacer>
-              <v-btn href="/#" text color="black">
-                <span class="title">تعمير مطلب</span>
-              </v-btn>
-            </v-list-item>
-            <v-list-item>
-              <v-spacer></v-spacer>
-              <v-btn href="/#" text color="black">
-                <span class="title">خريطة</span>
-              </v-btn>
-            </v-list-item>
-            <v-list-item>
-              <v-spacer></v-spacer>
-              <v-btn href="/#" text color="black">
-                <span class="title">ارشادات</span>
-              </v-btn>
-            </v-list-item>
-          </v-list>
-        </v-card>
-      </v-menu>
+          <router-link
+            :to="item.link"
+            :class="hover ? 'Navbar animation cool-link ' : 'Navbar cool-link '"
+            v-ripple="false"
+            depressed
+            elevation="0"
+          >
+            <v-icon :color="hover ? 'red' : 'black'">{{ item.icon }}</v-icon>
+            {{ item.name }}
+          </router-link>
+        </v-hover>
+      </v-toolbar-title>
     </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav dense>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Account</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
@@ -80,7 +61,9 @@ export default {
   name: "Header",
   data() {
     return {
-      menu: [
+      drawer: false,
+      group: false,
+      HeaderMenu: [
         { name: "ارشادات ", icon: "", link: "/" },
         { name: "اسئلة متداولة", icon: "", link: "/FAQ" },
         { name: "خريطة", icon: "", link: "/###" },
@@ -95,6 +78,42 @@ export default {
         { name: "دخول", icon: "", link: "/#" }
       ]
     };
-  }
+  },
+  computed: {}
 };
 </script>
+<style scoped>
+.Navbar {
+  margin-right: 11px;
+  padding-bottom: 3px;
+  font-size: 1.5rem;
+  color: black;
+  background-color: rgba(255, 255, 255, 1) !important;
+  text-decoration: none;
+}
+.cool-link {
+  border-radius: 100%;
+  display: inline-block;
+  color: #000000;
+  text-decoration: none;
+}
+
+.cool-link::after {
+  border-radius: 100%;
+  content: "";
+  display: block;
+  width: 0;
+  height: 3px;
+  background: #dd0100;
+  transition: width 0.3s;
+}
+
+.cool-link:hover::after {
+  width: 100%;
+  //transition: width .3s;
+}
+
+.animation {
+  color: red;
+}
+</style>
