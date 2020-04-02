@@ -37,15 +37,15 @@
             depressed
             elevation="0"
           >
-            <span @click="checkLoginPressed(item.name)" class="mr-2">
-              {{ item.name }}
-            </span>
             <v-icon
               :color="
                 activeClass(hover, item.link, item.name, '#A93226  ', 'black')
               "
               >{{ item.icon }}</v-icon
             >
+            <span @click="checkLoginPressed(item.name)" class="mr-2">
+              {{ item.name }}
+            </span>
           </router-link>
         </v-hover>
         <!--  Sign In --->
@@ -64,9 +64,6 @@
             depressed
             elevation="0"
           >
-            <span @click="checkLoginPressed(loginButton.name)"
-              >{{ loginButton.name }}
-            </span>
             <v-icon
               :color="
                 activeClass(
@@ -79,6 +76,9 @@
               "
               >{{ loginButton.icon }}</v-icon
             >
+            <span @click="checkLoginPressed(loginButton.name)"
+              >{{ loginButton.name }}
+            </span>
           </span>
         </v-hover>
         <!-- -->
@@ -110,8 +110,8 @@
                 depressed
                 elevation="0"
               >
-                <span class="ml-3">{{ item.name }}</span>
                 <v-icon color=" black ">{{ item.icon }}</v-icon>
+                <span class="mr-3">{{ item.name }}</span>
               </router-link>
             </v-list-item-title>
           </v-list-item>
@@ -127,10 +127,10 @@
                 depressed
                 elevation="0"
               >
+                <v-icon color=" black ">{{ loginButton.icon }}</v-icon>
                 <span @click="checkLoginPressed(loginButton.name)"
                   >{{ loginButton.name }}
                 </span>
-                <v-icon color=" black ">{{ loginButton.icon }}</v-icon>
               </span>
             </v-list-item-title>
           </v-list-item>
