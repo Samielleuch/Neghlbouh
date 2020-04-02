@@ -11,13 +11,12 @@ router.post("/add", (req, res) => {
 });
 
 // accept demande (state -> 1)
-router.put("/state/1",(req,res)=>{
-
+//deny demande (state -> 2)
+router.put("/state/:id",(req,res)=>{
+  DemandeController.changeState(req,res);
 });
 
-router.put("/state/0",(req,res)=>{
-  
-});
+
 
 router.route('/:demandId')
 .get(authenticate.verifyOrdinaryUser,(req,res,next) => {
