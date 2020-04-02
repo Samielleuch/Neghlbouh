@@ -2,13 +2,6 @@
   <div>
     <v-app>
       <Header />
-      <!--the button to show the Sign in modal -->
-      <div>
-        <v-btn @click="pressLogin(true)">
-          <span class="mr-2">LOGIN</span>
-          <v-icon>mdi-open-in-new</v-icon>
-        </v-btn>
-      </div>
       <v-content>
         <!-- the actual page that the router shows-->
         <router-view />
@@ -23,7 +16,6 @@
 import Sign_In from "./components/Sign_In";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { mapActions, mapState } from "vuex";
 export default {
   name: "App",
   components: {
@@ -33,13 +25,7 @@ export default {
   },
   data: () => ({
     //
-  }),
-  computed: {
-    ...mapState(["isLoginPressed"])
-  },
-  methods: {
-    ...mapActions(["pressLogin"])
-  }
+  })
 };
 </script>
 <style scoped>
