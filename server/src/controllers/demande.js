@@ -10,23 +10,26 @@ module.exports = {
     console.log(keys);
     if (
       !keys.includes("cin") ||
-      !keys.includes("when") ||
-      !keys.includes("duration") ||
+      !keys.includes("dateSortie") ||
+      !keys.includes("tempsRetour") ||
       !keys.includes("where") ||
       !keys.includes("reason") ||
-      keys.length !== 5
+      keys.length !== 6
     ) {
       res.status(422);
       res.send("invalid data");
     }
-    Demande.create(req.body, (error, data) => {
-      if (error) {
-        res.send(error);
+    Demande.find({ cin: req.body.cin, state: 0 || 1 }).then(resp => {
+      if (resp == null) {
+        Demande.create(req.body).then(() => {
+          res.send("created succesfully");
+        });
       } else {
-        res.send(data._id);
+        res.send("there is already a demand");
       }
     });
   },
+
   changeState(req, res) {
     if (
       typeof req.body.state == "number" &&
@@ -52,13 +55,5 @@ module.exports = {
       res.status(500);
       res.send("invalid input: state' type must be a number");
     }
-
-    Demande.create(req.body, (error, data) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(data._id);
-      }
-    });
   }
 };
