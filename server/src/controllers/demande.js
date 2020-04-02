@@ -27,7 +27,6 @@ module.exports = {
       }
     });
   },
-
   changeState(req, res) {
     if (
       typeof req.body.state == "number" &&
@@ -53,5 +52,13 @@ module.exports = {
       res.status(500);
       res.send("invalid input: state' type must be a number");
     }
+
+    Demande.create(req.body, (error, data) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(data._id);
+      }
+    });
   }
 };
