@@ -17,5 +17,18 @@ export default {
     faq: "اسئلة متداولة",
     signup: "تسجيل",
     loginButton: "دخول"
+  },
+  Sign_Up: {
+    popup_text1: "مرحبا بكم في",
+    popup_text2: "الرجاء التسجيل للتمكن من الإنتفاع بالخدمة",
+    cinField: "بطاقة التعريف",
+    nameField: "الاسم و اللقب",
+    cityField: "مكان السكن",
+    phoneField: "رقم الهاتف",
+    emailField: "البريد الالكتروني",
+    passWordField: "كلمة السر",
+    submitField: "ارسل",
+    forgotPass: "ليس لديك حساب ؟ ",
+    makeAccount: "إبدء حساب جديد الآن "
   }
 };

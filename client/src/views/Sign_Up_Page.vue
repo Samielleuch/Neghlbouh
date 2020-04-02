@@ -1,8 +1,19 @@
-<template> <div></div></template>
-
+<template>
+  <div>
+    <v-row justify="center">
+      <v-col cols="12" sm="11" md="7">
+        <SignUpForm />
+      </v-col>
+    </v-row>
+  </div>
+</template>
 <script>
+import SignUpForm from "@/components/SignUpForm";
 export default {
-  name: "Sign_Up_Page"
+  name: "Sign_Up_Page",
+  components: {
+    SignUpForm
+  }
 };
 </script>
 
