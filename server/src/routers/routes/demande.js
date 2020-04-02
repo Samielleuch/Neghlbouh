@@ -3,7 +3,7 @@ const router = express.Router();
 const DemandeController = require('../../controllers/demande')
 const mongoose = require('mongoose')
 const Demande = require('../../models/Demande')
-var authenticate = require('../../authenticate');
+const authenticate = require('../../authenticate');
 
 //add "demande" to database
 router.post("/add", (req, res) => {
