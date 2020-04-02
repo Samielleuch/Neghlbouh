@@ -30,5 +30,11 @@ export default {
     submitField: "ارسل",
     forgotPass: "ليس لديك حساب ؟ ",
     makeAccount: "إبدء حساب جديد الآن "
+  },
+  HomePageBanner: {
+    title1: "الApplication الي تنجم تعاونك بش تخرج وقتلي تحب ",
+    title2: "شوف الخريطة و عمر الفرمولار توا",
+    btn1: "شوف الخريطة",
+    btn2: "عمّر طلب خروج"
   }
 };
