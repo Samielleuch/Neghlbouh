@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl" style="padding-bottom: 30px;height: 40px; margin-bottom: 50px">
+  <div dir="rtl" style="padding-bottom: 30px;height: 40px; margin-bottom: 10px">
     <v-app-bar color="white">
       <v-app-bar-nav-icon
         @click="drawer = true"
