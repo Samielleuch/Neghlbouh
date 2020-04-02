@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
-
 const mongoose = require("mongoose");
 const Demande = require("../models/Demande");
 const webpush = require("web-push");
-
 app.use(express.json());
 module.exports = {
   addDemande(req, res) {
@@ -49,15 +47,11 @@ module.exports = {
           });
       } else {
         res.status(500);
-        res.send("invalid input: state' type must be a number");
+        res.send("invalid input");
       }
+    } else {
+      res.status(500);
+      res.send("invalid input: state' type must be a number");
     }
-    Demande.create(req.body, (error, data) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(data._id);
-      }
-    });
   }
 };
