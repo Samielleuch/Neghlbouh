@@ -3,14 +3,14 @@
     <!-- exit button  -->
     <v-row v-if="isModal">
       <v-spacer></v-spacer>
-      <v-btn icon @click="pressLogin(false)" class=" mt-2 ml-5">
+      <v-btn icon @click="pressLogin(false)" class=" mt-2 mr-5">
         <v-icon>far fa-times-circle</v-icon>
       </v-btn>
     </v-row>
     <!---->
     <v-row>
       <v-col cols="12" align="center">
-        <span class="text-center font-login  ">
+        <span class="text-center font-login">
           {{ text.popup_text1 }}
         </span>
       </v-col>
@@ -31,6 +31,74 @@
     </v-row>
     <v-card-text>
       <v-form v-model="valid" ref="form">
+        <!-- Name -->
+        <v-row class="mb-0 pb-0">
+          <v-col cols="12" class="mb-0 pb-0">
+            <v-text-field
+              v-model="name"
+              outlined
+              rounded
+              prepend-inner-icon="fas fa-user"
+              filled
+              clearable
+              :label="text.nameField"
+              required
+              color="black"
+              class="mb-0 pb-0"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <!-- City  -->
+        <v-row class="mb-0 pb-0">
+          <v-col cols="12" class="mb-0 pb-0">
+            <v-select
+              v-model="city"
+              outlined
+              rounded
+              prepend-inner-icon="fas fa-thumbtack"
+              filled
+              clearable
+              :label="text.cityField"
+              required
+              color="black"
+              class="mb-0 pb-0"
+              :items="cities"
+            ></v-select>
+          </v-col>
+        </v-row>
+        <!-- Phone  -->
+        <v-row class="mb-0 pb-0">
+          <v-col cols="12" class="mb-0 pb-0">
+            <v-text-field
+              v-model="phone"
+              outlined
+              rounded
+              prepend-inner-icon="fas fa-phone"
+              type="integer"
+              clearable
+              :label="text.phoneField"
+              required
+              color="black"
+              class="mb-0 pb-0"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <!-- Email  -->
+        <v-row class="mb-0 pb-0">
+          <v-col cols="12" class="mb-0 pb-0">
+            <v-text-field
+              v-model="email"
+              outlined
+              rounded
+              prepend-inner-icon="far fa-envelope"
+              filled
+              clearable
+              :label="text.emailField"
+              color="black"
+              class="mb-0 pb-0"
+            ></v-text-field>
+          </v-col>
+        </v-row>
         <!-- CIN  -->
         <v-row class="mb-0 pb-0">
           <v-col cols="12" class="mb-0 pb-0">
@@ -49,7 +117,7 @@
           </v-col>
         </v-row>
         <!-- Password  -->
-        <v-row class="mt--5">
+        <v-row class="mb-0 pb-0">
           <v-col cols="12">
             <v-text-field
               v-model="password"
@@ -92,17 +160,6 @@
           </v-hover>
         </v-col>
       </v-row>
-      <!-- Forgot Password section -->
-      <v-row justify="center">
-        <v-col cols="9" align="center">
-          <em>
-            {{ text.forgotPass }}
-          </em>
-          <a class=" font-weight-bold font-login-pass" href="#">
-            {{ text.makeAccount }}
-          </a>
-        </v-col>
-      </v-row>
     </v-card-text>
   </div>
 </template>
@@ -110,7 +167,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 export default {
-  name: "SignInForm",
+  name: "SignUpForm",
   props: {
     isModal: {
       Boolean,
@@ -121,14 +178,44 @@ export default {
     return {
       password: "",
       CIN: "",
+      name: "",
+      city: "",
+      phone: "",
+      email: "",
       valid: false,
-      show1: false
+      show1: false,
+      cities: [
+        "أريانة",
+        "باجة",
+        "بنزرت",
+        "بن عروس",
+        "تطاوين",
+        "توزر",
+        "تونس",
+        "جندوبة",
+        "زغوان",
+        "سليانة",
+        "سوسة",
+        "سيدي بوزيد",
+        "صفاقس",
+        "قابس",
+        "قبلي",
+        "القصرين",
+        "قفصة",
+        "القيروان",
+        "الكاف",
+        "مدنين",
+        "المنستير",
+        "منوبة",
+        "المهدية",
+        "نابل"
+      ]
     };
   },
   computed: {
     ...mapState(["langPack"]),
     text() {
-      return this.langPack.Sign_In;
+      return this.langPack.Sign_Up;
     }
   },
   methods: {
@@ -141,10 +228,13 @@ export default {
 </script>
 
 <style scoped>
+body * {
+  font-family: Cairo;
+}
 .mt--5 {
   margin-top: -25px;
 }
->>> .mt--10 {
+.mt--10 {
   margin-top: -50px !important;
 }
 .font-login {
@@ -166,7 +256,7 @@ export default {
   color: #c70100;
 }
 
->>> .glowing-border {
+.glowing-border {
   box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
     /* middle magenta */ 0 0 10px 1px #6b2028 !important ;
 }
