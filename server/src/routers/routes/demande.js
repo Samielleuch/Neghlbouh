@@ -19,6 +19,18 @@ router.put("/state/0",(req,res)=>{
   
 });
 
+router.get('/', authenticate.verifyOrdinaryUser, (req, res, next) => {
+  Demande.find({
+    'cin': req.user.cin
+  }).then((resp) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  }, (err) => next(err))
+      .catch((err) => next(err));
+});
+
+
 router.route('/:demandId')
 .get(authenticate.verifyOrdinaryUser,(req,res,next) => {
   Demande.find({
@@ -75,4 +87,8 @@ router.route('/:demandId')
     }, (err) => next(err))
     .catch((err) => next(err));
 });
+
+
+
+
 module.exports = router;
