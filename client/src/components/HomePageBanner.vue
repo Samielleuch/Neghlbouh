@@ -49,21 +49,27 @@ export default {
   margin-right: 2vw !important;
 }
 .Hometext {
+  font-family: Cairo;
   color: white;
   font-weight: bold !important;
   font-size: 2.4vw !important;
   margin-top: 5vw !important;
 }
 .Subtext {
+  font-family: Cairo;
+
   font-weight: bold !important;
   font-size: 1.5vw !important;
   margin-top: 3vw !important;
 }
 
 .btnHome {
+  font-family: Cairo;
+
   margin-top: 50px;
   font-size: 20px;
   font-weight: bold !important;
+  font-family: Cairo;
 }
 @media only screen and (max-width: 958px) {
   .Hometext {
@@ -71,15 +77,18 @@ export default {
     font-weight: bold !important;
     font-size: 40px !important;
     margin-top: 7vw !important;
+    font-family: Cairo;
   }
   .Subtext {
     font-weight: bold !important;
     font-size: 20px !important;
     margin-top: 4vw !important;
+    font-family: Cairo;
   }
   .btnHome {
     margin-top: 20px;
     font-weight: bold !important;
+    font-family: Cairo;
   }
 }
 </style>
