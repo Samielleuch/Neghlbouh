@@ -3,7 +3,7 @@
     <!-- exit button  -->
     <v-row v-if="isModal">
       <v-spacer></v-spacer>
-      <v-btn icon @click="pressLogin(false)" class=" mt-2 mr-5">
+      <v-btn icon @click="pressLogin(false)" class=" mt-2 ml-5">
         <v-icon>far fa-times-circle</v-icon>
       </v-btn>
     </v-row>

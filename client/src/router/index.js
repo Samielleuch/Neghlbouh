@@ -16,6 +16,11 @@ const routes = [
     component: () => import("../views/Sign_In_Page.vue")
   },
   {
+    path: "/SignUp",
+    name: "SignUp", //lazy loading
+    component: () => import("../views/Sign_Up_Page.vue")
+  },
+  {
     path: "/FAQ",
     name: "FAQ",
     component: () => import("../views/FAQ.vue")
