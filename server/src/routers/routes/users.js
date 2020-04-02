@@ -1,14 +1,18 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const bodyParser = require('body-parser');
-var User = require('../../models/user');
-var passport = require('passport');
-var authenticate = require('../../authenticate');
+const User = require('../../models/user');
+const passport = require('passport');
+const authenticate = require('../../authenticate');
+const twilio = require('twilio');
+const config = require('../../config/config.js');
+const client = require('twilio')(config.accountSid, config.authToken);
 
 router.use(bodyParser.json());
 
 
 router.post('/signup', (req, res, next) => {
+  
   User.register(new User({cin: req.body.cin,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -34,12 +38,108 @@ router.post('/signup', (req, res, next) => {
 
 
 router.post('/signin', passport.authenticate('local'), (req, res) => {
-  var token = authenticate.getToken({_id: req.user._id});
+  const token = authenticate.getToken({_id: req.user._id});
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
   res.json({success: true, token: token, status: 'You are successfully logged in!'});
 });
 
+router.route('/')
+.post((req,res,next)=>{
+  client.messages
+  .create({
+    body: 'cc cest zak ma9wéni <3 put this code to reset your password: 9999 ',
+    from: config.numero,
+    to: '+21699005484'
+  })
+  .then(message => console.log(message.sid));
+})
+
+router.route('/:userId')
+.put(authenticate.verifyOrdinaryUser,(req, res, next) => {
+  if(req.params.userId==req.user._id){
+    if(req.body.oldPassword){
+      User.findById(req.user._id) 
+      .then((user) => {
+        if(user!=null){
+          user.changePassword(req.body.oldPassword,req.body.newPassword)
+          .then(() => {
+            console.log('password changed');
+            if(req.body.otherFields){
+              User.update({
+                '_id': req.params.userId
+                }, {
+                    $set: req.body.otherFields
+                }, { new: true })
+                .then((user) => {
+                  if(user!=null){
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(user);
+                  }
+                  else{
+                    err = new Error('the request user not found !!');
+                    err.status = 404;
+                    return next(err);
+                  }
+                }, (err) => next(err))
+                .catch((err) => next(err));  
+            }
+            else{
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json(user);
+            }
+          }
+          )
+          .catch((error) => {
+            err = new Error('the old password is incorrect !!');
+            err.status = 404;
+            return next(err);
+          })
+        }
+        else{
+          err = new Error('the request user not found !!');
+          err.status = 404;
+          return next(err);
+        }
+      }, (err) => next(err))
+      .catch((err) => next(err));  
+    }
+    else if(req.body.otherFields){
+      User.update({
+        '_id': req.params.userId
+        }, {
+            $set: req.body.otherFields
+        }, { new: true })
+        .then((user) => {
+          if(user!=null){
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(user);
+          }
+          else{
+            err = new Error('the request user not found !!');
+            err.status = 404;
+            return next(err);
+          }
+        }, (err) => next(err))
+        .catch((err) => next(err));  
+    }
+    
+  }
+  else{
+    err = new Error('You\'r not authorized to update this user!!');
+    err.status = 403;
+    return next(err);
+  }
+})
+
 
 
 module.exports = router;
+
+
+
+
+
