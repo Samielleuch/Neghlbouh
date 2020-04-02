@@ -178,10 +178,10 @@ export default {
     return {
       password: "",
       CIN: "",
-      name:"",
-      city:"",
-      phone:"",
-      email:"",
+      name: "",
+      city: "",
+      phone: "",
+      email: "",
       valid: false,
       show1: false,
       cities: [
