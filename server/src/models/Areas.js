@@ -7,7 +7,6 @@ const AreaSchema = mongoose.Schema({
     },
     countPeople:{
         type:Number,
-        require:true,
         default:0
     }
 });
