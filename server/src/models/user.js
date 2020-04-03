@@ -1,14 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
-var bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
-var User = new Schema({
-    firstname: {
-      type: String,
-      required: true
-    },
-    lastname: {
+const User = new Schema({
+    name: {
       type: String,
       required: true
     },
@@ -18,11 +13,19 @@ var User = new Schema({
     },
     email:   {
       type: String,
-      required: true
+      required: false
     },
-    job:   {
+    city:   {
       type: String,
       required: true
+    },
+    phone:   {
+      type: Number,
+      required: true
+    },
+    admin: {
+       type: Boolean,
+       default: false
     }
 });
 

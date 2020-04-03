@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require("cors");
 const config = require('./config/config')
 const logger = require("morgan");
-var passport = require('passport');
+const passport = require('passport');
 
 
 //Middlewares
