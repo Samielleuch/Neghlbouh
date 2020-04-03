@@ -30,5 +30,26 @@ export default {
     submitField: "ارسل",
     forgotPass: "ليس لديك حساب ؟ ",
     makeAccount: "إبدء حساب جديد الآن "
+  },
+  HomePageBanner: {
+    title1: "الApplication الي تنجم تعاونك بش تخرج وقتلي تحب ",
+    title2: "شوف الخريطة و عمر الفرمولار توا",
+    btn1: "شوف الخريطة",
+    btn2: "عمّر طلب خروج"
+  },
+  Steps: {
+    intro: "كفاش نجم ننتفع بل خدمة ؟",
+    step1: {
+      Title: "خطوة 1",
+      subTitle: "أعمل حساب"
+    },
+    step2: {
+      Title: "خطوة 2",
+      subTitle: "شوف الخريطة"
+    },
+    step3: {
+      Title: "خطوة 3",
+      subTitle: "عمّر طلب خروج"
+    }
   }
 };
