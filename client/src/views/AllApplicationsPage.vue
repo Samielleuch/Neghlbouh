@@ -1,7 +1,8 @@
 <template
   ><div class="background"><div class="app page">
     <v-col v-for="(item, i) in applications" :key="i" cols="12">
-      <v-card class="appcard">
+      <v-card class="app
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++card">
         <div class="d-flex flex-no-wrap">
           <div>
             <div class="app">{{ item.reason }}</div>
