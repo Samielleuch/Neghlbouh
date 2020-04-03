@@ -14,14 +14,16 @@ module.exports = {
       !keys.includes("tempsRetour") ||
       !keys.includes("where") ||
       !keys.includes("reason") ||
+      !keys.includes('tempsSortie') ||
       keys.length !== 6
     ) {
       res.status(422);
       res.send("invalid data");
     }
     Demande.find({ cin: req.body.cin, state: 0 || 1 }).then(resp => {
-      if (resp == null) {
+      if (!resp.length) {
         Demande.create(req.body).then(() => {
+          res.status(422)
           res.send("created succesfully");
         });
       } else {

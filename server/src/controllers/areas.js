@@ -27,6 +27,7 @@ module.exports = {
     },
     getNumber(req, res) {
         if (!req.params.area) {
+            console.log(req.params)
             res.status(422);
             res.setHeader('Content-Type', 'application/json');
             res.json({
@@ -35,40 +36,50 @@ module.exports = {
         }
         else {
             let area = req.params.area;
-            Demande.find({state:2}, function (err, demandes) { // search for accepted demands
+            Demande.find({ state: 2 }, (error, demandes) => { // search for accepted demands
+                if (error) res.json(error);
                 demandes.forEach(function (demande) {
                     let dateDemande = new Date(demande.dateSortie); // check if 
-                    let dateNow = new Date().setHours(0,0,0,0);        // these demande 
-                    if(dateDemande.getTime() === dateNow){          // mte3 lyoum
-                        Area.update(
+                    let dateNow = new Date().setHours(0, 0, 0, 0);        // these demande 
+                    if (dateDemande.getTime() === dateNow) {          // mte3 lyoum
+                        Area.updateMany(
                             {},
                             {
                                 $set: {
-                                    countPeople : 0                 // yraja3 lwileyeet lkol l 0 3beed
+                                    countPeople: 0                 // yraja3 lwileyeet lkol l 0 3beed
                                 }
-                            },
-                            {
-                                multi:true
                             }
-                        ).then(()=>{
+                        ).then(() => {
                             let time = new Date().getHours();
                             let timeDemande = demande.tempsSortie.split(':')[0];
-                            if(time >= timeDemande){
-                                Area.update(
-                                    {name:area},
+                            if (time >= timeDemande) {
+                                Area.updateOne(
+                                    { name: area },
                                     {
-                                        $inc:{
-                                            countPeople:1
+                                        $inc: {
+                                            countPeople: 1
                                         }
                                     }
-                                )
+                                ).catch(e => {
+                                    res.json(e)
+                                })
                             }
                         })
-                        .catch((e)=>{
-                            
-                        })
+                            .catch((e) => {
+                                res.json(e)
+                            })
                     }
                 });
+            });
+
+            Area.findOne({ name: area }, (err, areaFound) => {
+                if (err) res.json(err)
+                if (!areaFound) {
+                    res.status(422)
+                    res.send('invalid input')
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.json(areaFound.countPeople);
             });
         }
     }
