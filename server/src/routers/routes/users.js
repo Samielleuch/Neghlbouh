@@ -13,11 +13,12 @@ router.use(bodyParser.json());
 
 router.post('/signup', (req, res, next) => {
   
-  User.register(new User({cin: req.body.cin,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+  User.register(new User({
+        cin: req.body.cin,
+        name: req.body.name,
         email: req.body.email,
-        job: req.body.job
+        city: req.body.city,
+        phone: req.body.phone,
   }), 
     req.body.password, (err, user) => {
      
