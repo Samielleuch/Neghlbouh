@@ -49,6 +49,16 @@ router.get('/', authenticate.verifyOrdinaryUser, (req, res, next) => {
 });
 */
 
+router.get('/pending', authenticate.verifyOrdinaryUser, /*authenticate.verifyAdmin,*/ (req,res, next)=> {
+  Demande.find({
+    'state': 0
+  }).then((resp) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  }, (err) => next(err))
+.catch((err) => next(err))
+});
 
 router.route('/:demandId')
 .get(authenticate.verifyOrdinaryUser,(req,res,next) => {
