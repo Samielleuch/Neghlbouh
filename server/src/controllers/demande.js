@@ -5,6 +5,8 @@ const Demande = require("../models/Demande");
 const webpush = require("web-push");
 app.use(express.json());
 module.exports = {
+
+
   addDemande(req, res) {
     keys = Object.keys(req.body);
     console.log(keys);
@@ -19,6 +21,7 @@ module.exports = {
     ) {
       res.status(422);
       res.send("invalid data");
+
     }
     Demande.find({ cin: req.body.cin, state: 0 || 1 }).then(resp => {
       if (!resp.length) {
