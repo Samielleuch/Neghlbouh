@@ -2,50 +2,53 @@
   <v-hover v-slot:default="{ hover }" open-delay="200">
     <v-card
       class="mx-auto cardcc"
-      max-width="400"
+      max-width="520"
       dir="rtl"
       :elevation="hover ? 16 : 2"
     >
-      <div align="center">
-        <v-avatar size="130" class="avatar">
+      <div align="center" style="margin-top: 2px">
+        <v-avatar size="65">
           <img src="../assets/user.png" alt="" />
         </v-avatar>
       </div>
-      <v-card-text class="text--primary title">
+      <div class="text--primary ">
         <div class="row d">
-          <div>الإسم و اللقب :</div>
+          <h5>الإسم و اللقب :</h5>
 
-          <div>{{ user.name }}</div>
+          <h5>{{ user.name }}</h5>
+        </div>
+        <v-divider
+          class="divider"
+          style="background-color: #AFA8A8;"
+        ></v-divider>
+        <div class="row d">
+          <h5>مكان السكن :</h5>
+
+          <h5>{{ user.adress }}</h5>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
-          <div>مكان السكن :</div>
+          <h5>رقم الهاتف :</h5>
 
-          <div>{{ user.adress }}</div>
+          <h5>{{ user.phone }}</h5>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
-          <div>رقم الهاتف :</div>
+          <h5>بطاقة التعريف الوطنية</h5>
 
-          <div>{{ user.phone }}</div>
+          <h5>: {{ user.cin }}</h5>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
-          <div>بطاقة التعريف الوطنية</div>
+          <h5>البريد الالكتروني</h5>
 
-          <div>: {{ user.cin }}</div>
+          <h5>: {{ user.email }}</h5>
         </div>
         <v-divider class="divider"></v-divider>
-        <div class="row d">
-          <div>البريد الالكتروني</div>
+      </div>
 
-          <div>: {{ user.email }}</div>
-        </div>
-        <v-divider class="divider"></v-divider>
-      </v-card-text>
-
-      <div class="text-center">
-        <v-btn class="title" style="background-color: #D41B45">
+      <div class="text-center" v-if="checkPage">
+        <v-btn class="font title" dark rounded color="#d41b45" height="30">
           تعديل حسابي
         </v-btn>
       </div>
@@ -54,6 +57,7 @@
 </template>
 <script>
 export default {
+  name: "UserCard",
   props: {
     user: {
       cin: "string",
@@ -64,23 +68,40 @@ export default {
       email: "string",
       mdp: "string"
     }
+  },
+  methods: {
+    checkPage() {
+      if (this.$route.name === "UserDashboard") {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>
 <style>
 .cardcc {
+  height: 270px;
   padding-right: 20px;
   padding-left: 20px;
-  padding-bottom: 20px;
 }
+.font {
+  margin-top: 20px;
+  font-family: Cairo;
+}
+h5 {
+  font-family: Cairo;
+  margin-top: 2px;
+}
+
 .d {
-  margin-bottom: 8px;
-  margin-top: 8px;
+  margin-right: 85px;
 }
 .divider {
-  background-color: #d41b45;
-}
-.avatar {
-  margin-top: 10px;
+  background-color: #AFA8A8;
+  margin-top: 8px;
+  margin-right: 75px;
+  width: 300px;
 }
 </style>

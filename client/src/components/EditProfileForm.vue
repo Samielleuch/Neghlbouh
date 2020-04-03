@@ -11,7 +11,7 @@
         <v-form ref="form" class="form">
           <div class="row">
             <div class="col-md-6">
-              <v-label><h2>الإسم و اللقب</h2></v-label>
+              <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
                 color="red"
                 v-model="user.name"
@@ -20,7 +20,7 @@
               ></v-text-field>
             </div>
             <div class="col-md-6">
-              <v-label><h2>بطاقة التعريف الوطنية</h2></v-label>
+              <v-label><h3>بطاقة التعريف الوطنية</h3></v-label>
               <v-text-field
                 color="red"
                 v-model="user.cin"
@@ -31,7 +31,7 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <v-label><h2>رقم الهاتف</h2></v-label>
+              <v-label><h3>رقم الهاتف</h3></v-label>
               <v-text-field
                 color="red"
                 v-model="user.phone"
@@ -40,7 +40,7 @@
               ></v-text-field>
             </div>
             <div class="col-md-6">
-              <v-label><h2>مكان السكن</h2></v-label>
+              <v-label><h3>مكان السكن</h3></v-label>
               <v-text-field
                 color="red"
                 v-model="user.adress"
@@ -49,18 +49,39 @@
               ></v-text-field>
             </div>
           </div>
-          <div class="row">
+          <div class="col-md-6">
+            <v-label><h3>البريد الالكتروني</h3></v-label>
+            <v-text-field
+              color="red"
+              v-model="user.email"
+              :rules="rules"
+              placeholder="البريد الالكتروني"
+            ></v-text-field>
+          </div>
+          <v-btn
+            class="title"
+            color="#d41b45"
+            dark
+            height="25px"
+            rounded
+            @click="updatePass"
+          >
+            تغيير كلمة السر
+          </v-btn>
+
+          <div class="row" v-if="isClicked">
             <div class="col-md-6">
-              <v-label class="title"><h2>البريد الالكتروني</h2></v-label>
+              <v-label><h3>كلمة السر</h3></v-label>
               <v-text-field
                 color="red"
-                v-model="user.email"
+                type="password"
+                v-model="user.cin"
+                placeholder="كلمة السر"
                 :rules="rules"
-                placeholder="البريد الالكتروني"
               ></v-text-field>
             </div>
             <div class="col-md-6">
-              <v-label><h2>كلمة السر</h2></v-label>
+              <v-label><h3>كلمة السر</h3></v-label>
               <v-text-field
                 color="red"
                 type="password"
@@ -73,7 +94,13 @@
         </v-form>
         <br />
         <div class="text-center">
-          <v-btn class="title" style="background-color: #d41b45">
+          <v-btn
+            class="title"
+            color="#d41b45"
+            dark
+            style="margin-top: 0px;"
+            rounded
+          >
             تعديل حسابي
           </v-btn>
         </div>
@@ -84,7 +111,12 @@
 </template>
 <script>
 export default {
+  name: "EditProfileForm",
   props: {
+    isClicked: {
+      Boolean,
+      default: false
+    },
     user: {
       cin: "string",
       name: "string",
@@ -92,6 +124,15 @@ export default {
       phone: "integer",
       email: "string",
       mdp: "string"
+    }
+  },
+  methods: {
+    updatePass() {
+      if (!this.isClicked) {
+        this.isClicked = true;
+      } else {
+        this.isClicked = false;
+      }
     }
   }
 };
@@ -103,9 +144,11 @@ export default {
 }
 .cardc {
   padding-bottom: 20px;
-  height: 500px;
+  height: 520px;
 }
-h2 {
+h3 {
   color: #d41b45;
+  height: 3px;
+  font-family: Cairo;
 }
 </style>
