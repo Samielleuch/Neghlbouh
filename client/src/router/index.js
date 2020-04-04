@@ -25,17 +25,14 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Sign_Up_Page.vue")
   },
+
   {
     path: "/AllApplicationsPage",
     name: "AllApplicationsPage",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AllApplicationsPage.vue")
   },
-  {
-    path: "/SignUp",
-    name: "SignUp", //lazy loading
-    component: () => import("../views/Sign_Up_Page.vue")
-  },
+
   {
     path: "/FAQ",
     name: "FAQ",
@@ -55,6 +52,16 @@ const routes = [
     path: "/LiveMap",
     name: "LiveMap",
     component: () => import("../views/LiveMap.vue")
+  },
+  {
+    path: "/Info",
+    name: "Info",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
+  },
+  {
+    path: "/*",
+    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
   }
 ];
 
