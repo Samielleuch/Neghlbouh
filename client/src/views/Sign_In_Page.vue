@@ -14,6 +14,11 @@ export default {
   name: "Sign_In_Page",
   components: {
     SignInForm
+  },
+  created() {
+    if (this.$store.state.currentUser !== undefined) {
+      this.$router.replace({ name: "Home" });
+    }
   }
 };
 </script>

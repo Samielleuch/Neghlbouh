@@ -135,7 +135,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["pressLogin"]),
+    ...mapActions(["pressLogin", "loginUser"]),
     async validate() {
       this.$refs.form.validate();
       if (this.valid) {
@@ -144,10 +144,13 @@ export default {
           cin: this.CIN,
           password: this.password
         });
-        this.loading = false;
         console.log(resp);
         this.pressLogin(false);
-        this.$router.push({ name: "Home" });
+        if (this.$route.name !== "Home") {
+          this.$router.replace({ name: "Home" });
+        }
+        this.loginUser(resp.data);
+        this.loading = false;
       } else {
         //to implement notification v-if here
         console.log("validation failed");
