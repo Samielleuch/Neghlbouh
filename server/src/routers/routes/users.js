@@ -29,7 +29,7 @@ router.post('/signup', (req, res, next) => {
     req.body.password, (err, user) => {
      
     if(err) {
-      res.statusCode = 500;
+      res.statusCode = 401;
       res.setHeader('Content-Type', 'application/json');
       res.json({err: err});
     }
