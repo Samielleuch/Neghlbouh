@@ -1,5 +1,10 @@
 <template>
-  <div dir="rtl" style="padding-bottom: 30px;height: 40px; margin-bottom: 10px">
+  <!-- the z-index of the nav bar is set to 10 so that it doesn't 
+  collide with the form in the sign up page ( this form has been adjusted with transform) -->
+  <div
+    dir="rtl"
+    style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"
+  >
     <v-app-bar color="white">
       <v-app-bar-nav-icon
         @click="drawer = true"
@@ -370,7 +375,14 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.faq,
           icon: "fas fa-question-circle",
+
           link: "FAQ"
+        },
+
+        {
+          name: this.$store.state.langPack.HeaderMenu.signup,
+          icon: "fas fa-user-plus",
+          link: "SignUp"
         }
       ],
       loginButton: {
@@ -480,7 +492,7 @@ export default {
 
 .cool-link:hover::after {
   width: 100%;
-  //transition: width .3s;
+  transition: width 0.3s;
 }
 .animation {
   color: #d41b45;

@@ -20,16 +20,20 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Sign_In_Page.vue")
   },
   {
+
+    path: "/SignUp",
+    name: "SignUp",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Sign_Up_Page.vue")
+  },
+
+  {
     path: "/AllApplicationsPage",
     name: "AllApplicationsPage",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AllApplicationsPage.vue")
   },
-  {
-    path: "/SignUp",
-    name: "SignUp", //lazy loading
-    component: () => import("../views/Sign_Up_Page.vue")
-  },
+
   {
     path: "/FAQ",
     name: "FAQ",
