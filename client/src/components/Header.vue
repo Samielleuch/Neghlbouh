@@ -121,7 +121,7 @@
             </v-list-item-title>
           </v-list-item>
           <!-- Login Button -->
-          <v-list-item class="text-justify ">
+          <v-list-item class="text-justify login-btn">
             <v-list-item-title
               class="hamburgerMenu "
               @click="checkLoginPressed(loginButton.name)"
@@ -296,5 +296,8 @@ export default {
 
   background-color: rgba(255, 255, 255, 1) !important;
   font-size: 18px !important;
+}
+.login-btn{
+  cursor: pointer;
 }
 </style>

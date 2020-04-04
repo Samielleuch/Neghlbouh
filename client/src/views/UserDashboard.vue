@@ -27,8 +27,8 @@ export default {
         name: "اميرة دريدي",
         adress: "بنزرت ",
         phone: "21053262",
-        email: "kdldj@djkd.com",
-        mdp: "sghj"
+        email: "amira.dridi@yahoo.com",
+        mdp: "root  "
       }
     };
   },
