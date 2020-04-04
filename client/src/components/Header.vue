@@ -365,19 +365,19 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.demande,
           icon: "fas fa-paper-plane",
-          link: "Home"
+          link: this.infoRedirection()
         },
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,
           icon: "fas fa-hand-sparkles",
-          link: "Home"
+          link: "Info"
         },
         {
           name: this.$store.state.langPack.HeaderMenu.faq,
           icon: "fas fa-question-circle",
 
           link: "FAQ"
-        },
+        }
       ],
       loginButton: {
         name: this.$store.state.langPack.HeaderMenu.loginButton,
@@ -409,6 +409,14 @@ export default {
   },
   methods: {
     ...mapActions(["pressLogin"]),
+    infoRedirection() {
+      if (
+        this.$store.state.currentUser !== undefined &&
+        !this.$store.state.currentUser.admin
+      ) {
+        return "UserDashboard";
+      } else return "Home";
+    },
     checkLoginPressed(name) {
       if (name === "دخول") {
         if (this.$vuetify.breakpoint.mdAndUp) {

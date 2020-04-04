@@ -33,7 +33,7 @@ export default {
     submitField: "ارسل",
     forgotPass: "ليس لديك حساب ؟ ",
     makeAccount: "إبدء حساب جديد الآن ",
-    text_photo:"صحتك تهمنا"
+    text_photo: "صحتك تهمنا"
   },
   HomePageBanner: {
     title1: "الApplication الي تنجم تعاونك بش تخرج وقتلي تحب ",
