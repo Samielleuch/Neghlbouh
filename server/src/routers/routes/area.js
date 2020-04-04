@@ -10,7 +10,7 @@ router.post("/add", (req, res) => {
 });
 
 //get number of people in each zone
-router.get("/number", (req,res) => {
+router.get("/number/:area", (req,res) => {
     AreaController.getNumber(req,res)
 })
 module.exports = router;

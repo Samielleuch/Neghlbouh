@@ -16,21 +16,39 @@ module.exports = {
       !keys.includes("tempsRetour") ||
       !keys.includes("where") ||
       !keys.includes("reason") ||
+      !keys.includes('tempsSortie') ||
       keys.length !== 6
     ) {
       res.status(422);
-      res.send("invalid data");
+      res.setHeader('Content-Type', 'application/json');
+      res.json({
+        err: "invalid data"
+      });
 
+    } else {
+      Demande.find({ cin: req.body.cin, state: { $in: [0, 1] } }).then(resp => {
+        console.log(resp)
+        if (!resp.length) {
+          Demande.create(req.body).then(() => {
+            res.status(201)
+            res.json({
+              success:true,
+              status : "created succesfully"
+            });
+          }).catch((err) => {
+            res.json({ err: err.message })
+          });
+        } else {
+          res.status(409)
+          res.setHeader('Content-Type', 'application/json');
+          res.json({
+            err: "there is already a demand"
+          });
+        }
+      }).catch((err) => {
+        res.json({ err: err.message })
+      });
     }
-    Demande.find({ cin: req.body.cin, state: 0 || 1 }).then(resp => {
-      if (resp == null) {
-        Demande.create(req.body).then(() => {
-          res.send("created succesfully");
-        });
-      } else {
-        res.send("there is already a demand");
-      }
-    });
   },
 
   changeState(req, res) {
@@ -45,18 +63,27 @@ module.exports = {
       ) {
         Demande.findOneAndUpdate({ _id: req.params.id }, req.body)
           .then(() => {
-            res.send("succefully updated");
+            res.json({
+              success: true,
+              status: "succefully updated"
+            });
           })
           .catch(error => {
-            res.send(error);
+            res.json({
+              err: error.message
+            });
           });
       } else {
-        res.status(500);
-        res.send("invalid input");
+        res.status(422);
+        res.json({
+          err: "invalid data"
+        });
       }
     } else {
-      res.status(500);
-      res.send("invalid input: state' type must be a number");
+      res.status(422);
+      res.json({
+        err: "invalid input: state' type must be a number"
+      });
     }
   }
 };
