@@ -2,7 +2,10 @@
 node_modules
 /dist
 package-lock.json
+<<<<<<< HEAD
 
+=======
+>>>>>>> 37aa3cef95f501d98d6644349a7e9d46131a69f6
 /tests/e2e/reports/
 selenium-debug.log
 chromedriver.log

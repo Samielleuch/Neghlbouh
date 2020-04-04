@@ -102,8 +102,8 @@
                     false,
                     item.link,
                     item.name,
-                    'Navbar animation cool-link ',
-                    'Navbar  cool-link '
+                    'Navbar animation cool-link listItem ',
+                    'Navbar  cool-link listItem '
                   )
                 "
                 v-ripple="false"
@@ -232,6 +232,8 @@ export default {
 </script>
 <style scoped>
 .Navbar {
+  font-family: Cairo;
+  font-weight: bold;
   margin-right: 2vw;
   padding-bottom: 3px;
   font-size: 1.3vw !important;
@@ -241,12 +243,16 @@ export default {
 }
 
 .cool-link {
+  font-family: Cairo;
+
   display: inline-block;
   color: #000000;
   text-decoration: none;
 }
 
 .cool-link::after {
+  font-family: Cairo;
+
   border-radius: 100%;
   content: "";
   display: block;
@@ -266,6 +272,8 @@ export default {
 .animation::after {
   border-radius: 100%;
   content: "";
+  font-family: Cairo;
+
   display: block;
   width: 100%;
   height: 3px;
@@ -274,9 +282,13 @@ export default {
 }
 .hamburgerMenu {
   font-size: 20px !important;
+  font-family: Cairo;
+
   text-align: center !important;
 }
 .listItem {
+  font-family: Cairo;
+
   background-color: rgba(255, 255, 255, 1) !important;
   font-size: 18px !important;
 }

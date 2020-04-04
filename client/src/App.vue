@@ -28,6 +28,6 @@ export default {
   })
 };
 </script>
-<style scoped>
+<style>
 @import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
 </style>

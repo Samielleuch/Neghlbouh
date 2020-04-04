@@ -6,7 +6,7 @@ const Demande = require('../../models/Demande')
 const authenticate = require('../../authenticate');
 
 //add "demande" to database
-router.post("/add", (req, res) => {
+router.post("/add", authenticate.verifyOrdinaryUser, (req, res) => {
   DemandeController.addDemande(req, res);
 });
 
@@ -17,6 +17,48 @@ router.put("/state/:id",(req,res)=>{
 });
 
 
+//get all demands for user connected
+router.get('/', authenticate.verifyOrdinaryUser, (req, res, next) => {
+  Demande.find({
+    'cin': req.user.cin
+  }).then((resp) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  }, (err) => next(err))
+      .catch((err) => next(err));
+});
+
+/*router.get('/valid/:cin', authenticate.verifyOrdinaryUser, authenticate.verifyAdmin, (req, res, next) => {
+  Demande.find({
+    'cin': req.params.cin,
+    'state': 1
+  }).then((demand) => {
+    if(demand!=null){
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({"message": "Citizen approved"});
+    }
+    else{
+      err = new Error('Citizen not approved');
+      err.status = 404;
+      return next(err);
+    }
+  },(err) => next(err))
+      .catch((err) => next(err));
+});
+*/
+
+router.get('/pending', authenticate.verifyOrdinaryUser, /*authenticate.verifyAdmin,*/ (req,res, next)=> {
+  Demande.find({
+    'state': 0
+  }).then((resp) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  }, (err) => next(err))
+.catch((err) => next(err))
+});
 
 router.route('/:demandId')
 .get(authenticate.verifyOrdinaryUser,(req,res,next) => {
@@ -74,4 +116,8 @@ router.route('/:demandId')
     }, (err) => next(err))
     .catch((err) => next(err));
 });
+
+
+
+
 module.exports = router;

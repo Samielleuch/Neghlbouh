@@ -13,11 +13,12 @@ router.use(bodyParser.json());
 
 router.post('/signup', (req, res, next) => {
   
-  User.register(new User({cin: req.body.cin,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+  User.register(new User({
+        cin: req.body.cin,
+        name: req.body.name,
         email: req.body.email,
-        job: req.body.job
+        city: req.body.city,
+        phone: req.body.phone,
   }), 
     req.body.password, (err, user) => {
      
@@ -41,7 +42,10 @@ router.post('/signin', passport.authenticate('local'), (req, res) => {
   const token = authenticate.getToken({_id: req.user._id});
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
-  res.json({success: true, token: token, status: 'You are successfully logged in!'});
+  let user=req.user.toObject();;
+  delete user.hash;
+  delete user.salt;
+  res.json({success: true, token: token, user: user});
 });
 
 router.route('/')
