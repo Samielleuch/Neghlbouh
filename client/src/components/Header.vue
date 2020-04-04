@@ -15,13 +15,55 @@
         transition="scale-transition"
         width="150"
       />
-      <span
-        class="Navbar mr-0  d-none d-md-flex "
-        v-if="this.$store.state.currentUser !== undefined"
-      >
-        {{ welcomingMsg }} {{ this.$store.state.currentUser.name }}
-      </span>
       <v-toolbar-title class="d-none d-md-flex">
+        <!--  User Dashboard --->
+        <v-hover
+          v-slot:default="{ hover }"
+          v-if="
+            this.$store.state.currentUser !== undefined &&
+              !this.$store.state.currentUser.admin
+          "
+        >
+          <span
+            :class="
+              hover
+                ? 'Navbar animation cool-link mr-0 '
+                : 'Navbar  cool-link mr-0 '
+            "
+            v-ripple="false"
+            elevation="0"
+            @click="$router.replace({ name: 'UserDashboard' })"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              userDashboardButton.icon
+            }}</v-icon>
+            <span class="mr-1">{{ userDashboardButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
+        <!--  Admin Dashboard --->
+        <v-hover
+          v-slot:default="{ hover }"
+          v-if="
+            this.$store.state.currentUser !== undefined &&
+              this.$store.state.currentUser.admin
+          "
+        >
+          <span
+            :class="
+              hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
+            "
+            v-ripple="false"
+            elevation="0"
+            @click="$router.replace({ name: 'AdminDashboard' })"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              adminDashboardButton.icon
+            }}</v-icon>
+            <span class="mr-1">{{ adminDashboardButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
         <!-- Menu Items -->
         <v-hover
           v-slot:default="{ hover }"
@@ -153,6 +195,54 @@
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
         <v-list-item-group>
+          <!-- userDash Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="
+              this.$store.state.currentUser !== undefined &&
+                !this.$store.state.currentUser.admin
+            "
+          >
+            <v-list-item-title
+              class="hamburgerMenu "
+              @click="$router.replace({ name: 'UserDashboard' })"
+            >
+              <span
+                class="Navbar  cool-link listItem   "
+                v-ripple="false"
+                depressed
+                elevation="0"
+              >
+                <v-icon color=" black ">{{ userDashboardButton.icon }}</v-icon>
+                <span class="mr-1">{{ userDashboardButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
+          <!-- adminDash Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="
+              this.$store.state.currentUser !== undefined &&
+                this.$store.state.currentUser.admin
+            "
+          >
+            <v-list-item-title
+              class="hamburgerMenu "
+              @click="$router.replace({ name: 'AdminDashboard' })"
+            >
+              <span
+                class="Navbar  cool-link listItem   "
+                v-ripple="false"
+                depressed
+                elevation="0"
+              >
+                <v-icon color=" black ">{{ adminDashboardButton.icon }}</v-icon>
+                <span class="mr-1">{{ adminDashboardButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
           <v-list-item
             v-for="(item, index) in HeaderMenu"
             :key="index"
@@ -256,7 +346,6 @@ export default {
       session: undefined,
       drawer: false,
       // Data to transport to Vuex
-      welcomingMsg: this.$store.state.langPack.HeaderMenu.Userwelcome,
       HeaderMenu: [
         {
           name: this.$store.state.langPack.HeaderMenu.homePage,
@@ -297,6 +386,14 @@ export default {
       logOutButton: {
         name: this.$store.state.langPack.HeaderMenu.logOutButton,
         icon: "fas fa-door-closed"
+      },
+      userDashboardButton: {
+        name: this.$store.state.langPack.HeaderMenu.userDashboardButton,
+        icon: "fas fa-user-circle"
+      },
+      adminDashboardButton: {
+        name: this.$store.state.langPack.HeaderMenu.adminDashboardButton,
+        icon: "fas fa-user-shield"
       }
       //  End of Data to transport
     };

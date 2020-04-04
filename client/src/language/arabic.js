@@ -17,7 +17,9 @@ export default {
     faq: "اسئلة متداولة",
     signup: "تسجيل",
     loginButton: "دخول",
-    logOutButton: "خروج"
+    logOutButton: "خروج",
+    userDashboardButton: "الصفحة الخاصة",
+    adminDashboardButton: "لوحة القيادة"
   },
   Sign_Up: {
     popup_text1: "مرحبا بكم في",
