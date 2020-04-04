@@ -239,16 +239,21 @@ export default {
       this.$refs.form.validate();
       if (this.valid) {
         this.loading = true;
-        let resp = await authController.register({
-          name: this.name,
-          cin: this.CIN,
-          email: this.email,
-          city: this.city,
-          phone: this.phone,
-          password: this.password
-        });
-        this.loading = false;
-        console.log(resp);
+        try {
+          let resp = await authController.register({
+            name: this.name,
+            cin: this.CIN,
+            email: this.email,
+            city: this.city,
+            phone: this.phone,
+            password: this.password
+          });
+          this.loading = false;
+          console.log(resp);
+        } catch (e) {
+          this.loading = false;
+          console.log(e.response.data);
+        }
       } else {
         //to implement notification v-if here
         console.log("validation failed");

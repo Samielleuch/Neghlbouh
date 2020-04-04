@@ -15,6 +15,12 @@
         transition="scale-transition"
         width="150"
       />
+      <span
+        class="Navbar mr-0  d-none d-md-flex "
+        v-if="this.$store.state.currentUser !== undefined"
+      >
+        {{ welcomingMsg }} {{ this.$store.state.currentUser.name }}
+      </span>
       <v-toolbar-title class="d-none d-md-flex">
         <!-- Menu Items -->
         <v-hover
@@ -43,13 +49,53 @@
               "
               >{{ item.icon }}</v-icon
             >
-            <span @click="checkLoginPressed(item.name)" class="mr-2">
+            <span class="mr-2">
               {{ item.name }}
             </span>
           </router-link>
         </v-hover>
+        <!-- -->
+        <!--  Sign UP--->
+        <v-hover
+          v-slot:default="{ hover }"
+          v-if="this.$store.state.currentUser === undefined"
+        >
+          <span
+            :class="
+              activeClass(
+                hover,
+                signupButton.link,
+                signupButton.name,
+                'Navbar animation cool-link ',
+                'Navbar  cool-link '
+              )
+            "
+            v-ripple="false"
+            depressed
+            elevation="0"
+            @click="checkSignUpPressed"
+          >
+            <v-icon
+              :color="
+                activeClass(
+                  hover,
+                  signupButton.link,
+                  signupButton.name,
+                  '#A93226 ',
+                  'black'
+                )
+              "
+              >{{ signupButton.icon }}</v-icon
+            >
+            <span>{{ signupButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
         <!--  Sign In --->
-        <v-hover v-slot:default="{ hover }">
+        <v-hover
+          v-slot:default="{ hover }"
+          v-if="this.$store.state.currentUser === undefined"
+        >
           <span
             :class="
               activeClass(
@@ -63,6 +109,7 @@
             v-ripple="false"
             depressed
             elevation="0"
+            @click="checkLoginPressed(loginButton.name)"
           >
             <v-icon
               :color="
@@ -76,9 +123,27 @@
               "
               >{{ loginButton.icon }}</v-icon
             >
-            <span @click="checkLoginPressed(loginButton.name)"
-              >{{ loginButton.name }}
-            </span>
+            <span>{{ loginButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
+        <!--  Log Out Button  --->
+        <v-hover
+          v-slot:default="{ hover }"
+          v-if="this.$store.state.currentUser !== undefined"
+        >
+          <span
+            :class="
+              hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
+            "
+            v-ripple="false"
+            elevation="0"
+            @click="logOut"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              logOutButton.icon
+            }}</v-icon>
+            <span>{{ logOutButton.name }} </span>
           </span>
         </v-hover>
         <!-- -->
@@ -115,8 +180,33 @@
               </router-link>
             </v-list-item-title>
           </v-list-item>
+          <!-- Sign Up Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser === undefined"
+          >
+            <v-list-item-title
+              class="hamburgerMenu "
+              @click="checkSignUpPressed()"
+            >
+              <span
+                class="Navbar  cool-link listItem   "
+                v-ripple="false"
+                depressed
+                elevation="0"
+                @click="checkLoginPressed(signupButton.name)"
+              >
+                <v-icon color=" black ">{{ signupButton.icon }}</v-icon>
+                <span>{{ signupButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
           <!-- Login Button -->
-          <v-list-item class="text-justify ">
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser === undefined"
+          >
             <v-list-item-title
               class="hamburgerMenu "
               @click="checkLoginPressed(loginButton.name)"
@@ -128,9 +218,25 @@
                 elevation="0"
               >
                 <v-icon color=" black ">{{ loginButton.icon }}</v-icon>
-                <span @click="checkLoginPressed(loginButton.name)"
-                  >{{ loginButton.name }}
-                </span>
+                <span>{{ loginButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
+          <!-- LogOut Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser !== undefined"
+          >
+            <v-list-item-title class="hamburgerMenu " @click="logOut">
+              <span
+                class="Navbar  cool-link listItem   "
+                v-ripple="false"
+                depressed
+                elevation="0"
+              >
+                <v-icon color=" black ">{{ logOutButton.icon }}</v-icon>
+                <span>{{ logOutButton.name }} </span>
               </span>
             </v-list-item-title>
           </v-list-item>
@@ -147,8 +253,10 @@ export default {
   name: "Header",
   data() {
     return {
+      session: undefined,
       drawer: false,
       // Data to transport to Vuex
+      welcomingMsg: this.$store.state.langPack.HeaderMenu.Userwelcome,
       HeaderMenu: [
         {
           name: this.$store.state.langPack.HeaderMenu.homePage,
@@ -170,23 +278,25 @@ export default {
           icon: "fas fa-hand-sparkles",
           link: "Home"
         },
-        // { name: "الإجراءات المُتّخذة", icon: "fas fa-viruses", link: "Home" },
         {
           name: this.$store.state.langPack.HeaderMenu.faq,
           icon: "fas fa-question-circle",
           link: "FAQ"
-        },
-
-        {
-          name: this.$store.state.langPack.HeaderMenu.signup,
-          icon: "fas fa-user-plus",
-          link: "SignUp"
         }
       ],
       loginButton: {
         name: this.$store.state.langPack.HeaderMenu.loginButton,
         icon: "fas fa-door-open",
         link: "SignIn"
+      },
+      signupButton: {
+        name: this.$store.state.langPack.HeaderMenu.signup,
+        icon: "fas fa-user-plus",
+        link: "SignUp"
+      },
+      logOutButton: {
+        name: this.$store.state.langPack.HeaderMenu.logOutButton,
+        icon: "fas fa-door-closed"
       }
       //  End of Data to transport
     };
@@ -205,6 +315,9 @@ export default {
             this.$router.push({ name: "SignIn" });
         }
       }
+    },
+    checkSignUpPressed() {
+      if (this.$route.name !== "SignUn") this.$router.push({ name: "SignUp" });
     },
     activeClass(hover, link, name, classwhenactive, otherclass) {
       if (link === this.$route.name) {
@@ -225,9 +338,15 @@ export default {
           return otherclass;
         }
       }
+    },
+    logOut() {
+      this.session.clear();
+      this.$router.go();
     }
   },
-  created() {}
+  mounted() {
+    this.session = window.sessionStorage;
+  }
 };
 </script>
 <style scoped>

@@ -9,14 +9,15 @@ export default {
     makeAccount: "إبدء حساب جديد الآن "
   },
   HeaderMenu: {
+    Userwelcome: "مرحبا ",
     homePage: "الصّفحة الرّئيسيّة",
     liveMap: "خريطة",
     demande: "تعمير مطلب ",
     infoPage: "ارشادات ",
-    // { name: "الإجراءات المُتّخذة", icon: "fas fa-viruses", link: "Home" },
     faq: "اسئلة متداولة",
     signup: "تسجيل",
-    loginButton: "دخول"
+    loginButton: "دخول",
+    logOutButton: "خروج"
   },
   Sign_Up: {
     popup_text1: "مرحبا بكم في",
