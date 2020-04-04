@@ -22,7 +22,6 @@
       />
       <v-toolbar-title class="d-none d-md-flex">
         <!--  User Dashboard --->
-        <!-- test -->
         <v-hover
           v-slot:default="{ hover }"
           v-if="
@@ -379,12 +378,6 @@ export default {
 
           link: "FAQ"
         },
-
-        {
-          name: this.$store.state.langPack.HeaderMenu.signup,
-          icon: "fas fa-user-plus",
-          link: "SignUp"
-        }
       ],
       loginButton: {
         name: this.$store.state.langPack.HeaderMenu.loginButton,
