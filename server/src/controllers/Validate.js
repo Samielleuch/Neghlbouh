@@ -7,33 +7,41 @@ app.use(express.json())
 
 module.exports = {
 
-    async validate(req, res) {
-        a = await Demande.find({
-            'cin': req.user.cin,
-            'state': 1 || 0
+    async validate(cin) {
+        const a = await Demande.find({
+            cin: cin,
+            state: {
+                $in: [0, 1]
+            }
         })
-        const time = a.tempsRetour.split(':')
-        const tempsRetour = +(time[0]) * 60 + time[1]
-        const date = new Date()
-        const temps = date.getHours()*60 + date.getMinutes()
-        if (a == null){
-            return ({"message": "citizen not approved"})
+        if (a[0] == null) {
+            return ({ message: "citizen not approved" })
         }
-        if (a.state ==1){
-            return a;
+        const time = a[0].tempsRetour.split(':')
+        const tempsRetour = +(time[0]) * 60 + (+time[1]);
+        const date = new Date()
+        const temps = date.getHours() * 60 + date.getMinutes()
+        if (a[0].state == 0) {
+            return a[0];
         }
         else {
-            if (temps > tempsRetour){
-                return a;
+            if (temps > tempsRetour) {
+                const updatedDocument = await Demande.updateOne({
+                    "_id": a[0]._id,
+                }, {
+                    $set: {
+                        state: 2
+                    }
+                })
+                if (updatedDocument) {
+                    return a[0];
+                }
             }
-            else{
-                return ({"message": "citizen approved"})
+            else {
+                return ({ message: "citizen approved" })
             }
         }
-
-
-
-        }
-
     }
+
+}
 

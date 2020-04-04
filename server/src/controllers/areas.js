@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Area = require('../models/Areas')
 const Demande = require('../models/Demande')
 const webpush = require('web-push')
-
+const validate = require('./Validate')
 app.use(express.json())
 module.exports = {
     addArea(req, res) {
@@ -36,9 +36,10 @@ module.exports = {
         }
         else {
             let area = req.params.area;
-            Demande.find({ state: 2 }, (error, demandes) => { // search for accepted demands
+            Demande.find({ state: 1 }, (error, demandes) => { // search for accepted demands
                 if (error) res.json(error);
                 demandes.forEach(function (demande) {
+                    let validate = validate.validate(demande.cin); 
                     let dateDemande = new Date(demande.dateSortie); // check if 
                     let dateNow = new Date().setHours(0, 0, 0, 0);        // these demande 
                     if (dateDemande.getTime() === dateNow) {          // mte3 lyoum
