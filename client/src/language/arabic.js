@@ -29,7 +29,8 @@ export default {
     passWordField: "كلمة السر",
     submitField: "ارسل",
     forgotPass: "ليس لديك حساب ؟ ",
-    makeAccount: "إبدء حساب جديد الآن "
+    makeAccount: "إبدء حساب جديد الآن ",
+    text_photo:"صحتك تهمنا"
   },
   HomePageBanner: {
     title1: "الApplication الي تنجم تعاونك بش تخرج وقتلي تحب ",

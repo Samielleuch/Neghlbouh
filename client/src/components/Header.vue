@@ -1,5 +1,10 @@
 <template>
-  <div dir="rtl" style="padding-bottom: 30px;height: 40px; margin-bottom: 10px">
+  <!-- the z-index of the nav bar is set to 10 so that it doesn't 
+  collide with the form in the sign up page ( this form has been adjusted with transform) -->
+  <div
+    dir="rtl"
+    style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"
+  >
     <v-app-bar color="white">
       <v-app-bar-nav-icon
         @click="drawer = true"
@@ -153,46 +158,46 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.homePage,
           icon: "fas fa-globe-americas",
-          link: "Home"
+          link: "Home",
         },
         {
           name: this.$store.state.langPack.HeaderMenu.liveMap,
           icon: "fas fa-map-marked-alt",
-          link: "LiveMap"
+          link: "LiveMap",
         },
         {
           name: this.$store.state.langPack.HeaderMenu.demande,
           icon: "fas fa-paper-plane",
-          link: "Home"
+          link: "Home",
         },
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,
           icon: "fas fa-hand-sparkles",
-          link: "Home"
+          link: "Home",
         },
         // { name: "الإجراءات المُتّخذة", icon: "fas fa-viruses", link: "Home" },
         {
           name: this.$store.state.langPack.HeaderMenu.faq,
           icon: "fas fa-question-circle",
-          link: "FAQ"
+          link: "FAQ",
         },
 
         {
           name: this.$store.state.langPack.HeaderMenu.signup,
           icon: "fas fa-user-plus",
-          link: "SignUp"
-        }
+          link: "SignUp",
+        },
       ],
       loginButton: {
         name: this.$store.state.langPack.HeaderMenu.loginButton,
         icon: "fas fa-door-open",
-        link: "SignIn"
-      }
+        link: "SignIn",
+      },
       //  End of Data to transport
     };
   },
   computed: {
-    ...mapState(["isLoginPressed"])
+    ...mapState(["isLoginPressed"]),
   },
   methods: {
     ...mapActions(["pressLogin"]),
@@ -225,9 +230,9 @@ export default {
           return otherclass;
         }
       }
-    }
+    },
   },
-  created() {}
+  created() {},
 };
 </script>
 <style scoped>
@@ -264,7 +269,7 @@ export default {
 
 .cool-link:hover::after {
   width: 100%;
-  //transition: width .3s;
+  transition: width .3s;
 }
 .animation {
   color: #d41b45;
