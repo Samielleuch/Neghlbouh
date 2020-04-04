@@ -8,12 +8,7 @@
           v-model="valid"
         >
           <!-- exit button  -->
-          <v-row v-if="isModal">
-            <v-spacer></v-spacer>
-            <v-btn icon @click="pressLogin(false)" class=" mt-2 mr-5">
-              <v-icon>far fa-times-circle</v-icon>
-            </v-btn>
-          </v-row>
+
           <!---->
           <!-- icon -->
           <!--
@@ -38,6 +33,16 @@
               <span class="text-center  font-login-popup2">
                 {{ text.popup_text2 }}
               </span>
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="mt-10"
+                width="80%"
+                v-if="error !== ''"
+              >
+                {{ error }}
+              </v-alert>
             </v-col>
           </v-row>
           <v-card-text>
@@ -209,6 +214,7 @@ export default {
   data() {
     return {
       loading: false,
+      error: "",
       password: "",
       CIN: "",
       cinRules: [
@@ -289,6 +295,7 @@ export default {
         } catch (e) {
           this.loading = false;
           console.log(e.response.data);
+          this.error = e.response.data.err;
         }
       } else {
         //to implement notification v-if here

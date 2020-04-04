@@ -28,6 +28,16 @@
           <span class="text-center  font-login-popup2 ">
             {{ text.popup_text2 }}
           </span>
+          <v-alert
+            dense
+            outlined
+            type="error"
+            class="mt-10"
+            width="80%"
+            v-if="error !== ''"
+          >
+            {{ error }}
+          </v-alert>
         </v-col>
       </v-row>
       <v-card-text>
@@ -125,7 +135,8 @@ export default {
       password: "",
       CIN: "",
       valid: false,
-      show1: false
+      show1: false,
+      error: ""
     };
   },
   computed: {
@@ -140,17 +151,23 @@ export default {
       this.$refs.form.validate();
       if (this.valid) {
         this.loading = true;
-        let resp = await authController.signIn({
-          cin: this.CIN,
-          password: this.password
-        });
-        console.log(resp);
-        this.pressLogin(false);
-        if (this.$route.name !== "Home") {
-          this.$router.replace({ name: "Home" });
+        try {
+          let resp = await authController.signIn({
+            cin: this.CIN,
+            password: this.password
+          });
+          console.log(resp);
+          this.pressLogin(false);
+          if (this.$route.name !== "Home") {
+            this.$router.replace({ name: "Home" });
+          }
+          this.loginUser(resp.data);
+          this.loading = false;
+        } catch (e) {
+          this.loading = false;
+          console.log(e.response.data.err);
+          this.error = e.response.data.err;
         }
-        this.loginUser(resp.data);
-        this.loading = false;
       } else {
         //to implement notification v-if here
         console.log("validation failed");
