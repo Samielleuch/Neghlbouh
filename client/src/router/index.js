@@ -27,9 +27,26 @@ const routes = [
   },
 
   {
+    path: "/AllApplicationsPage",
+    name: "AllApplicationsPage",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/AllApplicationsPage.vue")
+  },
+
+  {
     path: "/FAQ",
     name: "FAQ",
     component: () => import("../views/FAQ.vue")
+  },
+  {
+    path: "/UserDashboard",
+    name: "UserDashboard",
+    component: () => import("../views/UserDashboard.vue")
+  },
+  {
+    path: "/EditProfilePage",
+    name: "EditProfilePage",
+    component: () => import("../views/EditProfilePage.vue")
   },
   {
     path: "/LiveMap",
