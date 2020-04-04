@@ -16,32 +16,12 @@
         width="150"
       />
       <span
-        class="Navbar mr-0 "
+        class="Navbar mr-0  d-none d-md-flex "
         v-if="this.$store.state.currentUser !== undefined"
       >
         {{ welcomingMsg }} {{ this.$store.state.currentUser.name }}
       </span>
       <v-toolbar-title class="d-none d-md-flex">
-        <!--  Log Out Button  --->
-        <v-hover
-          v-slot:default="{ hover }"
-          v-if="this.$store.state.currentUser !== undefined"
-        >
-          <span
-            :class="
-              hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
-            "
-            v-ripple="false"
-            elevation="0"
-            @click="logOut"
-          >
-            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
-              loginButton.icon
-            }}</v-icon>
-            <span>{{ loginButton.name }} </span>
-          </span>
-        </v-hover>
-        <!-- -->
         <!-- Menu Items -->
         <v-hover
           v-slot:default="{ hover }"
@@ -147,6 +127,26 @@
           </span>
         </v-hover>
         <!-- -->
+        <!--  Log Out Button  --->
+        <v-hover
+          v-slot:default="{ hover }"
+          v-if="this.$store.state.currentUser !== undefined"
+        >
+          <span
+            :class="
+              hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
+            "
+            v-ripple="false"
+            elevation="0"
+            @click="logOut"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              logOutButton.icon
+            }}</v-icon>
+            <span>{{ logOutButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
       </v-toolbar-title>
     </v-app-bar>
     <!-- Responsive Menu here !! -->
@@ -181,7 +181,10 @@
             </v-list-item-title>
           </v-list-item>
           <!-- Sign Up Button -->
-          <v-list-item class="text-justify ">
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser === undefined"
+          >
             <v-list-item-title
               class="hamburgerMenu "
               @click="checkSignUpPressed()"
@@ -200,7 +203,10 @@
           </v-list-item>
           <!-- -->
           <!-- Login Button -->
-          <v-list-item class="text-justify ">
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser === undefined"
+          >
             <v-list-item-title
               class="hamburgerMenu "
               @click="checkLoginPressed(loginButton.name)"
@@ -213,6 +219,24 @@
               >
                 <v-icon color=" black ">{{ loginButton.icon }}</v-icon>
                 <span>{{ loginButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
+          <!-- LogOut Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser !== undefined"
+          >
+            <v-list-item-title class="hamburgerMenu " @click="logOut">
+              <span
+                class="Navbar  cool-link listItem   "
+                v-ripple="false"
+                depressed
+                elevation="0"
+              >
+                <v-icon color=" black ">{{ logOutButton.icon }}</v-icon>
+                <span>{{ logOutButton.name }} </span>
               </span>
             </v-list-item-title>
           </v-list-item>
@@ -271,8 +295,8 @@ export default {
         link: "SignUp"
       },
       logOutButton: {
-        name: this.$store.state.langPack.HeaderMenu.logOut,
-        icon: "fas fa-user-plus"
+        name: this.$store.state.langPack.HeaderMenu.logOutButton,
+        icon: "fas fa-door-closed"
       }
       //  End of Data to transport
     };
