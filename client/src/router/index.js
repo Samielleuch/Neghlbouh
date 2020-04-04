@@ -52,6 +52,16 @@ const routes = [
     path: "/LiveMap",
     name: "LiveMap",
     component: () => import("../views/LiveMap.vue")
+  },
+  {
+    path: "/Info",
+    name: "Info",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
+  },
+  {
+    path: "/*",
+    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
   }
 ];
 

@@ -8,12 +8,7 @@
           v-model="valid"
         >
           <!-- exit button  -->
-          <v-row v-if="isModal">
-            <v-spacer></v-spacer>
-            <v-btn icon @click="pressLogin(false)" class=" mt-2 mr-5">
-              <v-icon>far fa-times-circle</v-icon>
-            </v-btn>
-          </v-row>
+
           <!---->
           <!-- icon -->
           <!--
@@ -38,6 +33,16 @@
               <span class="text-center  font-login-popup2">
                 {{ text.popup_text2 }}
               </span>
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="mt-10"
+                width="80%"
+                v-if="error !== ''"
+              >
+                {{ error }}
+              </v-alert>
             </v-col>
           </v-row>
           <v-card-text>
@@ -180,10 +185,13 @@
         </v-form>
       </v-col>
       <v-col :class="$vuetify.breakpoint.xs ? 'd-none' : ''" sm="6">
-        <v-img src="@/assets/SignUpPic.png" class="d-flex align-end pb-12 mt-12 side-image">
+        <v-img
+          src="@/assets/SignUpPic.png"
+          class="d-flex align-end pb-12 mt-12 side-image"
+        >
           <v-row>
             <v-col class="text-center" cols="12">
-              <span class="text-photo">{{text.text_photo}}</span>
+              <span class="text-photo">{{ text.text_photo }}</span>
             </v-col>
           </v-row>
         </v-img>
@@ -200,39 +208,36 @@ export default {
   props: {
     isModal: {
       Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       loading: false,
+      error: "",
       password: "",
       CIN: "",
       cinRules: [
-        (v) => !!v || "رقم بطاقة التعريف مطلوب",
-        (v) =>
-          (!isNaN(parseFloat(v)) && !isNaN(v - 0)) ||
-          "يجب أن يكون رقم",
-        (v) => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام",
+        v => !!v || "رقم بطاقة التعريف مطلوب",
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        v => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام"
       ],
       name: "",
       nameRules: [
-        (v) => !!v || "الاسم مطلوب",
-        (v) => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف",
+        v => !!v || "الاسم مطلوب",
+        v => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف"
       ],
       city: "",
       phone: "",
       phoneRules: [
-        (v) => !!v || "رقم الهاتف مطلوب",
-        (v) =>
-          (!isNaN(parseFloat(v)) && !isNaN(v - 0)) ||
-          "يجب أن يكون رقم",
-        (v) => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام",
+        v => !!v || "رقم الهاتف مطلوب",
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
       ],
       email: "",
       emailRules: [
-        (v) => !!v || "البريد الالكتروني مطلوب",
-        (v) => /.+@.+\..+/.test(v) || "يجب ان يكون البريد الاكتروني صحيح",
+        v => !!v || "البريد الالكتروني مطلوب",
+        v => /.+@.+\..+/.test(v) || "يجب ان يكون البريد الاكتروني صحيح"
       ],
       valid: false,
       show1: false,
@@ -260,15 +265,15 @@ export default {
         "المنستير",
         "منوبة",
         "المهدية",
-        "نابل",
-      ],
+        "نابل"
+      ]
     };
   },
   computed: {
     ...mapState(["langPack"]),
     text() {
       return this.langPack.Sign_Up;
-    },
+    }
   },
   methods: {
     ...mapActions(["pressLogin"]),
@@ -276,22 +281,28 @@ export default {
       this.$refs.form.validate();
       if (this.valid) {
         this.loading = true;
-        let resp = await authController.register({
-          name: this.name,
-          cin: this.CIN,
-          email: this.email,
-          city: this.city,
-          phone: this.phone,
-          password: this.password,
-        });
-        this.loading = false;
-        console.log(resp);
+        try {
+          let resp = await authController.register({
+            name: this.name,
+            cin: this.CIN,
+            email: this.email,
+            city: this.city,
+            phone: this.phone,
+            password: this.password
+          });
+          this.loading = false;
+          console.log(resp);
+        } catch (e) {
+          this.loading = false;
+          console.log(e.response.data);
+          this.error = e.response.data.err;
+        }
       } else {
         //to implement notification v-if here
         console.log("validation failed");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -299,7 +310,7 @@ export default {
 .form {
   /* This form has been down-scaled and the z-index is made 1
    with position relative so it doesn't collide with the nav bar */
-  
+
   position: relative;
   z-index: 1 !important;
 }
@@ -335,14 +346,13 @@ body * {
   box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
     /* middle magenta */ 0 0 10px 1px #6b2028 !important ;
 }
-.side-image{
-  height:90vh;
-  width:70vw;
-  padding-bottom:120px!important;
+.side-image {
+  height: 90vh;
+  width: 70vw;
+  padding-bottom: 120px !important;
 }
-.text-photo{
-  font-size:45px;
-  color:white;
-
+.text-photo {
+  font-size: 45px;
+  color: white;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-app>
-
       <Header />
       <v-content>
         <!-- the actual page that the router shows-->
