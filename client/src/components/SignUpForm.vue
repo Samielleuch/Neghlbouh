@@ -83,6 +83,24 @@
                   ></v-select>
                 </v-col>
               </v-row>
+              <!-- Area  -->
+              <v-row class="mb-0 pb-0" justify="center">
+                <v-col cols="10" class="mb-0 pb-0">
+                  <v-select
+                    v-model="city"
+                    outlined
+                    rounded
+                    prepend-inner-icon="fas fa-thumbtack"
+                    filled
+                    clearable
+                    :label="text.areaField"
+                    required
+                    color="black"
+                    class="mb-0 pb-0"
+                    :items="areas"
+                  ></v-select>
+                </v-col>
+              </v-row>
               <!-- Phone  -->
               <v-row class="mb-0 pb-0" justify="center">
                 <v-col cols="10" class="mb-0 pb-0">
@@ -208,8 +226,8 @@ export default {
   props: {
     isModal: {
       Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -218,43 +236,43 @@ export default {
       password: "",
       CIN: "",
       cinRules: [
-        v => !!v || "رقم بطاقة التعريف مطلوب",
-        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        v => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام"
+        (v) => !!v || "رقم بطاقة التعريف مطلوب",
+        (v) => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        (v) => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام",
       ],
       name: "",
       nameRules: [
-        v => !!v || "الاسم مطلوب",
-        v => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف"
+        (v) => !!v || "الاسم مطلوب",
+        (v) => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف",
       ],
       city: "",
       phone: "",
       phoneRules: [
-        v => !!v || "رقم الهاتف مطلوب",
-        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
+        (v) => !!v || "رقم الهاتف مطلوب",
+        (v) => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        (v) => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام",
       ],
       email: "",
       emailRules: [
-        v => !!v || "البريد الالكتروني مطلوب",
-        v => /.+@.+\..+/.test(v) || "يجب ان يكون البريد الاكتروني صحيح"
+        (v) => !!v || "البريد الالكتروني مطلوب",
+        (v) => /.+@.+\..+/.test(v) || "يجب ان يكون البريد الاكتروني صحيح",
       ],
       valid: false,
       show1: false,
       cities: [
         "أريانة",
+        "تونس",
+        "صفاقس",
         "باجة",
         "بنزرت",
         "بن عروس",
         "تطاوين",
         "توزر",
-        "تونس",
         "جندوبة",
         "زغوان",
         "سليانة",
         "سوسة",
         "سيدي بوزيد",
-        "صفاقس",
         "قابس",
         "قبلي",
         "القصرين",
@@ -265,15 +283,38 @@ export default {
         "المنستير",
         "منوبة",
         "المهدية",
-        "نابل"
-      ]
+        "نابل",
+      ],
+      areas: [
+        "	ساقية الزيت",
+        "ساقية الدائر",
+        "	العين",
+        "قرمدة",
+        "	طينة",
+        "	الشيحية",
+        "المحرس",
+        "	قرقنة",
+        "	الصخيرة",
+        "عقارب",
+        "	الحنشة",
+        "جبنيانة",
+        "بئر علي",
+        "الغريبة",
+        "	العامرة",
+        "العوابد - الخزانات",
+        "الناظور - سيدي علي بن عابد",
+        "الحاجب",
+        "حزق - اللوزة",
+        "الأعشاش",
+        "النصر",
+      ],
     };
   },
   computed: {
     ...mapState(["langPack"]),
     text() {
       return this.langPack.Sign_Up;
-    }
+    },
   },
   methods: {
     ...mapActions(["pressLogin"]),
@@ -288,7 +329,7 @@ export default {
             email: this.email,
             city: this.city,
             phone: this.phone,
-            password: this.password
+            password: this.password,
           });
           this.loading = false;
           console.log(resp);
@@ -301,8 +342,8 @@ export default {
         //to implement notification v-if here
         console.log("validation failed");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

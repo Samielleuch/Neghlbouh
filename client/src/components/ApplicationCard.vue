@@ -10,7 +10,7 @@
         <v-avatar size="50" class="avatar">
           <img src="../assets/appcard.png" alt="" />
         </v-avatar>
-        <h4>الطلبات</h4>
+        <h4>خرجاتي</h4>
       </div>
       <div v-if="applications.length == 0">you don't have any request</div>
       <div v-else>
@@ -19,42 +19,60 @@
             <v-card class="appcard">
               <div class="d-flex flex-no-wrap">
                 <div class="row">
-                  <v-col>
+                  <v-col cols="5">
                     <div class="app font" style="margin-top: 1px">
-                      طلب الخروج إلى : {{ item.destination }}
+                      سبب الخروج : {{ item.destination }}
                     </div>
                   </v-col>
                   <v-divider vertical inset></v-divider>
                   <div class="app font" style="margin-top: 10px">
-                    الوقت : {{ item.time }}
+                    وقت العودة : {{ item.time }}
                   </div>
                   <v-divider
                     vertical
                     inset
                     style="margin-right: 80px"
                   ></v-divider>
-                  <div class="app font" style="margin-top: 10px">
-                    وضعية الطلب : {{ item.state }}
+                  <div class="app font" style="margin-top: 10px; width: 280px">
+                    الوجهة : {{ item.state }}
                   </div>
-                  <v-col class="text-left">
-                    <v-btn
-                      class="title font"
-                      dark
-                      height="25px"
-                      color="#D41B45"
-                      rounded
-                      style="margin-top: 1px"
+                  <div class="app1 font">
+                    <v-alert
+                      v-if="item.state == 'Supermodel'"
+                      dense
+                      text
+                      width="170px"
+                      type="success"
                     >
-                      المزيد
-                    </v-btn></v-col
-                  >
+                      الخطر :{{ item.score }}</v-alert
+                    >
+                    <v-alert
+                      v-else-if="item.state == 'Super'"
+                      dense
+                      text
+                      width="170px"
+                      type="warning"
+                    >
+                      الخطر :{{ item.score }}</v-alert
+                    >
+                    <v-alert v-else dense outlined type="error" width="170px">
+                      الخطر :{{ item.score }}</v-alert
+                    >
+                  </div>
                 </div>
               </div>
             </v-card>
           </v-col>
         </v-row>
         <div class="text-center">
-          <v-btn class="title " dark rounded color="#D41B45" height="28px">
+          <v-btn
+            class="title "
+            dark
+            rounded
+            color="#D41B45"
+            height="28px"
+            :to="AllApplicationsPage"
+          >
             المزيد
           </v-btn>
         </div>
@@ -70,23 +88,26 @@ export default {
       {
         destination: "Supermodel",
         time: "15:00",
-        state: "مقبول"
+        state: "Supermodel",
+        score: "75%"
+      },
+      {
+        destination: "Super",
+        time: "15:00",
+        state: "Super",
+        score: "50%"
       },
       {
         destination: "Supermodel",
         time: "15:00",
-        state: "مقبول"
-      },
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "مقبول"
+        state: "Seeyou",
+        score: "90%"
       }
     ]
   })
 };
 </script>
-<style>
+<style scoped>
 .cardc {
   height: 250px;
 }
@@ -98,6 +119,9 @@ export default {
 }
 .app {
   padding-right: 15px;
+}
+.app1 {
+  margin-right: 30px;
 }
 .font {
   font-family: Cairo;
