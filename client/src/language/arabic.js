@@ -9,27 +9,32 @@ export default {
     makeAccount: "إبدء حساب جديد الآن "
   },
   HeaderMenu: {
+    Userwelcome: "مرحبا ",
     homePage: "الصّفحة الرّئيسيّة",
     liveMap: "خريطة",
     demande: "تعمير مطلب ",
     infoPage: "ارشادات ",
-    // { name: "الإجراءات المُتّخذة", icon: "fas fa-viruses", link: "Home" },
     faq: "اسئلة متداولة",
     signup: "تسجيل",
-    loginButton: "دخول"
+    loginButton: "دخول",
+    logOutButton: "خروج",
+    userDashboardButton: "الصفحة الخاصة",
+    adminDashboardButton: "لوحة القيادة"
   },
   Sign_Up: {
     popup_text1: "مرحبا بكم في",
     popup_text2: "الرجاء التسجيل للتمكن من الإنتفاع بالخدمة",
     cinField: "بطاقة التعريف",
     nameField: "الاسم و اللقب",
-    cityField: "مكان السكن",
+    cityField: "ولاية السكن",
+    areaField: "منطقة السكن",
     phoneField: "رقم الهاتف",
     emailField: "البريد الالكتروني",
     passWordField: "كلمة السر",
     submitField: "ارسل",
     forgotPass: "ليس لديك حساب ؟ ",
-    makeAccount: "إبدء حساب جديد الآن "
+    makeAccount: "إبدء حساب جديد الآن ",
+    text_photo: "صحتك تهمنا"
   },
   HomePageBanner: {
     title1: "الapplication اللي تنظّملك خروجك و تبعّدك على الزحمة ",
