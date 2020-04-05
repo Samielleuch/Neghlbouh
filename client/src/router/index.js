@@ -25,17 +25,14 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Sign_Up_Page.vue")
   },
+
   {
     path: "/AllApplicationsPage",
     name: "AllApplicationsPage",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AllApplicationsPage.vue")
   },
-  {
-    path: "/SignUp",
-    name: "SignUp", //lazy loading
-    component: () => import("../views/Sign_Up_Page.vue")
-  },
+
   {
     path: "/FAQ",
     name: "FAQ",
@@ -57,9 +54,20 @@ const routes = [
     component: () => import("../views/LiveMap.vue")
   },
   {
+<<<<<<< HEAD
     path: "/FormPage",
     name: "FormPage",
     component: () => import("../views/FormPage.vue")
+=======
+    path: "/Info",
+    name: "Info",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
+  },
+  {
+    path: "/*",
+    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
+>>>>>>> 90f38b0ef3c43a5134f8e6777edab9ff5b59d2c9
   }
 ];
 
