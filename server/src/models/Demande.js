@@ -5,16 +5,19 @@ const DemandeSchema = mongoose.Schema({
     reason: String,
     date: {
         type: Date,
-        default: Date.now
+        default: new Date()
     },
-    dateSortie: String,
-    tempsSortie : String,
-    tempsRetour: String,
     where : String,
+    zone : String,
     state: {
         type:Number,
+        default: 1
+    },
+    score : {
+        type : Number,
         default: 0
-    }
+    },
+    tempsRetour : String
 })
 
 module.exports = mongoose.model("Demandes", DemandeSchema)
