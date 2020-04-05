@@ -1,7 +1,10 @@
 <template>
   <v-row justify="center" align-content="center" class="fill-height">
     <v-col cols=" 12 " md="6" class="text-center">
-      <h1 class=" Hometext mt-12" v-if="this.$store.state.currentUser !== undefined">
+      <h1
+        class=" Hometext mt-12"
+        v-if="this.$store.state.currentUser !== undefined"
+      >
         {{ this.$store.state.langPack.HeaderMenu.Userwelcome }}
         {{ this.$store.state.currentUser.name }} !
       </h1>

@@ -16,29 +16,32 @@
             <MglNavigationControl position="top-right" />
             <MglGeolocateControl position="top-right" />
             <MglScaleControl />
-            <MglMarker :coordinates.sync="markerCoordinates" color="red" />
+            <MglMarker :coordinates.sync="myCoordinate" color="red">
+            </MglMarker>
+
             <MglGeojsonLayer
-              :sourceId="geoJsonSource.data.id"
-              :source="geoJsonSource"
-              layerId="somethingSomething"
-              :layer="geoJsonLayer"
-            />
+              v-for="(city, index) in Zones"
+              :key="index + 30"
+              :sourceId="getGeoJsonSource(index, city.cord).data.id"
+              :source="getGeoJsonSource(index, city.cord)"
+              :layerId="index.toString()"
+              :layer="getGeoJsonLayer(0.6)"
+            >
+            </MglGeojsonLayer>
           </MglMap>
         </div>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        <div>
-          hi
-        </div>
+        <div></div>
       </v-col>
-    </v-row>
-  </div></template
->
+    </v-row></div
+></template>
 
 <script>
 import Mapbox from "mapbox-gl";
+import sfax from "@/store/sfaxx.json";
 import {
   MglMap,
   MglMarker,
@@ -56,54 +59,39 @@ export default {
     MglGeojsonLayer,
     MglNavigationControl,
     MglGeolocateControl,
-    MglScaleControl
+    MglScaleControl,
   },
   data() {
     return {
+      geoJson: "",
       myCoordinate: [10.4, 35.8],
       accessToken:
         "pk.eyJ1Ijoic2FtaWVsbGV1Y2giLCJhIjoiY2s4ZmYxanp5MDA5MDNmcWowY3FuZm1tbSJ9.neFuBaRgOGr8khOj2FGweA",
       mapStyle: "mapbox://styles/mapbox/light-v10",
       center: [10.5375, 35.2],
-      markerCoordinates: [10.5375, 36.8],
+      markerCoordinates: [10.7659153, 34.805275],
       zoom: 6,
       minZoom: 0,
       maxBounds: [
         [6.5, 28.8869],
         [12.5375, 38.1]
       ],
-      geoJsonLayer: {
-        type: "circle",
-        paint: {
-          "circle-color": "red",
-          "circle-radius": {
-            stops: [
-              [0, 0],
-              [20, 100000]
-              //distance here
-            ],
-            base: 2
-          },
-          "circle-stroke-color": "white",
-          "circle-opacity": 0.3,
-          "circle-pitch-scale": "viewport"
-        }
-      }
+      Zones: sfax.Zones
     };
   },
-  computed: {
-    geoJsonSource() {
+  methods: {
+    getGeoJsonSource(idd, cord) {
       return {
         type: "geojson",
         data: {
-          id: "thisIsMySource",
+          id: idd.toString(),
           type: "FeatureCollection",
           features: [
             {
               type: "Feature",
               geometry: {
                 type: "Point",
-                coordinates: this.myCoordinate
+                coordinates: cord
               },
               properties: {
                 description: "Ford's Theater",
@@ -113,11 +101,31 @@ export default {
           ]
         }
       };
+    },
+    getGeoJsonLayer(opacity) {
+      return {
+        type: "circle",
+        paint: {
+          "circle-color": "red",
+          "circle-radius": {
+            stops: [
+              [0, 0],
+              [20, 80000]
+              //distance here
+            ],
+            base: 2
+          },
+          "circle-stroke-color": "white",
+          "circle-opacity": opacity,
+          "circle-pitch-scale": "viewport"
+        }
+      };
     }
   },
   created() {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
+    console.log(this.getGeoJsonSource(0, this.Zones[0].cord));
   }
 };
 </script>
