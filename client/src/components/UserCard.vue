@@ -47,8 +47,15 @@
         <v-divider class="divider"></v-divider>
       </div>
 
-      <div class="text-center" v-if="checkPage">
-        <v-btn class="font title" dark rounded color="#d41b45" height="30">
+      <div class="text-center">
+        <v-btn
+          class="font title"
+          dark
+          rounded
+          color="#d41b45"
+          height="30"
+          to="/EditProfilePage"
+        >
           تعديل حسابي
         </v-btn>
       </div>
@@ -68,19 +75,10 @@ export default {
       email: "string",
       mdp: "string"
     }
-  },
-  methods: {
-    checkPage() {
-      if (this.$route.name === "UserDashboard") {
-        return true;
-      } else {
-        return false;
-      }
-    }
   }
 };
 </script>
-<style>
+<style scoped>
 .cardcc {
   height: 270px;
   padding-right: 20px;
