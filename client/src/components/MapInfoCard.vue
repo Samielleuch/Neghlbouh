@@ -12,12 +12,33 @@
           <img alt="" src="../assets/infomap.png" />
         </v-avatar>
       </div>
+
+      <v-sheet color="rgba(230, 45, 45, 0.6)">
+        <v-sparkline
+          auto-draw
+          :labels="label"
+          :value="value"
+          color="rgba(255, 255, 255, .97)"
+          height="50"
+          padding="5"
+          stroke-linecap="round"
+          smooth
+        >
+          <template v-slot:label="item"> {{ item.value }} </template>
+        </v-sparkline>
+      </v-sheet>
     </v-card>
   </v-hover>
 </template>
 <script>
 export default {
-  name: "MapInfoCard"
+  name: "MapInfoCard",
+  data() {
+    return {
+      value: [423, 446, 675, 510, 590, 610, 760],
+      label: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm"]
+    };
+  }
 };
 </script>
 

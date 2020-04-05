@@ -415,7 +415,7 @@ export default {
         this.$store.state.currentUser !== undefined &&
         !this.$store.state.currentUser.admin
       ) {
-        return "UserDashboard";
+        return "FormPage";
       } else return "Home";
     },
     checkLoginPressed(name) {
