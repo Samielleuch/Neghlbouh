@@ -54,7 +54,7 @@
 
 <script>
 import Mapbox from "mapbox-gl";
-//import gps from "@/services/GpsService";
+import gps from "@/services/GpsService";
 import sfax from "@/store/sfaxx.json";
 import {
   MglMap,
@@ -174,11 +174,15 @@ export default {
   mounted() {
     //every 10 second request the api !
     this.interval = setInterval(() => {
-      //  this.getJoke();
-      // gps.requestGPS();
-      // this.opacity[0].number += 10 ;
-      // this.opacity[1].number += 10 ;
-      // this.opacity[2].number += 10 ;
+      gps
+        .requestGPS()
+        .then(resp => {
+          this.opacity = resp;
+          console.log(resp);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }, 5000);
   }
 };
