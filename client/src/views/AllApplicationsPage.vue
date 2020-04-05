@@ -1,7 +1,6 @@
 <template
   ><div class="background">
     <div class="app page">
-<<<<<<< HEAD
       <v-row dense>
         <v-col v-for="(item, i) in applications" :key="i" cols="12">
           <v-card class="appcard">
@@ -52,11 +51,9 @@
           </v-card>
         </v-col>
       </v-row>
-=======
       <v-col v-for="(item, i) in applications" :key="i" cols="12">
         <v-card
-          class="app
-      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++card"
+          class="appcard"
         >
           <div class="d-flex flex-no-wrap">
             <div>
@@ -68,7 +65,6 @@
           </div>
         </v-card>
       </v-col>
->>>>>>> 90f38b0ef3c43a5134f8e6777edab9ff5b59d2c9
     </div>
   </div>
 </template>

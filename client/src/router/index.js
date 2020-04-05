@@ -54,11 +54,11 @@ const routes = [
     component: () => import("../views/LiveMap.vue")
   },
   {
-<<<<<<< HEAD
     path: "/FormPage",
     name: "FormPage",
     component: () => import("../views/FormPage.vue")
-=======
+  },
+  {
     path: "/Info",
     name: "Info",
     component: () =>
@@ -67,7 +67,6 @@ const routes = [
   {
     path: "/*",
     component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
->>>>>>> 90f38b0ef3c43a5134f8e6777edab9ff5b59d2c9
   }
 ];
 

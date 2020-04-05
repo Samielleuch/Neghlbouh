@@ -23,12 +23,12 @@ export default {
   data() {
     return {
       user: {
-        cin: "125665223",
-        name: "اميرة دريدي",
-        adress: "بنزرت ",
-        phone: "21053262",
-        email: "kdldj@djkd.com",
-        mdp: "sghj"
+        cin: "022",
+        name: "مهدي",
+        adress: "بن عروس ",
+        phone: "28034483",
+        email: "mehdi@yahoo.com",
+        mdp: "root"
       }
     };
   },
