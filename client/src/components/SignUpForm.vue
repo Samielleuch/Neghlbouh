@@ -226,8 +226,8 @@ export default {
   props: {
     isModal: {
       Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
@@ -236,26 +236,26 @@ export default {
       password: "",
       CIN: "",
       cinRules: [
-        (v) => !!v || "رقم بطاقة التعريف مطلوب",
-        (v) => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        (v) => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام",
+        v => !!v || "رقم بطاقة التعريف مطلوب",
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        v => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام"
       ],
       name: "",
       nameRules: [
-        (v) => !!v || "الاسم مطلوب",
-        (v) => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف",
+        v => !!v || "الاسم مطلوب",
+        v => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف"
       ],
       city: "",
       phone: "",
       phoneRules: [
-        (v) => !!v || "رقم الهاتف مطلوب",
-        (v) => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        (v) => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام",
+        v => !!v || "رقم الهاتف مطلوب",
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
       ],
       email: "",
       emailRules: [
-        (v) => !!v || "البريد الالكتروني مطلوب",
-        (v) => /.+@.+\..+/.test(v) || "يجب ان يكون البريد الاكتروني صحيح",
+        v => !!v || "البريد الالكتروني مطلوب",
+        v => /.+@.+\..+/.test(v) || "يجب ان يكون البريد الاكتروني صحيح"
       ],
       valid: false,
       show1: false,
@@ -283,7 +283,7 @@ export default {
         "المنستير",
         "منوبة",
         "المهدية",
-        "نابل",
+        "نابل"
       ],
       areas: [
         "	ساقية الزيت",
@@ -306,15 +306,15 @@ export default {
         "الحاجب",
         "حزق - اللوزة",
         "الأعشاش",
-        "النصر",
-      ],
+        "النصر"
+      ]
     };
   },
   computed: {
     ...mapState(["langPack"]),
     text() {
       return this.langPack.Sign_Up;
-    },
+    }
   },
   methods: {
     ...mapActions(["pressLogin"]),
@@ -329,7 +329,7 @@ export default {
             email: this.email,
             city: this.city,
             phone: this.phone,
-            password: this.password,
+            password: this.password
           });
           this.loading = false;
           console.log(resp);
@@ -342,8 +342,8 @@ export default {
         //to implement notification v-if here
         console.log("validation failed");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -351,7 +351,6 @@ export default {
 .form {
   /* This form has been down-scaled and the z-index is made 1
    with position relative so it doesn't collide with the nav bar */
-
   position: relative;
   z-index: 1 !important;
 }

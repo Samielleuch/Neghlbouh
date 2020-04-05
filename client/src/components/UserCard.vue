@@ -2,7 +2,7 @@
   <v-hover v-slot:default="{ hover }" open-delay="200">
     <v-card
       class="mx-auto cardcc"
-      max-width="520"
+      max-width="380"
       dir="rtl"
       :elevation="hover ? 16 : 2"
     >
@@ -81,8 +81,8 @@ export default {
 <style scoped>
 .cardcc {
   height: 270px;
-  padding-right: 20px;
   padding-left: 20px;
+  margin-top: 20px;
 }
 .font {
   margin-top: 20px;
@@ -100,6 +100,6 @@ h5 {
   background-color: #afa8a8;
   margin-top: 8px;
   margin-right: 75px;
-  width: 300px;
+  width: 250px;
 }
 </style>
