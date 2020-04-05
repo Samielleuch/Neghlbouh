@@ -8,6 +8,9 @@ const AreaSchema = mongoose.Schema({
     countPeople:{
         type:Number,
         default:0
+    },
+    coor :{
+        type : Array,
     }
 });
 

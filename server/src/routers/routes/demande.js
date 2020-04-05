@@ -153,7 +153,7 @@ router.route('/:demandId')
   .delete(authenticate.verifyOrdinaryUser, (req, res, next) => {
     Demande.remove({
       '_id': req.params.demandId,
-      'cin': req.user.cin
+      //'cin': req.user.cin
     })
       .then((resp) => {
         res.statusCode = 200;
