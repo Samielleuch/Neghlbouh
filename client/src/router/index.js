@@ -55,6 +55,11 @@ const routes = [
     path: "/LiveMap",
     name: "LiveMap",
     component: () => import("../views/LiveMap.vue")
+  },
+  {
+    path: "/FormPage",
+    name: "FormPage",
+    component: () => import("../views/FormPage.vue")
   }
 ];
 

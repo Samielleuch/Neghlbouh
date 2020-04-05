@@ -32,7 +32,7 @@ export default {
     makeAccount: "إبدء حساب جديد الآن "
   },
   HomePageBanner: {
-    title1: "الApplication الي تنجم تعاونك بش تخرج وقتلي تحب ",
+    title1: "الapplication اللي تنظّملك خروجك و تبعّدك على الزحمة ",
     title2: "شوف الخريطة و عمر الفرمولار توا",
     btn1: "شوف الخريطة",
     btn2: "عمّر طلب خروج"
