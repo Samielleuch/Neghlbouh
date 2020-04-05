@@ -1,17 +1,18 @@
 <template>
   <div class="background">
-    <div class="row edit" dir="rtl">
-      <div class="col-xl-6 col-lg-5 col-md-4">
+    <v-row>
+      <v-col class="col-md-4">
         <UserCard :user="user"> </UserCard>
-      </div>
-      <div class="col-xl-7 col-lg-7 col-md-8">
+      </v-col>
+      <v-col class="col-md-8">
         <MapInfoCard> </MapInfoCard>
-      </div>
-      <div class="w-100"></div>
-      <div class="col-xl-12 col-lg-12 col-md-12 row">
+      </v-col>
+    </v-row>
+    <v-row>
+      <div class="col-md-12">
         <ApplicationCard> </ApplicationCard>
       </div>
-    </div>
+    </v-row>
   </div>
 </template>
 <script>
@@ -40,10 +41,8 @@ export default {
 };
 </script>
 <style>
-.edit {
-  margin-top: fill;
-}
 .background {
   background-color: #e5dddd;
+  height: 100%;
 }
 </style>
