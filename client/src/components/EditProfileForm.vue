@@ -13,16 +13,16 @@
             <div class="col-md-6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
-                color="red"
+                color="#d41b45"
                 v-model="user.name"
-                :rules="rules"
+                :rules="nameRules"
                 placeholder="الإسم و اللقب"
               ></v-text-field>
             </div>
             <div class="col-md-6">
               <v-label><h3>بطاقة التعريف الوطنية</h3></v-label>
               <v-text-field
-                color="red"
+                color="#d41b45"
                 v-model="user.cin"
                 placeholder="بطاقة التعريف الوطنية"
                 :rules="rules"
@@ -31,32 +31,33 @@
           </div>
           <div class="row">
             <div class="col-md-6">
+              <v-label><h3>مكان السكن</h3></v-label>
+              <v-select :items="cities" required></v-select>
+            </div>
+            <div class="col-md-6">
+              <v-label><h3>المنطقة</h3></v-label>
+              <v-select :items="items" required></v-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <v-label><h3>البريد الالكتروني</h3></v-label>
+              <v-text-field
+                color="#d41b45"
+                v-model="user.email"
+                :rules="emailRules"
+                placeholder="البريد الالكتروني"
+              ></v-text-field>
+            </div>
+            <div class="col-md-6">
               <v-label><h3>رقم الهاتف</h3></v-label>
               <v-text-field
-                color="red"
+                color="#d41b45"
                 v-model="user.phone"
                 :rules="rules"
                 placeholder="رقم الهاتف"
               ></v-text-field>
             </div>
-            <div class="col-md-6">
-              <v-label><h3>مكان السكن</h3></v-label>
-              <v-text-field
-                color="red"
-                v-model="user.adress"
-                placeholder="مكان السكن"
-                :rules="rules"
-              ></v-text-field>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <v-label><h3>البريد الالكتروني</h3></v-label>
-            <v-text-field
-              color="red"
-              v-model="user.email"
-              :rules="rules"
-              placeholder="البريد الالكتروني"
-            ></v-text-field>
           </div>
           <v-btn
             class="title"
@@ -126,6 +127,65 @@ export default {
       mdp: "string"
     }
   },
+  data: () => ({
+    cities: [
+      "أريانة",
+      "باجة",
+      "بنزرت",
+      "بن عروس",
+      "تطاوين",
+      "توزر",
+      "تونس",
+      "جندوبة",
+      "زغوان",
+      "سليانة",
+      "سوسة",
+      "سيدي بوزيد",
+      "صفاقس",
+      "قابس",
+      "قبلي",
+      "القصرين",
+      "قفصة",
+      "القيروان",
+      "الكاف",
+      "مدنين",
+      "المنستير",
+      "منوبة",
+      "المهدية",
+      "نابل"
+    ],
+    items: [
+      "ساقية الزيت",
+      "ساقية الدائر",
+      "العين صفاقس",
+      "قرمدة",
+      "طينة",
+      "الشيحية",
+      "المحرس",
+      "قرقنة",
+      "الصخيرة",
+      "عقارب",
+      "الحنشة",
+      "جبنيانة",
+      "بئر علي صفاقس",
+      "الغريبة",
+      "العامرة",
+      "العوابد - الخزانات",
+      "الناظور",
+      "الحاجب",
+      "حزق",
+      "الأعشاش",
+      "النصر"
+    ],
+    nameRules: [
+      v => !!v || "Name is required",
+      v => (v && v.length <= 10) || "Name must be less than 10 characters"
+    ],
+    emailRules: [
+      v => !!v || "E-mail is required",
+      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+    ]
+  }),
   methods: {
     updatePass() {
       if (!this.isClicked) {

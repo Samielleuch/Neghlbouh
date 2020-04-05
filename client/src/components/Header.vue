@@ -522,4 +522,7 @@ export default {
   background-color: rgba(255, 255, 255, 1) !important;
   font-size: 18px !important;
 }
+.login-btn{
+  cursor: pointer;
+}
 </style>
