@@ -38,17 +38,17 @@
     <v-row class="mr-12 ml-12">
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-5"> moin de 20 personne</v-sheet>
+          <v-sheet color="red lighten-5"> اقل 20 مواطن </v-sheet>
         </div>
       </v-col>
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-4"> entre 20 et 50 personne</v-sheet>
+          <v-sheet color="red lighten-4"> بين 20 و 50 مواطن </v-sheet>
         </div>
       </v-col>
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-2"> +50 personne</v-sheet>
+          <v-sheet color="red lighten-2"> اكثر من 50 </v-sheet>
         </div>
       </v-col>
     </v-row>
@@ -98,26 +98,26 @@ export default {
       ],
       Zones: sfax.Zones,
       opacity: [
-        { name: "ساقية الزيت", number: 0 },
-        { name: "ساقية الدائر", number: 0 },
+        { name: "ساقية الزيت", number: 50 },
+        { name: "ساقية الدائر", number: 16 },
         { name: "العين صفاقس", number: 0 },
-        { name: "قرمدة", number: 0 },
+        { name: "قرمدة", number: 30 },
         { name: "طينة", number: 0 },
-        { name: "الشيحية", number: 0 },
-        { name: "المحرس", number: 0 },
-        { name: "قرقنة", number: 0 },
-        { name: "الصخيرة", number: 0 },
+        { name: "الشيحية", number: 50 },
+        { name: "المحرس", number: 16 },
+        { name: "قرقنة", number: 20 },
+        { name: "الصخيرة", number: 20 },
         { name: "عقارب", number: 0 },
-        { name: "الحنشة", number: 0 },
+        { name: "الحنشة", number: 16 },
         { name: "جبنيانة", number: 0 },
         { name: "بئر علي صفاقس", number: 0 },
         { name: "الغريبة", number: 0 },
-        { name: "العامرة", number: 0 },
+        { name: "العامرة", number: 16 },
         { name: "العوابد - الخزانات", number: 0 },
         { name: "الناظور", number: 0 },
-        { name: "الحاجب", number: 0 },
+        { name: "الحاجب", number: 16 },
         { name: "حزق", number: 0 },
-        { name: "الأعشاش", number: 0 },
+        { name: "الأعشاش", number: 9 },
         { name: "النصر", number: 0 }
       ]
     };
@@ -187,7 +187,6 @@ export default {
       //   })
       //   .catch(err => {
       //     console.log(err);
-
       //   });
       this.numb++;
       if (this.numb > 7) {
