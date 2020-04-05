@@ -25,22 +25,36 @@
               :sourceId="getGeoJsonSource(index, city.cord).data.id"
               :source="getGeoJsonSource(index, city.cord)"
               :layerId="index.toString()"
-              :layer="getGeoJsonLayer(0.6)"
+              :layer="getGeoJsonLayer(opacity[index].number)"
             >
             </MglGeojsonLayer>
           </MglMap>
         </div>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12">
-        <div></div>
+    <v-row class="mr-12 ml-12">
+      <v-col cols="4">
+        <div class="text-center">
+          <v-sheet color="red lighten-5"> moin de 20 personne </v-sheet>
+        </div>
       </v-col>
-    </v-row></div
-></template>
+      <v-col cols="4">
+        <div class="text-center">
+          <v-sheet color="red lighten-4"> entre 20 et 50 personne</v-sheet>
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="text-center">
+          <v-sheet color="red lighten-2"> +50 personne</v-sheet>
+        </div>
+      </v-col>
+    </v-row>
+  </div></template
+>
 
 <script>
 import Mapbox from "mapbox-gl";
+//import gps from "@/services/GpsService";
 import sfax from "@/store/sfaxx.json";
 import {
   MglMap,
@@ -50,7 +64,6 @@ import {
   MglGeolocateControl,
   MglScaleControl
 } from "vue-mapbox";
-
 export default {
   name: "LiveMap",
   components: {
@@ -59,7 +72,7 @@ export default {
     MglGeojsonLayer,
     MglNavigationControl,
     MglGeolocateControl,
-    MglScaleControl,
+    MglScaleControl
   },
   data() {
     return {
@@ -76,7 +89,30 @@ export default {
         [6.5, 28.8869],
         [12.5375, 38.1]
       ],
-      Zones: sfax.Zones
+      Zones: sfax.Zones,
+      opacity: [
+        { name: "ساقية الزيت", number: 0 },
+        { name: "ساقية الدائر", number: 0 },
+        { name: "العين صفاقس", number: 0 },
+        { name: "قرمدة", number: 0 },
+        { name: "طينة", number: 0 },
+        { name: "الشيحية", number: 0 },
+        { name: "المحرس", number: 0 },
+        { name: "قرقنة", number: 0 },
+        { name: "الصخيرة", number: 0 },
+        { name: "عقارب", number: 0 },
+        { name: "الحنشة", number: 0 },
+        { name: "جبنيانة", number: 0 },
+        { name: "بئر علي صفاقس", number: 0 },
+        { name: "الغريبة", number: 0 },
+        { name: "العامرة", number: 0 },
+        { name: "العوابد - الخزانات", number: 0 },
+        { name: "الناظور", number: 0 },
+        { name: "الحاجب", number: 0 },
+        { name: "حزق", number: 0 },
+        { name: "الأعشاش", number: 0 },
+        { name: "النصر", number: 0 }
+      ]
     };
   },
   methods: {
@@ -102,7 +138,15 @@ export default {
         }
       };
     },
-    getGeoJsonLayer(opacity) {
+    getGeoJsonLayer(nb) {
+      let opacity = 0;
+      if (nb < 15) {
+        opacity = 0.1;
+      } else if (nb < 30) {
+        opacity = 0.3;
+      } else {
+        opacity = 0.5;
+      }
       return {
         type: "circle",
         paint: {
@@ -126,6 +170,16 @@ export default {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
     console.log(this.getGeoJsonSource(0, this.Zones[0].cord));
+  },
+  mounted() {
+    //every 10 second request the api !
+    this.interval = setInterval(() => {
+      //  this.getJoke();
+      // gps.requestGPS();
+      // this.opacity[0].number += 10 ;
+      // this.opacity[1].number += 10 ;
+      // this.opacity[2].number += 10 ;
+    }, 5000);
   }
 };
 </script>
