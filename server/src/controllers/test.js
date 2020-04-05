@@ -1,6 +1,6 @@
 module.exports = {
   test(req, res) {
-   res.send('hello world');
-   console.log(new Date().getHours());
+   console.log(req.params.text);
+   res.send({msg:"cbn"})
 }
 };
