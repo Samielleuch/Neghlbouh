@@ -16,7 +16,8 @@ export default new Vuex.Store({
     language: "ar",
     langPack: arPack,
     currentUser: undefined,
-    token: ""
+    token: "",
+    currentDemandeId: ""
   },
   mutations: {
     changeLoginPressedState: (state, payload) => {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     setUser: (state, { token, user }) => {
       state.currentUser = user;
       state.token = token;
+    },
+    addDemandeid: (state, { _id }) => {
+      state.currentDemandeId = _id;
     }
   },
   actions: {
@@ -33,6 +37,9 @@ export default new Vuex.Store({
     },
     loginUser: ({ commit }, payload) => {
       commit("setUser", payload);
+    },
+    addDemande: ({ commit }, payload) => {
+      commit("addDemandeid", payload);
     }
   },
   modules: {}

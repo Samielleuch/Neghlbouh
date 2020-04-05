@@ -13,9 +13,9 @@
       </v-col>
     </v-row>
     <v-row class=" mt-0 text-center">
-      <v-col cols=" 12 " md="4" class="mt-0 pt-0 ">
+      <v-col class="mt-0 pt-0 " cols=" 12 " md="4">
         <div class="step1">
-          <v-img src="@/assets/step1.png" max-height="100" contain class="pt-0">
+          <v-img class="pt-0" contain max-height="100" src="@/assets/step1.png">
           </v-img>
           <h1>
             {{ Steps.step1.Title }}
@@ -25,9 +25,9 @@
           </h3>
         </div>
       </v-col>
-      <v-col cols=" 12 " md="4" class="mt-0 pt-0">
+      <v-col class="mt-0 pt-0" cols=" 12 " md="4">
         <div class="step2">
-          <v-img src="@/assets/step2.png" max-height="100" contain class="pt-0">
+          <v-img class="pt-0" contain max-height="100" src="@/assets/step2.png">
           </v-img>
           <h1>
             {{ Steps.step2.Title }}
@@ -37,9 +37,9 @@
           </h3>
         </div>
       </v-col>
-      <v-col cols=" 12 " md="4" class="mt-0 pt-0">
+      <v-col class="mt-0 pt-0" cols=" 12 " md="4">
         <div class="step3">
-          <v-img src="@/assets/step3.png" max-height="100" contain class="pt-0">
+          <v-img class="pt-0" contain max-height="100" src="@/assets/step3.png">
           </v-img>
           <h1>
             {{ Steps.step3.Title }}
@@ -55,6 +55,7 @@
 <script>
 // @ is an alias to /src
 import HomePageBanner from "@/components/HomePageBanner";
+
 export default {
   name: "Home",
   components: {
@@ -71,24 +72,29 @@ export default {
 .stepsHeader {
   font-family: Cairo;
 }
+
 .step1 {
   font-family: Cairo;
 
   margin-right: 50%;
 }
+
 .step2 {
   font-family: Cairo;
 }
+
 .step3 {
   font-family: Cairo;
 
   margin-left: 50%;
 }
+
 @media only screen and (max-width: 958px) {
   .step1 {
     margin-right: 0%;
     margin-bottom: 20px;
   }
+
   .step3 {
     font-family: Cairo;
     margin-left: 0%;

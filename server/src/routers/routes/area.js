@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const AreaController = require('../../controllers/areas')
-const mongoose = require('mongoose')
-
+const AreaController = require("../../controllers/areas");
+const mongoose = require("mongoose");
 
 //add "area" to database
 router.post("/add", (req, res) => {
@@ -10,7 +9,7 @@ router.post("/add", (req, res) => {
 });
 
 //get number of people in each zone
-router.get("/number", (req,res) => {
-    AreaController.getAreasWithCount(req,res)
-})
+router.get("/number", (req, res) => {
+  AreaController.getAreasWithCount(req, res);
+});
 module.exports = router;

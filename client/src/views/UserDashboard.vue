@@ -1,5 +1,6 @@
 <template>
   <div class="background">
+
     <v-row>
       <v-col class="col-md-4">
         <UserCard :user="user"> </UserCard>
@@ -19,25 +20,20 @@
 import MapInfoCard from "../components/MapInfoCard.vue";
 import UserCard from "../components/UserCard.vue";
 import ApplicationCard from "../components/ApplicationCard";
+
 export default {
   name: "UserDashboard",
   data() {
     return {
-      user: {
-        cin: "022",
-        name: "مهدي",
-        adress: "بن عروس ",
-        phone: "28034483",
-        email: "mehdi@yahoo.com",
-        mdp: "root"
-      }
+      user: this.$store.state.currentUser
     };
   },
   components: {
     ApplicationCard,
     MapInfoCard,
     UserCard
-  }
+  },
+  created() {}
 };
 </script>
 <style>

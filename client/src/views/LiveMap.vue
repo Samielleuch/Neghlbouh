@@ -2,30 +2,33 @@
   <div>
     <v-row justify="center">
       <v-col cols="9">
-        <div id="map" class="mapboxgl-map">
+        <div class="mapboxgl-map" id="map">
           <MglMap
-            container="map"
-            :center.sync="center"
             :accessToken="accessToken"
+            :center.sync="center"
             :mapStyle.sync="mapStyle"
-            :zoom="zoom"
-            :minZoom="minZoom"
             :maxBounds="maxBounds"
+            :minZoom="minZoom"
+            :zoom="zoom"
+            container="map"
           >
             <MglGeolocateControl position="top-right" />
             <MglNavigationControl position="top-right" />
             <MglGeolocateControl position="top-right" />
             <MglScaleControl />
-            <MglMarker :coordinates.sync="myCoordinate" color="red">
-            </MglMarker>
-
+            <MglMarker
+              v-if="visible"
+              :coordinates="myCoordinate"
+              color="red"
+              :key="mykey"
+            />
             <MglGeojsonLayer
-              v-for="(city, index) in Zones"
               :key="index + 30"
-              :sourceId="getGeoJsonSource(index, city.cord).data.id"
-              :source="getGeoJsonSource(index, city.cord)"
-              :layerId="index.toString()"
               :layer="getGeoJsonLayer(opacity[index].number)"
+              :layerId="index.toString()"
+              :source="getGeoJsonSource(index, city.cord)"
+              :sourceId="getGeoJsonSource(index, city.cord).data.id"
+              v-for="(city, index) in Zones"
             >
             </MglGeojsonLayer>
           </MglMap>
@@ -35,7 +38,7 @@
     <v-row class="mr-12 ml-12">
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-5"> moin de 20 personne </v-sheet>
+          <v-sheet color="red lighten-5"> moin de 20 personne</v-sheet>
         </div>
       </v-col>
       <v-col cols="4">
@@ -49,12 +52,12 @@
         </div>
       </v-col>
     </v-row>
-  </div></template
->
+  </div>
+</template>
 
 <script>
 import Mapbox from "mapbox-gl";
-import gps from "@/services/GpsService";
+//import gps from "@/services/GpsService";
 import sfax from "@/store/sfaxx.json";
 import {
   MglMap,
@@ -64,6 +67,7 @@ import {
   MglGeolocateControl,
   MglScaleControl
 } from "vue-mapbox";
+
 export default {
   name: "LiveMap",
   components: {
@@ -77,7 +81,10 @@ export default {
   data() {
     return {
       geoJson: "",
-      myCoordinate: [10.4, 35.8],
+      visible: false,
+      mykey: "100",
+      numb: "0",
+      myCoordinate: [10.5449929, 34.7267589],
       accessToken:
         "pk.eyJ1Ijoic2FtaWVsbGV1Y2giLCJhIjoiY2s4ZmYxanp5MDA5MDNmcWowY3FuZm1tbSJ9.neFuBaRgOGr8khOj2FGweA",
       mapStyle: "mapbox://styles/mapbox/light-v10",
@@ -169,21 +176,27 @@ export default {
   created() {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
-    console.log(this.getGeoJsonSource(0, this.Zones[0].cord));
   },
   mounted() {
     //every 10 second request the api !
     this.interval = setInterval(() => {
-      gps
-        .requestGPS()
-        .then(resp => {
-          this.opacity = resp;
-          console.log(resp);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }, 5000);
+      // gps
+      //   .requestGPS()
+      //   .then(resp => {
+      //     this.opacity = resp.data.status;
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+
+      //   });
+      this.numb++;
+      if (this.numb > 7) {
+        this.visible = true;
+        this.mykey++;
+        this.myCoordinate[0] += 0.0000021;
+        this.myCoordinate[1] += 0.0000031;
+      }
+    }, 1000);
   }
 };
 </script>

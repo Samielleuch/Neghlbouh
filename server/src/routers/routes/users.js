@@ -16,24 +16,23 @@ const ResetPassword = require("../../models/resetPassword");
 
 router.use(bodyParser.json());
 
-router.post('/signup', (req, res, next) => {
-
-  User.register(new User({
-    cin: req.body.cin,
-    name: req.body.name,
-    email: req.body.email,
-    city: req.body.city,
-    phone: req.body.phone,
-  }),
-    req.body.password, (err, user) => {
-
+router.post("/signup", (req, res, next) => {
+  User.register(
+    new User({
+      cin: req.body.cin,
+      name: req.body.name,
+      email: req.body.email,
+      city: req.body.city,
+      phone: req.body.phone
+    }),
+    req.body.password,
+    (err, user) => {
       if (err) {
         res.statusCode = 401;
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader("Content-Type", "application/json");
         res.json({ err: err });
-      }
-      else {
-        passport.authenticate('local')(req, res, () => {
+      } else {
+        passport.authenticate("local")(req, res, () => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           res.json({ success: true, status: "Registration Successful!" });
@@ -195,13 +194,13 @@ router.post("/reset-password", (req, res, next) => {
                   });
 
                   /*{
-                  service: config.emailService,
-                  auth: {
-                    user: config.emailUser,
-                    pass: config.emailPassword
-                  },
-                  tls: { rejectUnauthorized: false }
-                });*/
+                                    service: config.emailService,
+                                    auth: {
+                                      user: config.emailUser,
+                                      pass: config.emailPassword
+                                    },
+                                    tls: { rejectUnauthorized: false }
+                                  });*/
 
                   ResetPassword.create({
                     userId: user._id,

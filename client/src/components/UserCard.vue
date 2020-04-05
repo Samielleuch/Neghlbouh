@@ -1,14 +1,14 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover open-delay="200" v-slot:default="{ hover }">
     <v-card
-      class="mx-auto cardcc"
-      max-width="380"
-      dir="rtl"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardcc"
+      max-width="520"
+      dir="rtl"
     >
       <div align="center" style="margin-top: 2px">
         <v-avatar size="65">
-          <img src="../assets/user.png" alt="" />
+          <img alt="" src="../assets/user.png" />
         </v-avatar>
       </div>
       <div class="text--primary ">
@@ -24,7 +24,7 @@
         <div class="row d">
           <h5>مكان السكن :</h5>
 
-          <h5>{{ user.adress }}</h5>
+          <h5>{{ user.city }}</h5>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
@@ -50,10 +50,10 @@
       <div class="text-center">
         <v-btn
           class="font title"
-          dark
-          rounded
           color="#d41b45"
+          dark
           height="30"
+          rounded
           to="/EditProfilePage"
         >
           تعديل حسابي
@@ -84,10 +84,12 @@ export default {
   padding-left: 20px;
   margin-top: 20px;
 }
+
 .font {
   margin-top: 20px;
   font-family: Cairo;
 }
+
 h5 {
   font-family: Cairo;
   margin-top: 2px;
@@ -96,6 +98,7 @@ h5 {
 .d {
   margin-right: 85px;
 }
+
 .divider {
   background-color: #afa8a8;
   margin-top: 8px;
