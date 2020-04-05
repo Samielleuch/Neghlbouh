@@ -1,7 +1,7 @@
 <template
   ><div class="background">
     <div class="app page">
-      <v-row dense>
+      <v-row dense class="col-md-12">
         <v-col v-for="(item, i) in applications" :key="i" cols="12">
           <v-card class="appcard">
             <div class="d-flex flex-no-wrap">
@@ -89,6 +89,7 @@ export default {
 }
 .background {
   background-color: #e5dddd;
+  height: 100%;
 }
 .page {
   margin-top: 17px;
