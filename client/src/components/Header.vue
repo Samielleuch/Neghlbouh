@@ -1,6 +1,6 @@
 <template>
   <!-- the z-index of the nav bar is set to 10 so that it doesn't 
-  collide with the form in the sign up page ( this form has been adjusted with transform) -->
+    collide with the form in the sign up page ( this form has been adjusted with transform) -->
   <div
     dir="rtl"
     style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"
@@ -12,22 +12,22 @@
       ></v-app-bar-nav-icon>
       <v-spacer class="d-flex d-md-none"></v-spacer>
       <v-img
-        style="margin-left: 20px"
         alt="Neghlbouh"
         class="shrink mr-1"
         contain
         src="../assets/logo.png"
+        style="margin-left: 20px"
         transition="scale-transition"
         width="150"
       />
       <v-toolbar-title class="d-none d-md-flex">
         <!--  User Dashboard --->
         <v-hover
-          v-slot:default="{ hover }"
           v-if="
             this.$store.state.currentUser !== undefined &&
               !this.$store.state.currentUser.admin
           "
+          v-slot:default="{ hover }"
         >
           <span
             :class="
@@ -35,9 +35,9 @@
                 ? 'Navbar animation cool-link mr-0 '
                 : 'Navbar  cool-link mr-0 '
             "
-            v-ripple="false"
-            elevation="0"
             @click="$router.replace({ name: 'UserDashboard' })"
+            elevation="0"
+            v-ripple="false"
           >
             <v-icon :color="hover ? '#A93226 ' : 'black'">{{
               userDashboardButton.icon
@@ -48,19 +48,19 @@
         <!-- -->
         <!--  Admin Dashboard --->
         <v-hover
-          v-slot:default="{ hover }"
           v-if="
             this.$store.state.currentUser !== undefined &&
               this.$store.state.currentUser.admin
           "
+          v-slot:default="{ hover }"
         >
           <span
             :class="
               hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
             "
-            v-ripple="false"
-            elevation="0"
             @click="$router.replace({ name: 'AdminDashboard' })"
+            elevation="0"
+            v-ripple="false"
           >
             <v-icon :color="hover ? '#A93226 ' : 'black'">{{
               adminDashboardButton.icon
@@ -71,12 +71,11 @@
         <!-- -->
         <!-- Menu Items -->
         <v-hover
-          v-slot:default="{ hover }"
-          v-for="(item, index) in HeaderMenu"
           :key="index"
+          v-for="(item, index) in HeaderMenu"
+          v-slot:default="{ hover }"
         >
           <router-link
-            :to="{ name: item.link }"
             :class="
               activeClass(
                 hover,
@@ -86,16 +85,17 @@
                 'Navbar  cool-link '
               )
             "
-            v-ripple="false"
+            :to="{ name: item.link }"
             depressed
             elevation="0"
+            v-ripple="false"
           >
             <v-icon
               :color="
                 activeClass(hover, item.link, item.name, '#A93226  ', 'black')
               "
-              >{{ item.icon }}</v-icon
-            >
+              >{{ item.icon }}
+            </v-icon>
             <span class="mr-2">
               {{ item.name }}
             </span>
@@ -104,8 +104,8 @@
         <!-- -->
         <!--  Sign UP--->
         <v-hover
-          v-slot:default="{ hover }"
           v-if="this.$store.state.currentUser === undefined"
+          v-slot:default="{ hover }"
         >
           <span
             :class="
@@ -117,10 +117,10 @@
                 'Navbar  cool-link '
               )
             "
-            v-ripple="false"
+            @click="checkSignUpPressed"
             depressed
             elevation="0"
-            @click="checkSignUpPressed"
+            v-ripple="false"
           >
             <v-icon
               :color="
@@ -140,8 +140,8 @@
         <!-- -->
         <!--  Sign In --->
         <v-hover
-          v-slot:default="{ hover }"
           v-if="this.$store.state.currentUser === undefined"
+          v-slot:default="{ hover }"
         >
           <span
             :class="
@@ -153,10 +153,10 @@
                 'Navbar  cool-link '
               )
             "
-            v-ripple="false"
+            @click="checkLoginPressed(loginButton.name)"
             depressed
             elevation="0"
-            @click="checkLoginPressed(loginButton.name)"
+            v-ripple="false"
           >
             <v-icon
               :color="
@@ -176,16 +176,16 @@
         <!-- -->
         <!--  Log Out Button  --->
         <v-hover
-          v-slot:default="{ hover }"
           v-if="this.$store.state.currentUser !== undefined"
+          v-slot:default="{ hover }"
         >
           <span
             :class="
               hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
             "
-            v-ripple="false"
-            elevation="0"
             @click="logOut"
+            elevation="0"
+            v-ripple="false"
           >
             <v-icon :color="hover ? '#A93226 ' : 'black'">{{
               logOutButton.icon
@@ -197,8 +197,8 @@
       </v-toolbar-title>
     </v-app-bar>
     <!-- Responsive Menu here !! -->
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav dense>
+    <v-navigation-drawer absolute temporary v-model="drawer">
+      <v-list dense nav>
         <v-list-item-group>
           <!-- userDash Button -->
           <v-list-item
@@ -209,14 +209,14 @@
             "
           >
             <v-list-item-title
-              class="hamburgerMenu "
               @click="$router.replace({ name: 'UserDashboard' })"
+              class="hamburgerMenu "
             >
               <span
                 class="Navbar  cool-link listItem   "
-                v-ripple="false"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ userDashboardButton.icon }}</v-icon>
                 <span class="mr-1">{{ userDashboardButton.name }} </span>
@@ -233,14 +233,14 @@
             "
           >
             <v-list-item-title
-              class="hamburgerMenu "
               @click="$router.replace({ name: 'AdminDashboard' })"
+              class="hamburgerMenu "
             >
               <span
                 class="Navbar  cool-link listItem   "
-                v-ripple="false"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ adminDashboardButton.icon }}</v-icon>
                 <span class="mr-1">{{ adminDashboardButton.name }} </span>
@@ -249,14 +249,13 @@
           </v-list-item>
           <!-- -->
           <v-list-item
-            v-for="(item, index) in HeaderMenu"
             :key="index"
             :to="{ name: item.link }"
             class="text-justify "
+            v-for="(item, index) in HeaderMenu"
           >
             <v-list-item-title class="hamburgerMenu listItem">
               <router-link
-                :to="{ name: item.link }"
                 :class="
                   activeClass(
                     false,
@@ -266,9 +265,10 @@
                     'Navbar  cool-link listItem '
                   )
                 "
-                v-ripple="false"
+                :to="{ name: item.link }"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ item.icon }}</v-icon>
                 <span class="mr-3">{{ item.name }}</span>
@@ -281,15 +281,15 @@
             v-if="this.$store.state.currentUser === undefined"
           >
             <v-list-item-title
-              class="hamburgerMenu "
               @click="checkSignUpPressed()"
+              class="hamburgerMenu "
             >
               <span
+                @click="checkLoginPressed(signupButton.name)"
                 class="Navbar  cool-link listItem   "
-                v-ripple="false"
                 depressed
                 elevation="0"
-                @click="checkLoginPressed(signupButton.name)"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ signupButton.icon }}</v-icon>
                 <span>{{ signupButton.name }} </span>
@@ -303,14 +303,14 @@
             v-if="this.$store.state.currentUser === undefined"
           >
             <v-list-item-title
-              class="hamburgerMenu "
               @click="checkLoginPressed(loginButton.name)"
+              class="hamburgerMenu "
             >
               <span
                 class="Navbar  cool-link listItem   "
-                v-ripple="false"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ loginButton.icon }}</v-icon>
                 <span>{{ loginButton.name }} </span>
@@ -323,12 +323,12 @@
             class="text-justify "
             v-if="this.$store.state.currentUser !== undefined"
           >
-            <v-list-item-title class="hamburgerMenu " @click="logOut">
+            <v-list-item-title @click="logOut" class="hamburgerMenu ">
               <span
                 class="Navbar  cool-link listItem   "
-                v-ripple="false"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ logOutButton.icon }}</v-icon>
                 <span>{{ logOutButton.name }} </span>
@@ -344,6 +344,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+
 export default {
   name: "Header",
   data() {
@@ -496,9 +497,11 @@ export default {
   width: 100%;
   transition: width 0.3s;
 }
+
 .animation {
   color: #d41b45;
 }
+
 .animation::after {
   border-radius: 100%;
   content: "";
@@ -510,19 +513,22 @@ export default {
   background: #d41b45;
   transition: width 0.3s;
 }
+
 .hamburgerMenu {
   font-size: 20px !important;
   font-family: Cairo;
 
   text-align: center !important;
 }
+
 .listItem {
   font-family: Cairo;
 
   background-color: rgba(255, 255, 255, 1) !important;
   font-size: 18px !important;
 }
-.login-btn{
+
+.login-btn {
   cursor: pointer;
 }
 </style>

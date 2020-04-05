@@ -1,15 +1,15 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover open-delay="200" v-slot:default="{ hover }">
     <v-card
-      style="height: 270px"
-      dir="rtl"
-      class="mx-auto cardc"
-      max-width="700"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardc"
+      dir="rtl"
+      max-width="700"
+      style="height: 270px"
     >
       <div align="center">
-        <v-avatar size="80" class="avatar">
-          <img src="../assets/infomap.png" alt="" />
+        <v-avatar class="avatar" size="80">
+          <img alt="" src="../assets/infomap.png" />
         </v-avatar>
       </div>
     </v-card>

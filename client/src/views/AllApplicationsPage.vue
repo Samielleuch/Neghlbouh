@@ -1,8 +1,8 @@
-<template
-  ><div class="background">
+<template>
+  <div class="background">
     <div class="app page">
       <v-row dense>
-        <v-col v-for="(item, i) in applications" :key="i" cols="12">
+        <v-col :key="i" cols="12" v-for="(item, i) in applications">
           <v-card class="appcard">
             <div class="d-flex flex-no-wrap">
               <div class="row">
@@ -11,47 +11,47 @@
                     سبب الخروج : {{ item.destination }}
                   </div>
                 </v-col>
-                <v-divider vertical inset></v-divider>
+                <v-divider inset vertical></v-divider>
                 <div class="app font" style="margin-top: 10px">
                   وقت العودة : {{ item.time }}
                 </div>
                 <v-divider
-                  vertical
                   inset
                   style="margin-right: 80px"
+                  vertical
                 ></v-divider>
                 <div class="app font" style="margin-top: 10px; width: 280px">
                   الوجهة : {{ item.state }}
                 </div>
                 <div class="app1 font">
                   <v-alert
-                    v-if="item.state == 'Supermodel'"
                     dense
                     text
-                    width="170px"
                     type="success"
+                    v-if="item.state == 'Supermodel'"
+                    width="170px"
                   >
-                    الخطر :{{ item.score }}</v-alert
-                  >
+                    الخطر :{{ item.score }}
+                  </v-alert>
                   <v-alert
-                    v-else-if="item.state == 'Super'"
                     dense
                     text
-                    width="170px"
                     type="warning"
+                    v-else-if="item.state == 'Super'"
+                    width="170px"
                   >
-                    الخطر :{{ item.score }}</v-alert
-                  >
-                  <v-alert v-else dense outlined type="error" width="170px">
-                    الخطر :{{ item.score }}</v-alert
-                  >
+                    الخطر :{{ item.score }}
+                  </v-alert>
+                  <v-alert dense outlined type="error" v-else width="170px">
+                    الخطر :{{ item.score }}
+                  </v-alert>
                 </div>
               </div>
             </div>
           </v-card>
         </v-col>
       </v-row>
-      <v-col v-for="(item, i) in applications" :key="i" cols="12">
+      <v-col :key="i" cols="12" v-for="(item, i) in applications">
         <v-card
           class="app
       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++card"
@@ -102,18 +102,23 @@ export default {
   width: 1000px;
   margin-bottom: 30px;
 }
+
 .background {
   background-color: #e5dddd;
 }
+
 .page {
   margin-top: 17px;
 }
+
 .app {
   padding-right: 15px;
 }
+
 .app1 {
   margin-right: 30px;
 }
+
 .font {
   font-family: Cairo;
 }

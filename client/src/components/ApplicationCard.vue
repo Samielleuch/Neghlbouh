@@ -1,21 +1,27 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover open-delay="200" v-slot:default="{ hover }">
     <v-card
-      dir="rtl"
-      class="mx-auto cardc"
-      width="1300"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardc"
+      dir="rtl"
+      width="1300"
     >
       <div align="center">
-        <v-avatar size="50" class="avatar">
-          <img src="../assets/appcard.png" alt="" />
+        <v-avatar class="avatar" size="50">
+          <img alt="" src="../assets/appcard.png" />
         </v-avatar>
         <h4>خرجاتي</h4>
       </div>
       <div v-if="applications.length == 0">you don't have any request</div>
       <div v-else>
-        <v-row dense>
-          <v-col v-for="(item, i) in applications" :key="i" cols="12">
+        <v-row dense justify="center" align="center">
+          <v-col
+            :key="i"
+            cols="12"
+            v-for="(item, i) in applications"
+            justify="center"
+            align="center"
+          >
             <v-card class="appcard">
               <div class="d-flex flex-no-wrap">
                 <div class="row">
@@ -24,40 +30,40 @@
                       سبب الخروج : {{ item.destination }}
                     </div>
                   </v-col>
-                  <v-divider vertical inset></v-divider>
+                  <v-divider inset vertical></v-divider>
                   <div class="app font" style="margin-top: 10px">
                     وقت العودة : {{ item.time }}
                   </div>
                   <v-divider
-                    vertical
                     inset
                     style="margin-right: 80px"
+                    vertical
                   ></v-divider>
                   <div class="app font" style="margin-top: 10px; width: 280px">
                     الوجهة : {{ item.state }}
                   </div>
                   <div class="app1 font">
                     <v-alert
-                      v-if="item.state == 'Supermodel'"
                       dense
                       text
-                      width="170px"
                       type="success"
+                      v-if="item.state == 'Supermodel'"
+                      width="170px"
                     >
-                      الخطر :{{ item.score }}</v-alert
-                    >
+                      الخطر :{{ item.score }}
+                    </v-alert>
                     <v-alert
-                      v-else-if="item.state == 'Super'"
                       dense
                       text
-                      width="170px"
                       type="warning"
+                      v-else-if="item.state == 'Super'"
+                      width="170px"
                     >
-                      الخطر :{{ item.score }}</v-alert
-                    >
-                    <v-alert v-else dense outlined type="error" width="170px">
-                      الخطر :{{ item.score }}</v-alert
-                    >
+                      الخطر :{{ item.score }}
+                    </v-alert>
+                    <v-alert dense outlined type="error" v-else width="170px">
+                      الخطر :{{ item.score }}
+                    </v-alert>
                   </div>
                 </div>
               </div>
@@ -66,12 +72,12 @@
         </v-row>
         <div class="text-center">
           <v-btn
+            :to="{ name: 'AllApplicationsPage' }"
             class="title "
-            dark
-            rounded
             color="#D41B45"
+            dark
             height="28px"
-            :to="AllApplicationsPage"
+            rounded
           >
             المزيد
           </v-btn>
@@ -81,6 +87,7 @@
   </v-hover>
 </template>
 <script>
+import DemandesService from "@/services/DemandesService";
 export default {
   name: "ApplicationCard",
   data: () => ({
@@ -104,25 +111,39 @@ export default {
         score: "90%"
       }
     ]
-  })
+  }),
+  created() {
+    DemandesService.getDemandes(this.$store.state.currentUser)
+      .then(resp => {
+        console.log(resp);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 };
 </script>
 <style scoped>
 .cardc {
   height: 250px;
 }
+
 .appcard {
   height: 40px;
 }
+
 .avatar {
   margin-top: 2px;
 }
+
 .app {
   padding-right: 15px;
 }
+
 .app1 {
   margin-right: 30px;
 }
+
 .font {
   font-family: Cairo;
 }

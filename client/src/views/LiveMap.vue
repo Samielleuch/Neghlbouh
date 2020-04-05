@@ -2,15 +2,15 @@
   <div>
     <v-row justify="center">
       <v-col cols="9">
-        <div id="map" class="mapboxgl-map">
+        <div class="mapboxgl-map" id="map">
           <MglMap
-            container="map"
-            :center.sync="center"
             :accessToken="accessToken"
+            :center.sync="center"
             :mapStyle.sync="mapStyle"
-            :zoom="zoom"
-            :minZoom="minZoom"
             :maxBounds="maxBounds"
+            :minZoom="minZoom"
+            :zoom="zoom"
+            container="map"
           >
             <MglGeolocateControl position="top-right" />
             <MglNavigationControl position="top-right" />
@@ -20,12 +20,12 @@
             </MglMarker>
 
             <MglGeojsonLayer
-              v-for="(city, index) in Zones"
               :key="index + 30"
-              :sourceId="getGeoJsonSource(index, city.cord).data.id"
-              :source="getGeoJsonSource(index, city.cord)"
-              :layerId="index.toString()"
               :layer="getGeoJsonLayer(opacity[index].number)"
+              :layerId="index.toString()"
+              :source="getGeoJsonSource(index, city.cord)"
+              :sourceId="getGeoJsonSource(index, city.cord).data.id"
+              v-for="(city, index) in Zones"
             >
             </MglGeojsonLayer>
           </MglMap>
@@ -35,7 +35,7 @@
     <v-row class="mr-12 ml-12">
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-5"> moin de 20 personne </v-sheet>
+          <v-sheet color="red lighten-5"> moin de 20 personne</v-sheet>
         </div>
       </v-col>
       <v-col cols="4">
@@ -49,8 +49,8 @@
         </div>
       </v-col>
     </v-row>
-  </div></template
->
+  </div>
+</template>
 
 <script>
 import Mapbox from "mapbox-gl";
@@ -64,6 +64,7 @@ import {
   MglGeolocateControl,
   MglScaleControl
 } from "vue-mapbox";
+
 export default {
   name: "LiveMap",
   components: {
@@ -169,7 +170,6 @@ export default {
   created() {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
-    console.log(this.getGeoJsonSource(0, this.Zones[0].cord));
   },
   mounted() {
     //every 10 second request the api !
@@ -177,8 +177,7 @@ export default {
       gps
         .requestGPS()
         .then(resp => {
-          this.opacity = resp;
-          console.log(resp);
+          this.opacity = resp.data.status;
         })
         .catch(err => {
           console.log(err);
