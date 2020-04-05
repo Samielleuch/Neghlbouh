@@ -453,7 +453,7 @@ export default {
     },
     logOut() {
       this.session.clear();
-      this.$router.go();
+      this.$router.replace({ name: "Home" });
     }
   },
   mounted() {

@@ -16,9 +16,12 @@
             <MglNavigationControl position="top-right" />
             <MglGeolocateControl position="top-right" />
             <MglScaleControl />
-            <MglMarker :coordinates.sync="myCoordinate" color="red">
-            </MglMarker>
-
+            <MglMarker
+              v-if="visible"
+              :coordinates="myCoordinate"
+              color="red"
+              :key="mykey"
+            />
             <MglGeojsonLayer
               :key="index + 30"
               :layer="getGeoJsonLayer(opacity[index].number)"
@@ -54,7 +57,7 @@
 
 <script>
 import Mapbox from "mapbox-gl";
-import gps from "@/services/GpsService";
+//import gps from "@/services/GpsService";
 import sfax from "@/store/sfaxx.json";
 import {
   MglMap,
@@ -78,7 +81,10 @@ export default {
   data() {
     return {
       geoJson: "",
-      myCoordinate: [10.4, 35.8],
+      visible: false,
+      mykey: "100",
+      numb: "0",
+      myCoordinate: [10.5449929, 34.7267589],
       accessToken:
         "pk.eyJ1Ijoic2FtaWVsbGV1Y2giLCJhIjoiY2s4ZmYxanp5MDA5MDNmcWowY3FuZm1tbSJ9.neFuBaRgOGr8khOj2FGweA",
       mapStyle: "mapbox://styles/mapbox/light-v10",
@@ -174,15 +180,23 @@ export default {
   mounted() {
     //every 10 second request the api !
     this.interval = setInterval(() => {
-      gps
-        .requestGPS()
-        .then(resp => {
-          this.opacity = resp.data.status;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }, 5000);
+      // gps
+      //   .requestGPS()
+      //   .then(resp => {
+      //     this.opacity = resp.data.status;
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+
+      //   });
+      this.numb++;
+      if (this.numb > 7) {
+        this.visible = true;
+        this.mykey++;
+        this.myCoordinate[0] += 0.0000021;
+        this.myCoordinate[1] += 0.0000031;
+      }
+    }, 1000);
   }
 };
 </script>

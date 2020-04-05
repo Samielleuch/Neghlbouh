@@ -22,7 +22,11 @@
               <v-label><h3>وقت العودة</h3></v-label>
             </div>
             <div class="col-md-5" style="margin-right: 30px">
-              <v-time-picker color="#d41b45" width="180px"></v-time-picker>
+              <v-time-picker
+                color="#d41b45"
+                width="180px"
+                v-model="tempsRetour"
+              ></v-time-picker>
             </div>
           </v-row>
           <v-label><h3>الوجهة</h3></v-label>
@@ -32,7 +36,7 @@
             class="txt"
             color="#d41b45"
             required
-            v-model="select"
+            v-model="zone"
           ></v-select>
 
           <div class="text-center">
@@ -75,7 +79,7 @@
             </div>
             <div class="text-center">
               <v-btn
-                @click="updatePass"
+                @click="accept"
                 class="title"
                 color="#D41B45"
                 dark
@@ -87,7 +91,7 @@
                 تثبيت الخروج
               </v-btn>
               <v-btn
-                @click="updatePass"
+                @click="reject"
                 class="title"
                 color="#D41B45"
                 dark
@@ -107,6 +111,8 @@
 </template>
 
 <script>
+import DemandesService from "@/services/DemandesService";
+import { mapActions } from "vuex";
 export default {
   name: "FormPage",
   props: {
@@ -121,6 +127,8 @@ export default {
     state: "Supermodel",
     score: "75%",
     reason: "",
+    zone: "",
+    tempsRetour: "",
     reasonRules: [v => !!v || "الرجاء ادخال سبب الخروج"],
     select: null,
     items: [
@@ -148,11 +156,38 @@ export default {
     ]
   }),
   methods: {
-    verify() {
+    ...mapActions(["addDemande"]),
+    async verify() {
       if (!this.isClicked) {
         this.isClicked = true;
       } else {
         this.isClicked = false;
+      }
+
+      try {
+        let resp = await DemandesService.addDemandes({
+          cin: this.$store.state.currentUser.cin,
+          zone: this.zone,
+          where: "sfax",
+          tempsRetour: this.tempsRetour,
+          reason: this.reason
+        });
+        console.log(resp);
+        this.addDemande(resp.data.status);
+        this.score = resp.data.status.score;
+      } catch (e) {
+        console.log(e.response.data);
+      }
+    },
+    accept() {
+      this.$router.replace({ name: "UserDashboard" });
+    },
+    async reject() {
+      try {
+        let resp = await DemandesService.deleteDemande();
+        console.log(resp);
+      } catch (e) {
+        console.log(e.response.data);
       }
     }
   }

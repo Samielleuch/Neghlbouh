@@ -12,8 +12,8 @@
         </v-avatar>
         <h4>خرجاتي</h4>
       </div>
-      <div v-if="applications.length == 0">you don't have any request</div>
-      <div v-else>
+      <div v-if="Demandes.length == 0">you don't have any request</div>
+      <div>
         <v-row dense justify="center" align="center">
           <v-col
             :key="i"
@@ -27,12 +27,12 @@
                 <div class="row">
                   <v-col cols="5">
                     <div class="app font" style="margin-top: 1px">
-                      سبب الخروج : {{ item.destination }}
+                      سبب الخروج : {{ item.reason }}
                     </div>
                   </v-col>
                   <v-divider inset vertical></v-divider>
                   <div class="app font" style="margin-top: 10px">
-                    وقت العودة : {{ item.time }}
+                    وقت العودة : {{ item.tempsRetour }}
                   </div>
                   <v-divider
                     inset
@@ -40,14 +40,14 @@
                     vertical
                   ></v-divider>
                   <div class="app font" style="margin-top: 10px; width: 280px">
-                    الوجهة : {{ item.state }}
+                    الوجهة : {{ item.where }}
                   </div>
                   <div class="app1 font">
                     <v-alert
                       dense
                       text
                       type="success"
-                      v-if="item.state == 'Supermodel'"
+                      v-if="item.state == 1"
                       width="170px"
                     >
                       الخطر :{{ item.score }}
@@ -70,18 +70,37 @@
             </v-card>
           </v-col>
         </v-row>
-        <div class="text-center">
-          <v-btn
-            :to="{ name: 'AllApplicationsPage' }"
-            class="title "
-            color="#D41B45"
-            dark
-            height="28px"
-            rounded
-          >
-            المزيد
-          </v-btn>
-        </div>
+        <v-row>
+          <v-col>
+            <div class="text-center">
+              <v-btn
+                :to="{ name: 'AllApplicationsPage' }"
+                class="title "
+                color="#D41B45"
+                dark
+                height="28px"
+                rounded
+                v-if="Demandes.length !== 0"
+              >
+                المزيد
+              </v-btn>
+            </div>
+          </v-col>
+          <v-col>
+            <div class="text-center">
+              <v-btn
+                :to="{ name: 'FormPage' }"
+                class="title "
+                color="#D41B45"
+                dark
+                height="28px"
+                rounded
+              >
+                طلب جديد
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </v-card>
   </v-hover>
@@ -91,31 +110,15 @@ import DemandesService from "@/services/DemandesService";
 export default {
   name: "ApplicationCard",
   data: () => ({
-    applications: [
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "Supermodel",
-        score: "75%"
-      },
-      {
-        destination: "Super",
-        time: "15:00",
-        state: "Super",
-        score: "50%"
-      },
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "Seeyou",
-        score: "90%"
-      }
-    ]
+    Demandes: [],
+    applications: []
   }),
   created() {
     DemandesService.getDemandes(this.$store.state.currentUser)
       .then(resp => {
-        console.log(resp);
+        console.log(resp.data.status);
+        this.Demandes = resp.data.status;
+        this.applications = this.Demandes;
       })
       .catch(err => {
         console.log(err);

@@ -3,10 +3,8 @@
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto cardcc"
-
-      max-width="380"
-      dir="rtl"
       max-width="520"
+      dir="rtl"
     >
       <div align="center" style="margin-top: 2px">
         <v-avatar size="65">
