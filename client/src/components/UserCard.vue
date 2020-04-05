@@ -3,6 +3,8 @@
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto cardcc"
+
+      max-width="380"
       dir="rtl"
       max-width="520"
     >
@@ -81,8 +83,8 @@ export default {
 <style scoped>
 .cardcc {
   height: 270px;
-  padding-right: 20px;
   padding-left: 20px;
+  margin-top: 20px;
 }
 
 .font {
@@ -103,6 +105,6 @@ h5 {
   background-color: #afa8a8;
   margin-top: 8px;
   margin-right: 75px;
-  width: 300px;
+  width: 250px;
 }
 </style>

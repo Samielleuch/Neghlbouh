@@ -25,5 +25,6 @@ export default {
 .cardc {
   padding-right: 20px;
   padding-left: 20px;
+  margin-top: 20px;
 }
 </style>

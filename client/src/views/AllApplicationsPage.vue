@@ -51,21 +51,6 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-col :key="i" cols="12" v-for="(item, i) in applications">
-        <v-card
-          class="app
-      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++card"
-        >
-          <div class="d-flex flex-no-wrap">
-            <div>
-              <div class="app">{{ item.reason }}</div>
-
-              <div class="app">{{ item.time }}</div>
-              <div class="app">{{ item.timeestimated }}</div>
-            </div>
-          </div>
-        </v-card>
-      </v-col>
     </div>
   </div>
 </template>

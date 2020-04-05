@@ -1,17 +1,19 @@
 <template>
   <div class="background">
-    <div class="row edit " dir="rtl">
-      <div class=" col-md-5 mt-10 ">
-        <UserCard :user="user"></UserCard>
+
+    <v-row>
+      <v-col class="col-md-4">
+        <UserCard :user="user"> </UserCard>
+      </v-col>
+      <v-col class="col-md-8">
+        <MapInfoCard> </MapInfoCard>
+      </v-col>
+    </v-row>
+    <v-row>
+      <div class="col-md-12">
+        <ApplicationCard> </ApplicationCard>
       </div>
-      <div class="col-md-7 mt-10">
-        <MapInfoCard></MapInfoCard>
-      </div>
-      <div class="w-100"></div>
-      <div class=" col-md-12 row">
-        <ApplicationCard></ApplicationCard>
-      </div>
-    </div>
+    </v-row>
   </div>
 </template>
 <script>
@@ -35,10 +37,6 @@ export default {
 };
 </script>
 <style>
-.edit {
-  margin-top: fill;
-}
-
 .background {
   background-color: #e5dddd;
   height: 100%;
