@@ -10,22 +10,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-<<<<<<< HEAD
-    "lite-server": "^2.5.4",
-    "mongoose": "^5.9.6",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.2",
-=======
     "jsonwebtoken": "^8.3.0",
+    "lite-server": "^2.5.4",
+    "moment": "^2.24.0",
     "mongoose": "^5.9.6",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.4.6",
+    "nodemon": "^2.0.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
->>>>>>> 65a9a290b8c4edbb96ada501e3a23d4f157bb454
-    "twilio": "^3.41.1"
+    "twilio": "^3.42.0",
+    "web-push": "^3.4.3"
   }
 }

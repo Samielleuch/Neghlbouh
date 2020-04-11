@@ -7,8 +7,9 @@ const DemandeSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    when: String,
-    duration : String,
+    dateSortie: String,
+    tempsSortie : String,
+    tempsRetour: String,
     where : String,
     state: {
         type:Number,

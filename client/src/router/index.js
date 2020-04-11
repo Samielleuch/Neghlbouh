@@ -25,15 +25,43 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Sign_Up_Page.vue")
   },
+
+  {
+    path: "/AllApplicationsPage",
+    name: "AllApplicationsPage",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/AllApplicationsPage.vue")
+  },
+
   {
     path: "/FAQ",
     name: "FAQ",
     component: () => import("../views/FAQ.vue")
   },
   {
+    path: "/UserDashboard",
+    name: "UserDashboard",
+    component: () => import("../views/UserDashboard.vue")
+  },
+  {
+    path: "/EditProfilePage",
+    name: "EditProfilePage",
+    component: () => import("../views/EditProfilePage.vue")
+  },
+  {
     path: "/LiveMap",
     name: "LiveMap",
     component: () => import("../views/LiveMap.vue")
+  },
+  {
+    path: "/Info",
+    name: "Info",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
+  },
+  {
+    path: "/*",
+    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
   }
 ];
 
