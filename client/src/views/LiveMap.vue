@@ -179,23 +179,6 @@ export default {
   },
   mounted() {
     //every 10 second request the api !
-    this.interval = setInterval(() => {
-      // gps
-      //   .requestGPS()
-      //   .then(resp => {
-      //     this.opacity = resp.data.status;
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-      this.numb++;
-      if (this.numb > 7) {
-        this.visible = true;
-        this.mykey++;
-        this.myCoordinate[0] += 0.0000021;
-        this.myCoordinate[1] += 0.0000031;
-      }
-    }, 1000);
   }
 };
 </script>
