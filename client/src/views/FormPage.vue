@@ -1,100 +1,104 @@
 <template dir="rtl">
   <div class="background">
-    <v-hover v-slot:default="{ hover }" open-delay="200">
+    <v-hover open-delay="200" v-slot:default="{ hover }">
       <v-card
-        dir="rtl"
-        class="mx-auto"
-        width="900"
-        height="840"
         :elevation="hover ? 16 : 2"
+        class="mx-auto"
+        dir="rtl"
+        height="840"
+        width="900"
       >
-        <v-form ref="form" class="form">
+        <v-form class="form" ref="form">
           <v-label><h3>سبب الخروج</h3></v-label>
           <v-text-field
-            v-model="reason"
-            color="#d41b45"
             :counter="10"
             :rules="reasonRules"
+            color="#d41b45"
             required
+            v-model="reason"
           ></v-text-field>
           <v-row>
             <div class="col-md-4">
               <v-label><h3>وقت العودة</h3></v-label>
             </div>
             <div class="col-md-5" style="margin-right: 30px">
-              <v-time-picker width="180px" color="#d41b45"></v-time-picker>
+              <v-time-picker
+                color="#d41b45"
+                width="180px"
+                v-model="tempsRetour"
+              ></v-time-picker>
             </div>
           </v-row>
           <v-label><h3>الوجهة</h3></v-label>
           <v-select
-            v-model="select"
-            class="txt"
-            color="#d41b45"
             :items="items"
             :rules="[v => !!v || 'الرجاء اختيار الوجهة']"
+            class="txt"
+            color="#d41b45"
             required
+            v-model="zone"
           ></v-select>
 
           <div class="text-center">
             <v-btn
-              class="title "
-              dark
-              rounded
-              color="#D41B45"
-              height="30px"
-              width="100px"
               @click="verify"
+              class="title "
+              color="#D41B45"
+              dark
+              height="30px"
+              rounded
+              width="100px"
             >
               تقييم
             </v-btn>
           </div>
-          <div v-if="isClicked" style="margin-top: 5px">
+          <div style="margin-top: 5px" v-if="isClicked">
             <div class="app1">
               <v-alert
-                v-if="state == 'Supermodel'"
                 dense
-                text
-                width="200px"
                 height="70px"
+                text
                 type="success"
+                v-if="state == 'Supermodel'"
+                width="200px"
               >
-                الخطر :{{ score }}</v-alert
-              >
+                الخطر :{{ score }}
+              </v-alert>
               <v-alert
-                v-else-if="state == 'Super'"
                 dense
                 text
-                width="170px"
                 type="warning"
+                v-else-if="state == 'Super'"
+                width="170px"
               >
-                الخطر :{{ score }}</v-alert
-              >
-              <v-alert v-else dense outlined type="error" width="170px">
-                الخطر :{{ score }}</v-alert
-              >
+                الخطر :{{ score }}
+              </v-alert>
+              <v-alert dense outlined type="error" v-else width="170px">
+                الخطر :{{ score }}
+              </v-alert>
             </div>
             <div class="text-center">
               <v-btn
+                @click="accept"
                 class="title"
+                color="#D41B45"
                 dark
+                height="50px"
                 rounded
                 style="margin-top: 80px;margin-left: 15px"
-                color="#D41B45"
-                height="50px"
                 width="120px"
-                @click="updatePass"
               >
                 تثبيت الخروج
               </v-btn>
               <v-btn
+                @click="reject"
                 class="title"
+                color="#D41B45"
                 dark
+                height="50px"
                 rounded
                 style="margin-top: 80px;margin-left: 15px"
-                color="#D41B45"
-                height="50px"
                 width="120px"
-                @click="updatePass"
               >
                 الغاء الخروج
               </v-btn>
@@ -107,6 +111,8 @@
 </template>
 
 <script>
+import DemandesService from "@/services/DemandesService";
+import { mapActions } from "vuex";
 export default {
   name: "FormPage",
   props: {
@@ -121,6 +127,8 @@ export default {
     state: "Supermodel",
     score: "75%",
     reason: "",
+    zone: "",
+    tempsRetour: "",
     reasonRules: [v => !!v || "الرجاء ادخال سبب الخروج"],
     select: null,
     items: [
@@ -148,11 +156,38 @@ export default {
     ]
   }),
   methods: {
-    verify() {
+    ...mapActions(["addDemande"]),
+    async verify() {
       if (!this.isClicked) {
         this.isClicked = true;
       } else {
         this.isClicked = false;
+      }
+
+      try {
+        let resp = await DemandesService.addDemandes({
+          cin: this.$store.state.currentUser.cin,
+          zone: this.zone,
+          where: "sfax",
+          tempsRetour: this.tempsRetour,
+          reason: this.reason
+        });
+        console.log(resp);
+        this.addDemande(resp.data.status);
+        this.score = resp.data.status.score;
+      } catch (e) {
+        console.log(e.response.data);
+      }
+    },
+    accept() {
+      this.$router.replace({ name: "UserDashboard" });
+    },
+    async reject() {
+      try {
+        let resp = await DemandesService.deleteDemande();
+        console.log(resp);
+      } catch (e) {
+        console.log(e.response.data);
       }
     }
   }
@@ -162,6 +197,7 @@ export default {
 .form {
   padding: 30px 50px 50px 50px;
 }
+
 .background {
   background-color: #e5dddd;
   font-family: Cairo;
@@ -169,12 +205,15 @@ export default {
   padding-top: 35px;
   padding-bottom: 100px;
 }
+
 h3 {
   color: #d41b45;
 }
+
 .txt {
   margin-bottom: 25px;
 }
+
 .app1 {
   margin-right: 300px;
   margin-top: 30px;

@@ -1,13 +1,13 @@
 <template>
   <div dir="rtl">
-    <v-row style="height:252px" align="center" justify="center">
+    <v-row align="center" justify="center" style="height:252px">
       <v-col
-        cols="12"
         :class="
           $vuetify.breakpoint.xs
             ? 'text-center title-xs'
             : 'text-center title-sm'
         "
+        cols="12"
       >
         أهم الارشادات
 
@@ -22,34 +22,34 @@
         </h4>
       </v-col>
     </v-row>
-    <v-row class="questions-body pt-12" align="center" justify="center">
-      <v-col cols="12" class="text-center">
+    <v-row align="center" class="questions-body pt-12" justify="center">
+      <v-col class="text-center" cols="12">
         <!-- Question 1 -->
         <div
-          v-for="(item, index) in contentFAQ"
           :key="index"
           align="center"
           justify="center"
+          v-for="(item, index) in contentFAQ"
         >
           <v-col
-            @click="current[index] = !current[index]"
-            cols="10"
-            md="4"
             :class="
               current[index]
                 ? 'text-right question'
                 : 'text-right question grey--text text--darken-1'
             "
             :style="$vuetify.breakpoint.xs ? 'font-size:7vw;' : ''"
+            @click="current[index] = !current[index]"
+            cols="10"
+            md="4"
           >
             {{ item.question }}
           </v-col>
-          <v-col cols="6" md="4" class="text-right ">
+          <v-col class="text-right " cols="6" md="4">
             <v-expand-transition>
               <div
-                v-show="current[index]"
-                class="mx-auto answer"
                 :style="$vuetify.breakpoint.xs ? 'font-size:4vw;' : ''"
+                class="mx-auto answer"
+                v-show="current[index]"
               >
                 {{ item.answer }}
               </div>
@@ -57,15 +57,15 @@
           </v-col>
           <v-row align="center" justify="center">
             <v-col cols="6">
-              <v-divider width="70%" class="mt-5 mb-5" />
+              <v-divider class="mt-5 mb-5" width="70%" />
             </v-col>
           </v-row>
         </div>
       </v-col>
     </v-row>
     <!-- Can't find what you're looking for -->
-    <v-row class="banner pt-12 pb-12" align="center" justify="center">
-      <v-col cols="12" class="text-center mb-5">
+    <v-row align="center" class="banner pt-12 pb-12" justify="center">
+      <v-col class="text-center mb-5" cols="12">
         <div
           :class="
             $vuetify.breakpoint.xs
@@ -84,8 +84,8 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="footer" align="center" justify="center">
-      <v-col cols="12" class="text-center">
+    <v-row align="center" class="footer" justify="center">
+      <v-col class="text-center" cols="12">
         <v-row>
           <v-col cols="6">
             نغلبوه
@@ -104,51 +104,65 @@
 body * {
   font-family: Cairo;
 }
+
 .title-sm {
   font-size: 79px;
 }
+
 .title-xs {
   font-size: 12vw;
 }
+
 .subtitle-xs {
   font-size: 5vw !important;
 }
+
 .subtitle {
   font-size: 24px;
 }
+
 .questions-body {
   background: #f7f5f8;
   height: 100%;
 }
+
 .question {
   font-size: 40px;
   cursor: pointer;
 }
+
 .answer {
   font-size: 22px;
   color: #555555;
 }
+
 .sperate-line {
   width: 50%;
   text-align: center;
 }
+
 .banner {
   height: 300px;
   background: #e82618;
   color: white;
 }
+
 .banner-title {
   font-size: 45px;
 }
+
 .banner-title-xs {
   font-size: 8vw;
 }
+
 .banner-content {
   font-size: 25px;
 }
+
 .banner-content-xs {
   font-size: 5vw;
 }
+
 .footer {
   height: 100px;
   background: #f7f5f8;
@@ -172,4 +186,3 @@ export default {
   })
 };
 </script>
-

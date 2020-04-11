@@ -1,128 +1,152 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover open-delay="200" v-slot:default="{ hover }">
     <v-card
-      dir="rtl"
-      class="mx-auto cardc"
-      width="1300"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardc"
+      dir="rtl"
+      width="1300"
     >
       <div align="center">
-        <v-avatar size="50" class="avatar">
-          <img src="../assets/appcard.png" alt="" />
+        <v-avatar class="avatar" size="50">
+          <img alt="" src="../assets/appcard.png" />
         </v-avatar>
         <h4>خرجاتي</h4>
       </div>
-      <div v-if="applications.length == 0">you don't have any request</div>
-      <div v-else>
-        <v-row dense>
-          <v-col v-for="(item, i) in applications" :key="i" cols="12">
+      <div v-if="Demandes.length == 0">you don't have any request</div>
+      <div>
+        <v-row dense justify="center" align="center">
+          <v-col
+            :key="i"
+            cols="12"
+            v-for="(item, i) in applications"
+            justify="center"
+            align="center"
+          >
             <v-card class="appcard">
               <div class="d-flex flex-no-wrap">
                 <div class="row">
                   <v-col cols="5">
                     <div class="app font" style="margin-top: 1px">
-                      سبب الخروج : {{ item.destination }}
+                      سبب الخروج : {{ item.reason }}
                     </div>
                   </v-col>
-                  <v-divider vertical inset></v-divider>
+                  <v-divider inset vertical></v-divider>
                   <div class="app font" style="margin-top: 10px">
-                    وقت العودة : {{ item.time }}
+                    وقت العودة : {{ item.tempsRetour }}
                   </div>
                   <v-divider
-                    vertical
                     inset
                     style="margin-right: 80px"
+                    vertical
                   ></v-divider>
                   <div class="app font" style="margin-top: 10px; width: 280px">
-                    الوجهة : {{ item.state }}
+                    الوجهة : {{ item.where }}
                   </div>
                   <div class="app1 font">
                     <v-alert
-                      v-if="item.state == 'Supermodel'"
                       dense
                       text
-                      width="170px"
                       type="success"
+                      v-if="item.state == 1"
+                      width="170px"
                     >
-                      الخطر :{{ item.score }}</v-alert
-                    >
+                      الخطر :{{ item.score }}
+                    </v-alert>
                     <v-alert
-                      v-else-if="item.state == 'Super'"
                       dense
                       text
-                      width="170px"
                       type="warning"
+                      v-else-if="item.state == 'Super'"
+                      width="170px"
                     >
-                      الخطر :{{ item.score }}</v-alert
-                    >
-                    <v-alert v-else dense outlined type="error" width="170px">
-                      الخطر :{{ item.score }}</v-alert
-                    >
+                      الخطر :{{ item.score }}
+                    </v-alert>
+                    <v-alert dense outlined type="error" v-else width="170px">
+                      الخطر :{{ item.score }}
+                    </v-alert>
                   </div>
                 </div>
               </div>
             </v-card>
           </v-col>
         </v-row>
-        <div class="text-center">
-          <v-btn
-            class="title "
-            dark
-            rounded
-            color="#D41B45"
-            height="28px"
-            :to="AllApplicationsPage"
-          >
-            المزيد
-          </v-btn>
-        </div>
+        <v-row>
+          <v-col>
+            <div class="text-center">
+              <v-btn
+                :to="{ name: 'AllApplicationsPage' }"
+                class="title "
+                color="#D41B45"
+                dark
+                height="28px"
+                rounded
+                v-if="Demandes.length !== 0"
+              >
+                المزيد
+              </v-btn>
+            </div>
+          </v-col>
+          <v-col>
+            <div class="text-center">
+              <v-btn
+                :to="{ name: 'FormPage' }"
+                class="title "
+                color="#D41B45"
+                dark
+                height="28px"
+                rounded
+              >
+                طلب جديد
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </v-card>
   </v-hover>
 </template>
 <script>
+import DemandesService from "@/services/DemandesService";
 export default {
   name: "ApplicationCard",
   data: () => ({
-    applications: [
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "Supermodel",
-        score: "75%"
-      },
-      {
-        destination: "Super",
-        time: "15:00",
-        state: "Super",
-        score: "50%"
-      },
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "Seeyou",
-        score: "90%"
-      }
-    ]
-  })
+    Demandes: [],
+    applications: []
+  }),
+  created() {
+    DemandesService.getDemandes(this.$store.state.currentUser)
+      .then(resp => {
+        console.log(resp.data.status);
+        this.Demandes = resp.data.status;
+        this.applications = this.Demandes;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 };
 </script>
 <style scoped>
 .cardc {
   height: 250px;
 }
+
 .appcard {
   height: 40px;
 }
+
 .avatar {
   margin-top: 2px;
 }
+
 .app {
   padding-right: 15px;
 }
+
 .app1 {
   margin-right: 30px;
 }
+
 .font {
   font-family: Cairo;
 }

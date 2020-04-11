@@ -1,16 +1,17 @@
 <template>
   <div class="row edit">
     <div class="col-xl-6 col-lg-5 col-md-4">
-      <UserCardEdit :user="user"> </UserCardEdit>
+      <UserCardEdit :user="user"></UserCardEdit>
     </div>
     <div class="col-xl-7 col-lg-7 col-md-8">
-      <EditProfileForm :user="user"> </EditProfileForm>
+      <EditProfileForm :user="user"></EditProfileForm>
     </div>
   </div>
 </template>
 <script>
 import EditProfileForm from "../components/EditProfileForm.vue";
 import UserCardEdit from "../components/UserCardEdit.vue";
+
 export default {
   name: "EditProfilePage",
   data() {

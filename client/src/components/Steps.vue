@@ -1,31 +1,36 @@
 <template>
   <div dir="rtl">
     <v-row class="mt-sm-6">
-      <v-col cols="12" md="4" class="text-center">
+      <v-col class="text-center" cols="12" md="4">
         <h1 class="display-1 font-weight-thin mb-4">
           خطوة <span class="application-text">1</span>
         </h1>
         <div class="content">
           <v-container>
             <v-row dense>
-              <v-col cols="12" class="text-right">
-                <v-hover v-slot:default="{ hover }" open-delay="60">
-                  <v-card :elevation="hover ? 16 : 2" color="#E45E54" dark class="card">
+              <v-col class="text-right" cols="12">
+                <v-hover open-delay="60" v-slot:default="{ hover }">
+                  <v-card
+                    :elevation="hover ? 16 : 2"
+                    class="card"
+                    color="#E45E54"
+                    dark
+                  >
                     <v-card-title class="headline">تسجيل الدخول</v-card-title>
 
                     <v-card-title
                       >حط المعطيات متاعك و أدخل كان عندك حساب أو اسعمل زر
-                      التسجيل بش تصنع حساب</v-card-title
-                    >
+                      التسجيل بش تصنع حساب
+                    </v-card-title>
 
                     <v-card-actions>
-                      <v-btn x-large text>تسجيل</v-btn>
+                      <v-btn text x-large>تسجيل</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-hover>
               </v-col>
 
-              <v-col v-for="(item, i) in items" :key="i" cols="12">
+              <v-col :key="i" cols="12" v-for="(item, i) in items">
                 <v-card :color="item.color" dark>
                   <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
@@ -47,31 +52,36 @@
           </v-container>
         </div>
       </v-col>
-      <v-col cols="12" md="4" class="text-center">
+      <v-col class="text-center" cols="12" md="4">
         <h1 class="display-1 font-weight-thin mb-4">
           خطوة <span class="application-text">2</span>
         </h1>
         <div class="content">
           <v-container>
             <v-row dense>
-              <v-col cols="12" class="text-right">
-                <v-hover v-slot:default="{ hover }" open-delay="60">
-                  <v-card :elevation="hover ? 16 : 2" color="#E45E54" dark class="card">
+              <v-col class="text-right" cols="12">
+                <v-hover open-delay="60" v-slot:default="{ hover }">
+                  <v-card
+                    :elevation="hover ? 16 : 2"
+                    class="card"
+                    color="#E45E54"
+                    dark
+                  >
                     <v-card-title class="headline">شوف العباد وين</v-card-title>
 
                     <v-card-title
                       >حل الخريطة و شوف لعباد الي عملو مطلب قبلك وينهم. اذا
-                      البلاصة الي ماشلها مش معبية عمر مطلب</v-card-title
-                    >
+                      البلاصة الي ماشلها مش معبية عمر مطلب
+                    </v-card-title>
 
                     <v-card-actions>
-                      <v-btn x-large text>حل الخريطة</v-btn>
+                      <v-btn text x-large>حل الخريطة</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-hover>
               </v-col>
 
-              <v-col v-for="(item, i) in items" :key="i" cols="12">
+              <v-col :key="i" cols="12" v-for="(item, i) in items">
                 <v-card :color="item.color" dark>
                   <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
@@ -93,34 +103,39 @@
           </v-container>
         </div>
       </v-col>
-      <v-col cols="12" md="4" class="text-center">
+      <v-col class="text-center" cols="12" md="4">
         <h1 class="display-1 font-weight-thin mb-4">
           خطوة <span class="application-text">3</span>
         </h1>
         <div class="content">
           <v-container>
             <v-row dense>
-              <v-col cols="12" class="text-right">
-                <v-hover v-slot:default="{ hover }" open-delay="60">
-                  <v-card :elevation="hover ? 16 : 2" color="#E45E54" dark class="card">
+              <v-col class="text-right" cols="12">
+                <v-hover open-delay="60" v-slot:default="{ hover }">
+                  <v-card
+                    :elevation="hover ? 16 : 2"
+                    class="card"
+                    color="#E45E54"
+                    dark
+                  >
                     <v-card-title class="headline"
-                      >عمر مطلب بش تخرج</v-card-title
-                    >
+                      >عمر مطلب بش تخرج
+                    </v-card-title>
 
                     <v-card-title
                       >باش أنظموا رواحنا كل عبد يعمر مطلب يحط فيه وين ماشي و
                       قداه وقت بش يقعد. ياخو إذن صالح في الوقت المحدد في البلاصة
-                      المحددة</v-card-title
-                    >
+                      المحددة
+                    </v-card-title>
 
                     <v-card-actions>
-                      <v-btn x-large text>عمر مطلب خروج</v-btn>
+                      <v-btn text x-large>عمر مطلب خروج</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-hover>
               </v-col>
 
-              <v-col v-for="(item, i) in items" :key="i" cols="12">
+              <v-col :key="i" cols="12" v-for="(item, i) in items">
                 <v-card :color="item.color" dark>
                   <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
@@ -149,9 +164,11 @@
 body * {
   font-family: Tajawal;
 }
-.card{
+
+.card {
   height: 300px;
 }
+
 .application-text {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
