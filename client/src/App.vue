@@ -1,23 +1,7 @@
 <template>
   <div>
     <v-app>
-
-
-      <!--the button to show the Sign in modal -->
-
-      <!-- Login button -->
-      <!--
-      <v-row justify="center">
-        <v-col align="center">
-          <v-btn @click="pressLogin(true)">
-            <span class="mr-2">LOGIN</span>
-            <v-icon>mdi-open-in-new</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-      -->
-
-
+      <Header />
       <v-content>
         <!-- the actual page that the router shows-->
         <router-view />
@@ -32,7 +16,6 @@
 import Sign_In from "./components/Sign_In";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
 export default {
   name: "App",
   components: {

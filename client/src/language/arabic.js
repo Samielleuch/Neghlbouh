@@ -8,6 +8,16 @@ export default {
     forgotPass: "ليس لديك حساب ؟ ",
     makeAccount: "إبدء حساب جديد الآن "
   },
+  Reset: {
+    popup_text2: "الرجاء تغيير كلمة السر في الاستمارة التالية",
+    cinField: "بطاقة التعريف",
+    oldPasswordField: "كلمة السر القديمة",
+    newPasswordField: "كلمة السر الجديدة",
+    confirmNewPasswordField: "أثبت كلمة السر الجديدة",
+    submitField: "ارسل",
+    forgotPass: "ليس لديك حساب ؟ ",
+    makeAccount: "إبدء حساب جديد الآن "
+  },
   HeaderMenu: {
     Userwelcome: "مرحبا ",
     homePage: "الصّفحة الرّئيسيّة",
