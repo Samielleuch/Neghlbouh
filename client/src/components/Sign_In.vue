@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-overlay
-      :value="isLoginPressed"
-      :dark="false"
       :class="isLoginPressed ? 'background-img' : ''"
+      :dark="false"
+      :value="isLoginPressed"
     >
       <v-card
-        shaped
-        elevation="10"
-        width="650"
-        color="rgba(250, 250, 250, 1 )"
-        outlined
         :dark="false"
+        color="rgba(250, 250, 250, 1 )"
+        elevation="10"
+        outlined
+        shaped
+        width="650"
       >
         <SignInForm isModal="true" />
       </v-card>
@@ -22,6 +22,7 @@
 <script>
 import SignInForm from "./SignInForm";
 import { mapState } from "vuex";
+
 export default {
   name: "Sign_In",
   components: {
