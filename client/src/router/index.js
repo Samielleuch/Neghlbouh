@@ -65,6 +65,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
   },
   {
+    path: "/reset/:id/:auth",
+    name: "ResetPassword",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ResetPassword.vue")
+  },
+  {
     path: "/*",
     component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
   }
