@@ -54,10 +54,21 @@ const routes = [
     component: () => import("../views/LiveMap.vue")
   },
   {
+    path: "/FormPage",
+    name: "FormPage",
+    component: () => import("../views/FormPage.vue")
+  },
+  {
     path: "/Info",
     name: "Info",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
+  },
+  {
+    path: "/reset/:id/:auth",
+    name: "ResetPassword",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ResetPassword.vue")
   },
   {
     path: "/*",

@@ -1,21 +1,6 @@
 <template>
   <div>
     <v-form ref="form" v-model="valid">
-      <!-- exit button  -->
-      <v-row v-if="isModal">
-        <v-spacer></v-spacer>
-        <v-btn @click="pressLogin(false)" class=" mt-2 ml-5" icon>
-          <v-icon>far fa-times-circle</v-icon>
-        </v-btn>
-      </v-row>
-      <!---->
-      <v-row>
-        <v-col align="center" cols="12">
-          <span class="text-center font-login  ">
-            {{ text.popup_text1 }}
-          </span>
-        </v-col>
-      </v-row>
       <!-- icon -->
       <v-row justify="center">
         <v-col align="center" cols="12">
@@ -42,29 +27,12 @@
       </v-row>
       <v-card-text>
         <v-form ref="form" v-model="valid">
-          <!-- CIN  -->
-          <v-row class="mb-0 pb-0">
-            <v-col class="mb-0 pb-0" cols="12">
-              <v-text-field
-                :label="text.cinField"
-                class="mb-0 pb-0"
-                clearable
-                color="black"
-                filled
-                outlined
-                prepend-inner-icon="far fa-address-card"
-                required
-                rounded
-                v-model="CIN"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <!-- Password  -->
+          <!-- New Password  -->
           <v-row class="mt--5">
             <v-col cols="12">
               <v-text-field
                 :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
-                :label="text.passWordField"
+                :label="text.newPasswordField"
                 :type="show1 ? 'text' : 'password'"
                 @click:append="show1 = !show1"
                 class="mt-0 pb-0"
@@ -75,7 +43,31 @@
                 prepend-inner-icon="fas fa-lock"
                 required
                 rounded
-                v-model="password"
+                name="password"
+                v-model="newPassword"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <!-- COnfirm new Password  -->
+          <v-row class="mt--5">
+            <v-col cols="12">
+              <v-text-field
+                :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                :label="text.confirmNewPasswordField"
+                :type="show1 ? 'text' : 'password'"
+                @click:append="show1 = !show1"
+                :rules="[passwordConfirmationRule]"
+                class="mt-0 pb-0"
+                clearable
+                color="black"
+                filled
+                outlined
+                prepend-inner-icon="fas fa-lock"
+                required
+                rounded 
+                name="password_confirmation" 
+                v-model="confirmNewPassword"
               >
               </v-text-field>
             </v-col>
@@ -103,17 +95,6 @@
             </v-hover>
           </v-col>
         </v-row>
-        <!-- Forgot Password section -->
-        <v-row justify="center">
-          <v-col align="center" cols="9">
-            <em>
-              {{ text.forgotPass }}
-            </em>
-            <a class=" font-weight-bold font-login-pass" href="#">
-              {{ text.makeAccount }}
-            </a>
-          </v-col>
-        </v-row>
       </v-card-text>
     </v-form>
   </div>
@@ -124,7 +105,7 @@ import authController from "@/services/AuthenticationService";
 import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "SignInForm",
+  name: "ResetForm",
   props: {
     isModal: {
       Boolean,
@@ -133,8 +114,9 @@ export default {
   },
   data() {
     return {
-      password: "",
-      CIN: "",
+      oldPassword: "",
+      newPassword: "",
+      confirmNewPassword:"",
       valid: false,
       show1: false,
       error: ""
@@ -143,8 +125,11 @@ export default {
   computed: {
     ...mapState(["langPack"]),
     text() {
-      return this.langPack.Sign_In;
-    }
+      return this.langPack.Reset;
+    },
+    passwordConfirmationRule() {
+      return () => (this.newPassword === this.confirmNewPassword) || 'Password must match'
+    },
   },
   methods: {
     ...mapActions(["pressLogin", "loginUser"]),
@@ -153,9 +138,11 @@ export default {
       if (this.valid) {
         this.loading = true;
         try {
-          let resp = await authController.signIn({
-            cin: this.CIN,
-            password: this.password
+          let resp = await authController.reset({
+            auth : this.$route.params.auth,
+            id: this.$route.params.id,
+            //cin: this.$store.state.currentUser.cin,
+            newPassword: this.newPassword
           });
           console.log(resp);
           this.pressLogin(false);

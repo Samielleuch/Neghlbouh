@@ -1,23 +1,44 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover open-delay="200" v-slot:default="{ hover }">
     <v-card
-      style="height: 270px"
-      dir="rtl"
-      class="mx-auto cardc"
-      max-width="700"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardc"
+      dir="rtl"
+      max-width="700"
+      style="height: 270px"
     >
       <div align="center">
-        <v-avatar size="80" class="avatar">
-          <img src="../assets/infomap.png" alt="" />
+        <v-avatar class="avatar" size="80">
+          <img alt="" src="../assets/infomap.png" />
         </v-avatar>
       </div>
+
+      <v-sheet color="rgba(230, 45, 45, 0.6)">
+        <v-sparkline
+          auto-draw
+          :labels="label"
+          :value="value"
+          color="rgba(255, 255, 255, .97)"
+          height="50"
+          padding="5"
+          stroke-linecap="round"
+          smooth
+        >
+          <template v-slot:label="item"> {{ item.value }} </template>
+        </v-sparkline>
+      </v-sheet>
     </v-card>
   </v-hover>
 </template>
 <script>
 export default {
-  name: "MapInfoCard"
+  name: "MapInfoCard",
+  data() {
+    return {
+      value: [423, 446, 675, 510, 590, 610, 760],
+      label: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm"]
+    };
+  }
 };
 </script>
 
@@ -25,5 +46,6 @@ export default {
 .cardc {
   padding-right: 20px;
   padding-left: 20px;
+  margin-top: 20px;
 }
 </style>
