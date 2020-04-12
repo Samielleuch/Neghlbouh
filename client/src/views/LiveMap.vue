@@ -8,13 +8,11 @@
             :center.sync="center"
             :mapStyle.sync="mapStyle"
             :maxBounds="maxBounds"
-            :minZoom="minZoom"
             :zoom="zoom"
             container="map"
           >
-            <MglGeolocateControl position="top-right" />
+            <MglGeolocateControl position="top-right" show="true" />
             <MglNavigationControl position="top-right" />
-            <MglGeolocateControl position="top-right" />
             <MglScaleControl />
             <MglMarker
               v-if="visible"
@@ -28,6 +26,15 @@
               :layerId="index.toString()"
               :source="getGeoJsonSource(index, city.cord)"
               :sourceId="getGeoJsonSource(index, city.cord).data.id"
+              v-for="(city, index) in Zones"
+            >
+            </MglGeojsonLayer>
+            <MglGeojsonLayer
+              :key="index + 500"
+              :layer="getTextLayer(city.name + '\n' + opacity[index].number)"
+              :layerId="(index + 500).toString()"
+              :source="getGeoJsonSource(index + 500, city.cord)"
+              :sourceId="getGeoJsonSource(index + 500, city.cord).data.id"
               v-for="(city, index) in Zones"
             >
             </MglGeojsonLayer>
@@ -91,7 +98,6 @@ export default {
       center: [10.5375, 35.2],
       markerCoordinates: [10.7659153, 34.805275],
       zoom: 6,
-      minZoom: 0,
       maxBounds: [
         [6.5, 28.8869],
         [12.5375, 38.1]
@@ -136,10 +142,7 @@ export default {
                 type: "Point",
                 coordinates: cord
               },
-              properties: {
-                description: "Ford's Theater",
-                id: "value0"
-              }
+              properties: {}
             }
           ]
         }
@@ -161,7 +164,7 @@ export default {
           "circle-radius": {
             stops: [
               [0, 0],
-              [20, 80000]
+              [20, 18000]
               //distance here
             ],
             base: 2
@@ -171,11 +174,26 @@ export default {
           "circle-pitch-scale": "viewport"
         }
       };
+    },
+    getTextLayer(text) {
+      return {
+        type: "symbol",
+        layout: {
+          "text-field": text,
+          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+          "text-size": 13
+        }
+      };
     }
   },
   created() {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
+    this.mapbox.setRTLTextPlugin(
+      "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js",
+      null,
+      true // Lazy load the plugin
+    );
   },
   mounted() {
     //every 10 second request the api !
