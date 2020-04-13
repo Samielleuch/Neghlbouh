@@ -24,7 +24,7 @@
                 v-if="error !== ''"
                 width="80%"
               >
-                {{ error }}
+                {{ error.message }}
               </v-alert>
             </v-col>
           </v-row>
