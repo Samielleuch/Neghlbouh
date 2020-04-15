@@ -1,13 +1,15 @@
 <template>
-  <v-hover open-delay="50" v-slot:default="{ hover }">
+  <v-hover  v-slot:default="{ hover }">
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto mt-12"
       max-width="520"
       dir="rtl"
+      height="360px"
+
     >
       <div align="center" style="margin-top: 2px">
-        <v-avatar size="65">
+        <v-avatar size="80">
           <img alt="" src="../assets/user.png" />
         </v-avatar>
       </div>
