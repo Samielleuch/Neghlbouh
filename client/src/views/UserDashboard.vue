@@ -1,10 +1,10 @@
 <template>
   <div class="background">
     <v-row>
-      <v-col class="col-md-4">
+      <v-col cols="6">
         <UserCard :user="user"> </UserCard>
       </v-col>
-      <v-col class="col-md-8">
+      <v-col cols="6">
         <MapInfoCard> </MapInfoCard>
       </v-col>
     </v-row>
