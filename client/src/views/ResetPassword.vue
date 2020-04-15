@@ -14,8 +14,7 @@ export default {
   name: "ResetPassword",
   components: {
     ResetForm
-  },
- 
+  }
 };
 </script>
 

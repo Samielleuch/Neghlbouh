@@ -65,8 +65,8 @@
                 outlined
                 prepend-inner-icon="fas fa-lock"
                 required
-                rounded 
-                name="password_confirmation" 
+                rounded
+                name="password_confirmation"
                 v-model="confirmNewPassword"
               >
               </v-text-field>
@@ -116,7 +116,7 @@ export default {
     return {
       oldPassword: "",
       newPassword: "",
-      confirmNewPassword:"",
+      confirmNewPassword: "",
       valid: false,
       show1: false,
       error: ""
@@ -128,8 +128,9 @@ export default {
       return this.langPack.Reset;
     },
     passwordConfirmationRule() {
-      return () => (this.newPassword === this.confirmNewPassword) || 'Password must match'
-    },
+      return () =>
+        this.newPassword === this.confirmNewPassword || "Password must match";
+    }
   },
   methods: {
     ...mapActions(["pressLogin", "loginUser"]),
@@ -139,7 +140,7 @@ export default {
         this.loading = true;
         try {
           let resp = await authController.reset({
-            auth : this.$route.params.auth,
+            auth: this.$route.params.auth,
             id: this.$route.params.id,
             //cin: this.$store.state.currentUser.cin,
             newPassword: this.newPassword

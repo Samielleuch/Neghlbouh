@@ -7,8 +7,8 @@ export default {
   signIn(credentials) {
     return Api().post("users/signin", credentials);
   },
-  reset(credentials){
-    return Api().put("users/reset",credentials)
+  reset(credentials) {
+    return Api().put("users/reset", credentials);
   },
   test(test) {
     return Api().get("test", test);

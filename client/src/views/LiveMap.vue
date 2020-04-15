@@ -1,5 +1,17 @@
 <template>
   <div>
+    <v-row
+      align="center"
+      justify="center"
+      class="mt-10 text-center"
+      v-if="alertMe"
+    >
+      <v-col align-self="center" justify="center" cols="4">
+        <v-alert dense text type="error"
+          >خطر في منطقتك الرجاء إلتزام المنزل
+        </v-alert>
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <v-col cols="9">
         <div class="mapboxgl-map" id="map">
@@ -88,6 +100,7 @@ export default {
   data() {
     return {
       geoJson: "",
+      alertMe: false,
       visible: false,
       mykey: "100",
       numb: "0",
@@ -164,7 +177,7 @@ export default {
           "circle-radius": {
             stops: [
               [0, 0],
-              [20, 18000]
+              [20, 38000]
               //distance here
             ],
             base: 2

@@ -1,6 +1,5 @@
 <template>
   <div class="background">
-
     <v-row>
       <v-col class="col-md-4">
         <UserCard :user="user"> </UserCard>
