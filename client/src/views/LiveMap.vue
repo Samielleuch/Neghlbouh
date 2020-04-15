@@ -34,16 +34,16 @@
             />
             <MglGeojsonLayer
               :key="index + 30"
-              :layer="getGeoJsonLayer(opacity[index].number)"
+              :layer="getGeoJsonLayer(10)"
               :layerId="index.toString()"
-              :source="getGeoJsonSource(index, city.cord)"
-              :sourceId="getGeoJsonSource(index, city.cord).data.id"
-              v-for="(city, index) in Zones"
+              :source="getGeoJsonSource(index, zone)"
+              :sourceId="index.toString()"
+              v-for="(zone, index) in miniZones"
             >
             </MglGeojsonLayer>
             <MglGeojsonLayer
               :key="index + 500"
-              :layer="getTextLayer(city.name + '\n' + opacity[index].number)"
+              :layer="getTextLayer(city.nom + '\n' + 10)"
               :layerId="(index + 500).toString()"
               :source="getGeoJsonSource(index + 500, city.cord)"
               :sourceId="getGeoJsonSource(index + 500, city.cord).data.id"
@@ -77,7 +77,7 @@
 <script>
 import Mapbox from "mapbox-gl";
 //import gps from "@/services/GpsService";
-import sfax from "@/store/sfaxx.json";
+import cord from "@/store/cord.json";
 import {
   MglMap,
   MglMarker,
@@ -115,7 +115,14 @@ export default {
         [6.5, 28.8869],
         [12.5375, 38.1]
       ],
-      Zones: sfax.Zones,
+      Zones: cord.Zones,
+      miniZones: [
+        [
+          [9.967067, 33.545741],
+          [8.581352, 36.339293]
+        ],
+        []
+      ],
       opacity: [
         { name: "ساقية الزيت", number: 50 },
         { name: "ساقية الدائر", number: 16 },
@@ -143,21 +150,24 @@ export default {
   },
   methods: {
     getGeoJsonSource(idd, cord) {
+      let createdFeatures = [];
+      for (let i = 0; i < cord.length; i++) {
+        createdFeatures.push({
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: cord[i]
+          },
+          properties: {}
+        });
+      }
+      console.log(createdFeatures);
       return {
         type: "geojson",
         data: {
           id: idd.toString(),
           type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              geometry: {
-                type: "Point",
-                coordinates: cord
-              },
-              properties: {}
-            }
-          ]
+          features: createdFeatures
         }
       };
     },
@@ -207,6 +217,13 @@ export default {
       null,
       true // Lazy load the plugin
     );
+    for (let i = 0; i < cord.Zones.length; i++) {
+      if (i < cord.Zones.length / 2) {
+        this.miniZones[0].push(cord.Zones[i].cord);
+      }
+    }
+
+    console.log(cord.Zones.length);
   },
   mounted() {
     //every 10 second request the api !

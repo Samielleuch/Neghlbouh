@@ -83,7 +83,6 @@
 import { mapActions, mapState } from "vuex";
 import authController from "@/services/AuthenticationService";
 
-
 export default {
   name: "Reset",
   components: {},
@@ -113,7 +112,7 @@ export default {
         this.loading = true;
         try {
           let resp = await authController.sendResetMail({
-            email: this.email,
+            email: this.email
           });
           console.log(resp);
           this.pressLogin(false);

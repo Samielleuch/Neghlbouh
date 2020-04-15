@@ -119,8 +119,12 @@
         <!-- Forgot Password section -->
         <v-row justify="center">
           <v-col align="center" cols="9">
-            <router-link to="/Reset" >
-              <a class=" font-weight-bold font-login-pass" href="#" @click="removeModal">
+            <router-link to="/Reset">
+              <a
+                class=" font-weight-bold font-login-pass"
+                href="#"
+                @click="removeModal"
+              >
                 {{ text.noPass }}
               </a>
             </router-link>
