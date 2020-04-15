@@ -47,8 +47,9 @@
             <v-col class="mb-0 pb-0" cols="12">
               <v-text-field
                 :label="text.cinField"
-                class="mb-0 pb-0"
+                class="mb-5 pb-0"
                 clearable
+                :rules="notEmpty"
                 color="black"
                 filled
                 outlined
@@ -67,8 +68,9 @@
                 :label="text.passWordField"
                 :type="show1 ? 'text' : 'password'"
                 @click:append="show1 = !show1"
-                class="mt-0 pb-0"
+                class="mt-0 pb-0 mb-5"
                 clearable
+                :rules="notEmpty"
                 color="black"
                 filled
                 outlined
@@ -103,15 +105,25 @@
             </v-hover>
           </v-col>
         </v-row>
-        <!-- Forgot Password section -->
+        <!-- Create Account section -->
         <v-row justify="center">
           <v-col align="center" cols="9">
             <em>
-              {{ text.forgotPass }}
+              {{ text.noAcc }}
             </em>
             <a class=" font-weight-bold font-login-pass" href="#">
               {{ text.makeAccount }}
             </a>
+          </v-col>
+        </v-row>
+        <!-- Forgot Password section -->
+        <v-row justify="center">
+          <v-col align="center" cols="9">
+            <router-link to="/Reset" >
+              <a class=" font-weight-bold font-login-pass" href="#" @click="removeModal">
+                {{ text.noPass }}
+              </a>
+            </router-link>
           </v-col>
         </v-row>
       </v-card-text>
@@ -137,7 +149,8 @@ export default {
       CIN: "",
       valid: false,
       show1: false,
-      error: ""
+      error: "",
+      notEmpty: [v => !!v || " مطلوب"]
     };
   },
   computed: {
@@ -167,12 +180,16 @@ export default {
         } catch (e) {
           this.loading = false;
           console.log(e.response.data.err);
-          this.error = e.response.data.err;
+          this.error = e.response.data;
         }
       } else {
         //to implement notification v-if here
         console.log("validation failed");
       }
+    },
+    removeModal() {
+      alert("here");
+      this.pressLogin(false);
     }
   }
 };
