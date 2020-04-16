@@ -25,6 +25,17 @@ io.on('connection', (socket) => {
 });
 //our routes are located in /api/v1/{routefilename}
 const route = require("./routers/router")(app);
+
+// error handling
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // send the error page
+  res.status(err.status || 500);
+  res.json(err.message)
+});
 mongoose
   .connect(
     `mongodb+srv://${config.db.dbUser}:${config.db.dbPassword}@${config.db.dbName}-t4fmt.mongodb.net/test?retryWrites=true&w=majority`,

@@ -35,95 +35,42 @@ module.exports = {
       }
     )
       .then(() => {
-        Demande.find({ state: 1 }, (error, demandes) => {
-          // search for accepted demands
-          if (error) res.json({ err: error.message });
-          (async function() {
-            let a = Array();
-            for (let i = 0; i < demandes.length; i++) {
-              let demande = demandes[i];
-              checkTime(demande.cin, res)
-                .then(async n => {
-                  let dateDemande = demande.date.setHours(0, 0, 0, 0); // check if
-                  let dateNow = new Date().setHours(0, 0, 0, 0); // these demande
-                  if (dateDemande === dateNow) {
-                    // mte3 lyoum
-                    let time = new Date().getHours();
-                    let timeDemande = +demande.tempsRetour.split(":")[0];
-                    if (time <= timeDemande) {
-                      a[i] = await Area.updateOne(
-                        { name: demande.zone.trim() },
-                        {
-                          $inc: {
-                            countPeople: 1
-                          }
-                        }
-                      ).catch(e => {
-                        res.json({
-                          err: e.message
-                        });
-                      });
-                    }
+        today = new Date(); //
+        today.setHours(0, 0, 0, 0);
+        return Demande.find({state: 1})// search for accepted demands
+      })
+      .then(async (demandes) => {
+        let a = await Array();
+        for (let i = 0; i < demandes.length; i++) {
+          let demande = demandes[i];
+              a[i] = Area.updateOne(
+                { name: demande.zone.trim() },
+                {
+                  $inc: {
+                    countPeople: 1
                   }
-                })
-                .catch(e => res.json({ err: e.message }));
-            }
-            return a;
-          })().then(() => {
-            setTimeout(() => {
-              Area.find({}, (err, areasFound) => {
-                console.log(areasFound);
-                if (err) res.json(err);
-                res.setHeader("Content-Type", "application/json");
-                let returnedValue = areasFound.map(area => {
-                  return {
-                    name: area.name,
-                    number: area.countPeople
-                  };
-                });
-                res.json({
-                  success: true,
-                  status: returnedValue
-                });
-              }).catch(e => res.json({ err: e.message }));
-            }, 3000); // solution bhiima 7atteksh l nal9a 7all .. :'(
-          });
-        }).catch(e => res.json({ err: e.message }));
+                }
+              ).then((ai) => console.log(ai.n))
+        }
+        return a;
+      })
+      .then((a) => {
+        return Area.find({})
+      })
+      .then((areasFound) => {
+        console.log(areasFound);
+        res.setHeader("Content-Type", "application/json");
+        let returnedValue = areasFound.map(area => {
+          return {
+            name: area.name,
+            number: area.countPeople
+          };
+        });
+        res.json({
+          success: true,
+          status: returnedValue
+        });
       })
       .catch(e => res.json({ err: e.message }));
   }
 };
-
-async function checkTime(cin, res) {
-  try {
-    const all = await Demande.find({
-      cin: cin,
-      state: 1
-    });
-    all.forEach(async a => {
-      const time = a.tempsRetour.split(":");
-      const tempsRetour = +time[0] * 60 + +time[1];
-      const date = new Date();
-      const temps = date.getHours() * 60 + date.getMinutes();
-      if (a.state !== 0) {
-        if (temps > tempsRetour) {
-          const updatedDocument = await Demande.updateOne(
-            {
-              _id: a._id
-            },
-            {
-              $set: {
-                state: 0
-              }
-            }
-          );
-        }
-      }
-    });
-    return 1;
-  } catch (e) {
-    res.json({
-      err: e
-    });
-  }
-}

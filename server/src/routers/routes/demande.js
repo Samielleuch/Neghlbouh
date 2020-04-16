@@ -5,6 +5,13 @@ const mongoose = require("mongoose");
 const Demande = require("../../models/Demande");
 const authenticate = require("../../authenticate");
 const validate = require("../../controllers/Validate");
+
+//check time for all routes
+router.all("*",(req,res,next)=>{
+  DemandeController.checkTime(req,res,next)
+  console.log('checked')
+})
+
 //add "demande" to database
 router.post("/add", (req, res) => {
   DemandeController.addDemande(req, res);

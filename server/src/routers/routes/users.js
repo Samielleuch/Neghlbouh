@@ -23,7 +23,8 @@ router.post("/signup", (req, res, next) => {
       name: req.body.name,
       email: req.body.email,
       city: req.body.city,
-      phone: req.body.phone
+      phone: req.body.phone,
+      zone:req.body.zone
     }),
     req.body.password,
     (err, user) => {
