@@ -10,6 +10,15 @@ export default {
   signIn(credentials) {
     return Api().post("users/signin", credentials);
   },
+  reset(credentials) {
+    return Api().post("users/store-password", credentials);
+  },
+  verifyToken(token) {
+    return Api().get("users/verify-token", token);
+  },
+  sendResetMail(data) {
+    return Api().post("users/reset-password", data);
+  },
   test(test) {
     return Api().get("test", test);
   }

@@ -1,11 +1,13 @@
 <template>
   <div class="row edit">
-    <div class="col-xl-6 col-lg-5 col-md-4">
-      <UserCardEdit :user="user"></UserCardEdit>
-    </div>
-    <div class="col-xl-7 col-lg-7 col-md-8">
-      <EditProfileForm :user="user"></EditProfileForm>
-    </div>
+    <v-row justify="center">
+      <v-col cols="12" md="6" lg="5" class="pr-lg-0">
+        <UserCardEdit :user="user"></UserCardEdit>
+      </v-col>
+      <v-col cols="12" md="6" lg="5" class="pr-lg-0 pl-lg-12">
+        <EditProfileForm :user="user"></EditProfileForm>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
@@ -27,7 +29,7 @@ export default {
 </script>
 <style>
 .edit {
-  height: 550px;
+  height: 100%;
   margin-top: 17px;
   background-color: #e5dddd;
 }
