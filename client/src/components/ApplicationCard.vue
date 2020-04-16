@@ -23,23 +23,47 @@
           >
             <v-card class="appcard pb-0 ">
               <v-row justify="center" align="center">
-                <v-col cols="3" justify="center" align-self="center" class="pb-0 mb-0">
+                <v-col
+                  cols="12"
+                  md="3"
+                  justify="center"
+                  align-self="center"
+                  class="pb-0 mb-0"
+                >
                   <div class="mb-0 font">
                     <span> سبب الخروج : {{ item.reason }} </span>
                   </div>
                   <v-divider inset vertical></v-divider>
                 </v-col>
-                <v-col cols="3" justify="center" align="center" class="pb-0 mb-0">
+                <v-col
+                  cols="12"
+                  md="3"
+                  justify="center"
+                  align="center"
+                  class="pb-0 mb-0"
+                >
                   <div class="mb-0 font">
                     وقت العودة : {{ item.tempsRetour }}
                   </div>
                   <v-divider inset vertical></v-divider>
                 </v-col>
-                <v-col cols="3" justify="center" align="center" class="pb-0 mb-0">
+                <v-col
+                  cols="12"
+                  md="3"
+                  justify="center"
+                  align="center"
+                  class="pb-0 mb-0"
+                >
                   <div class="mb-0 font">الوجهة : {{ item.where }}</div>
                   <v-divider inset vertical></v-divider>
                 </v-col>
-                <v-col justify="center" align="center" class="pb-0 mb-0" sm="12" md="3">
+                <v-col
+                  justify="center"
+                  align="center"
+                  class="pb-0 mb-0"
+                  cols="12"
+                  md="3"
+                >
                   <div class="mb-0 font">
                     <v-alert
                       dense

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-app>
+    <v-app class="pr-0">
       <Header />
-      <v-content>
+      <v-content class="pr-0">
         <!-- the actual page that the router shows-->
         <router-view />
         <!-- my sign up modal that gets rendered on top of the page -->
@@ -30,4 +30,5 @@ export default {
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
+
 </style>
