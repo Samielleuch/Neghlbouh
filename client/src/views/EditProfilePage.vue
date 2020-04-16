@@ -16,14 +16,7 @@ export default {
   name: "EditProfilePage",
   data() {
     return {
-      user: {
-        cin: "125665223",
-        name: "اميرة دريدي",
-        adress: "بنزرت ",
-        phone: "21053262",
-        email: "kdldj@djkd.com",
-        mdp: "sghj"
-      }
+      user: this.$store.state.currentUser
     };
   },
   components: {

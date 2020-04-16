@@ -21,7 +21,7 @@
         <div class="row d">
           <div>مكان السكن :</div>
 
-          <div>{{ user.adress }}</div>
+          <div>{{ user.city }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
@@ -53,11 +53,9 @@ export default {
     user: {
       cin: "string",
       name: "string",
-      lastName: "string",
-      adress: "string",
+      city: "string",
       phone: "integer",
       email: "string",
-      mdp: "string"
     }
   }
 };

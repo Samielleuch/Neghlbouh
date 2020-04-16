@@ -19,7 +19,7 @@
           :labels="label"
           :value="value"
           color="rgba(255, 255, 255, .97)"
-          height="50"
+          height="100"
           padding="5"
           stroke-linecap="round"
           smooth
@@ -47,5 +47,6 @@ export default {
   padding-right: 20px;
   padding-left: 20px;
   margin-top: 20px;
+  width: 400px;
 }
 </style>
