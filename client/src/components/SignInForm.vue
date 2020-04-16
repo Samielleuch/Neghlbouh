@@ -19,7 +19,7 @@
       <!-- icon -->
       <v-row justify="center">
         <v-col align="center" cols="12">
-          <v-img aspect-ratio="3" src="../assets/logo.png" width="400"></v-img>
+          <v-img aspect-ratio="3" src="../assets/logo.png" width="250"></v-img>
         </v-col>
       </v-row>
       <!---->
@@ -192,7 +192,6 @@ export default {
       }
     },
     removeModal() {
-      alert("here");
       this.pressLogin(false);
     }
   }
