@@ -1,20 +1,26 @@
 <template>
   <div>
     <v-overlay
-      :value="isLoginPressed"
-      :dark="false"
       :class="isLoginPressed ? 'background-img' : ''"
+      :dark="false"
+      :value="isLoginPressed"
+      @click="log"
     >
-      <v-card
-        shaped
-        elevation="10"
-        width="650"
-        color="rgba(250, 250, 250, 1 )"
-        outlined
-        :dark="false"
-      >
-        <SignInForm isModal="true" />
-      </v-card>
+      <v-row justify="center">
+        <v-col justify="center">
+          <v-card
+            :dark="false"
+            color="rgba(250, 250, 250, 1 )"
+            elevation="10"
+            outlined
+            shaped
+            width="600px"
+            class="test"
+          >
+            <SignInForm isModal="true" />
+          </v-card>
+        </v-col>
+      </v-row>
     </v-overlay>
   </div>
 </template>
@@ -22,6 +28,7 @@
 <script>
 import SignInForm from "./SignInForm";
 import { mapState } from "vuex";
+
 export default {
   name: "Sign_In",
   components: {
@@ -33,12 +40,34 @@ export default {
   computed: {
     ...mapState(["isLoginPressed"])
   },
-  methods: {}
+  methods: {
+    log() {
+      console.log("clicked");
+    }
+  }
 };
 </script>
 
 <style scoped>
 >>> .background-img {
   background-image: url("../assets/Loginbackground.png");
+}
+@media only screen and (max-width: 900px) {
+  .test {
+    margin-bottom: -20vh;
+
+    transform: scale(0.7, 0.7) !important;
+  }
+}
+@media only screen and (max-height: 550px) {
+  .test {
+    margin-bottom: -20vh;
+
+    transform: scale(0.5, 0.5) !important;
+  }
+}
+.test {
+  margin-bottom: -20vh;
+  transform: scale(0.84, 0.84);
 }
 </style>
