@@ -92,7 +92,7 @@ router.route('/')
     if(fieldToChange.init){
       fieldToChange=null;
     }
-    
+
     if(req.body.oldPassword!==""){
       User.findById(req.user._id) 
       .then((user) => {
@@ -160,8 +160,7 @@ router.route('/')
           }
         }, (err) => next(err))
         .catch((err) => next(err));  
-    }
-    
+    } 
   }
   else{
     err = new Error('You\'r not authorized to update this user!!');
