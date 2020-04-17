@@ -99,7 +99,7 @@ h5 {
   margin-right: 85px;
 }
 .divider {
-  background-color: #afa8a8;
+  background-color: #AFA8A8;
   margin-top: 8px;
   margin-right: 75px;
   width: 300px;

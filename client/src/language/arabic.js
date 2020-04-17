@@ -9,17 +9,14 @@ export default {
     makeAccount: "إبدء حساب جديد الآن "
   },
   HeaderMenu: {
-    Userwelcome: "مرحبا ",
     homePage: "الصّفحة الرّئيسيّة",
     liveMap: "خريطة",
     demande: "تعمير مطلب ",
     infoPage: "ارشادات ",
+    // { name: "الإجراءات المُتّخذة", icon: "fas fa-viruses", link: "Home" },
     faq: "اسئلة متداولة",
     signup: "تسجيل",
-    loginButton: "دخول",
-    logOutButton: "خروج",
-    userDashboardButton: "الصفحة الخاصة",
-    adminDashboardButton: "لوحة القيادة"
+    loginButton: "دخول"
   },
   Sign_Up: {
     popup_text1: "مرحبا بكم في",
@@ -32,8 +29,7 @@ export default {
     passWordField: "كلمة السر",
     submitField: "ارسل",
     forgotPass: "ليس لديك حساب ؟ ",
-    makeAccount: "إبدء حساب جديد الآن ",
-    text_photo: "صحتك تهمنا"
+    makeAccount: "إبدء حساب جديد الآن "
   },
   HomePageBanner: {
     title1: "الApplication الي تنجم تعاونك بش تخرج وقتلي تحب ",

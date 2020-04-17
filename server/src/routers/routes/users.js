@@ -29,7 +29,7 @@ router.post('/signup', (req, res, next) => {
     req.body.password, (err, user) => {
      
     if(err) {
-      res.statusCode = 401;
+      res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
       res.json({err: err});
     }
@@ -65,46 +65,21 @@ router.route('/')
   .then(message => console.log(message.sid));
 })
 
-router.route('/')
+router.route('/:userId')
 .put(authenticate.verifyOrdinaryUser,(req, res, next) => {
   if(req.params.userId==req.user._id){
-    let fieldToChange={init:''};
-    if(req.body.name!==""){
-      delete fieldToChange.init;
-      fieldToChange.name=req.body.name;
-    } 
-    if(req.body.cin!==""){
-      delete fieldToChange.init;
-      fieldToChange.cin=req.body.cin;
-    }
-    if(req.body.email!==""){
-      delete fieldToChange.init;
-      fieldToChange.email=req.body.email;
-    }
-    if(req.body.city!==""){
-      delete fieldToChange.init;
-      fieldToChange.city=req.body.city;
-    }
-    if(req.body.phone!==""){
-      delete fieldToChange.init;
-      fieldToChange.phone=req.body.phone;
-    }
-    if(fieldToChange.init){
-      fieldToChange=null;
-    }
-    
-    if(req.body.oldPassword!==""){
+    if(req.body.oldPassword){
       User.findById(req.user._id) 
       .then((user) => {
         if(user!=null){
           user.changePassword(req.body.oldPassword,req.body.newPassword)
           .then(() => {
             console.log('password changed');
-            if(fieldToChange){
+            if(req.body.otherFields){
               User.update({
                 '_id': req.params.userId
                 }, {
-                    $set: fieldToChange
+                    $set: req.body.otherFields
                 }, { new: true })
                 .then((user) => {
                   if(user!=null){
@@ -141,11 +116,11 @@ router.route('/')
       }, (err) => next(err))
       .catch((err) => next(err));  
     }
-    else if(fieldToChange){
+    else if(req.body.otherFields){
       User.update({
         '_id': req.params.userId
         }, {
-            $set: fieldToChange
+            $set: req.body.otherFields
         }, { new: true })
         .then((user) => {
           if(user!=null){
@@ -245,7 +220,7 @@ router.post('/reset-password',(req, res,next) => {
 })
 
 
-router.post('/store-password',(req, res, next) => {//handles the new password from the front 
+router.post('/store-password',(req, res) => {//handles the new password from the front 
   const userId = req.body.userId
   const token = req.body.token
   const password = req.body.password
@@ -270,7 +245,7 @@ router.post('/store-password',(req, res, next) => {//handles the new password fr
             }).catch(err=>{next(err);})
           }
         }).catch(err=>{next(err);});
-    });
+    }).catch(error => new Error(''))
   }).catch(error=>{next(error);});
 })
 

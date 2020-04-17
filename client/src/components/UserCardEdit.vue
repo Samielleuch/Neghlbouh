@@ -74,7 +74,7 @@ export default {
   font-family: Cairo;
 }
 .divider {
-  background-color: #afa8a8;
+  background-color: #AFA8A8;
 }
 .avatar {
   margin-top: 10px;

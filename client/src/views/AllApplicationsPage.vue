@@ -1,23 +1,20 @@
 <template
-  ><div class="background">
-    <div class="app page">
-      <v-col v-for="(item, i) in applications" :key="i" cols="12">
-        <v-card
-          class="app
-      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++card"
-        >
-          <div class="d-flex flex-no-wrap">
-            <div>
-              <div class="app">{{ item.reason }}</div>
+  ><div class="background"><div class="app page">
+    <v-col v-for="(item, i) in applications" :key="i" cols="12">
+      <v-card class="app
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++card">
+        <div class="d-flex flex-no-wrap">
+          <div>
+            <div class="app">{{ item.reason }}</div>
 
-              <div class="app">{{ item.time }}</div>
-              <div class="app">{{ item.timeestimated }}</div>
-            </div>
+            <div class="app">{{ item.time }}</div>
+            <div class="app">{{ item.timeestimated }}</div>
           </div>
-        </v-card>
-      </v-col>
-    </div>
+        </div>
+      </v-card>
+    </v-col>
   </div>
+</div>
 </template>
 <script>
 export default {
