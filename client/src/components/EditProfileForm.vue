@@ -9,14 +9,13 @@
       <br />
       <div>
         <v-form class="form" ref="form" method="put">
-          <div class="row">
+          <v-row>
             <div class="col-md-6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
                 :rules="nameRules"
                 color="#d41b45"
-                :placeholder="user.name"
-                v-model="name"
+                v-model="user.name"
               ></v-text-field>
             </div>
             <div class="col-md-6">
@@ -24,12 +23,11 @@
               <v-text-field
                 :rules="cinRules"
                 color="#d41b45"
-                :placeholder="user.cin"
                 v-model="cin"
               ></v-text-field>
             </div>
-          </div>
-          <div class="row">
+          </v-row>
+          <v-row>
             <div class="col-md-6">
               <v-label><h3>مكان السكن</h3></v-label>
               <v-select :items="cities" :placeholder="user.city"></v-select>
@@ -38,18 +36,16 @@
               <v-label><h3>المنطقة</h3></v-label>
               <v-select
                 :items="items"
-                :placeholder="user.city"
                 v-model="user.city"
               ></v-select>
             </div>
-          </div>
-          <div class="row">
+          </v-row>
+          <v-row>
             <div class="col-md-6">
               <v-label><h3>البريد الالكتروني</h3></v-label>
               <v-text-field
                 :rules="emailRules"
                 color="#d41b45"
-                :placeholder="user.email"
                 v-model="user.email"
               ></v-text-field>
             </div>
@@ -58,11 +54,10 @@
               <v-text-field
                 :rules="phoneRules"
                 color="#d41b45"
-                :placeholder="user.phone"
                 v-model="user.phone"
               ></v-text-field>
             </div>
-          </div>
+          </v-row>
           <v-btn
             @click="updatePass"
             class="title"
@@ -79,7 +74,6 @@
               <v-text-field
                 :rules="rules"
                 color="red"
-                placeholder="كلمة السر"
                 type="password"
                 v-model="oldPassword"
               ></v-text-field>
@@ -89,7 +83,6 @@
               <v-text-field
                 :rules="rules"
                 color="red"
-                placeholder="كلمة السر"
                 type="password"
                 v-model="newPassword"
               ></v-text-field>
