@@ -1,6 +1,7 @@
 <template>
   <div class="background">
     <div class="app page">
+
       <v-row dense>
         <v-col :key="i" cols="12" v-for="(item, i) in applications">
           <v-card class="appcard">
@@ -81,6 +82,7 @@ export default {
 
 .background {
   background-color: #e5dddd;
+  height: 100%;
 }
 
 .page {

@@ -8,35 +8,39 @@
     >
       <br />
       <div>
-        <v-form class="form" ref="form">
+        <v-form class="form" ref="form" method="put">
           <div class="row">
             <div class="col-md-6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
                 :rules="nameRules"
                 color="#d41b45"
-                placeholder="الإسم و اللقب"
-                v-model="user.name"
+                :placeholder="user.name"
+                v-model="name"
               ></v-text-field>
             </div>
             <div class="col-md-6">
               <v-label><h3>بطاقة التعريف الوطنية</h3></v-label>
               <v-text-field
-                :rules="rules"
+                :rules="cinRules"
                 color="#d41b45"
-                placeholder="بطاقة التعريف الوطنية"
-                v-model="user.cin"
+                :placeholder="user.cin"
+                v-model="cin"
               ></v-text-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
               <v-label><h3>مكان السكن</h3></v-label>
-              <v-select :items="cities" required></v-select>
+              <v-select :items="cities" :placeholder="user.city"></v-select>
             </div>
             <div class="col-md-6">
               <v-label><h3>المنطقة</h3></v-label>
-              <v-select :items="items" required></v-select>
+              <v-select
+                :items="items"
+                :placeholder="user.city"
+                v-model="user.city"
+              ></v-select>
             </div>
           </div>
           <div class="row">
@@ -45,16 +49,16 @@
               <v-text-field
                 :rules="emailRules"
                 color="#d41b45"
-                placeholder="البريد الالكتروني"
+                :placeholder="user.email"
                 v-model="user.email"
               ></v-text-field>
             </div>
             <div class="col-md-6">
               <v-label><h3>رقم الهاتف</h3></v-label>
               <v-text-field
-                :rules="rules"
+                :rules="phoneRules"
                 color="#d41b45"
-                placeholder="رقم الهاتف"
+                :placeholder="user.phone"
                 v-model="user.phone"
               ></v-text-field>
             </div>
@@ -69,26 +73,25 @@
           >
             تغيير كلمة السر
           </v-btn>
-
           <div class="row" v-if="isClicked">
             <div class="col-md-6">
-              <v-label><h3>كلمة السر</h3></v-label>
+              <v-label><h3>كلمة السر القديمة</h3></v-label>
               <v-text-field
                 :rules="rules"
                 color="red"
                 placeholder="كلمة السر"
                 type="password"
-                v-model="user.cin"
+                v-model="oldPassword"
               ></v-text-field>
             </div>
             <div class="col-md-6">
-              <v-label><h3>كلمة السر</h3></v-label>
+              <v-label><h3>كلمة السر الجديدة</h3></v-label>
               <v-text-field
                 :rules="rules"
                 color="red"
                 placeholder="كلمة السر"
                 type="password"
-                v-model="user.cin"
+                v-model="newPassword"
               ></v-text-field>
             </div>
           </div>
@@ -96,11 +99,14 @@
         <br />
         <div class="text-center">
           <v-btn
+            :disabled="button"
+            :loading="loading"
             class="title"
             color="#d41b45"
             dark
             rounded
             style="margin-top: 0px;"
+            @click="validate"
           >
             تعديل حسابي
           </v-btn>
@@ -111,6 +117,8 @@
   </v-hover>
 </template>
 <script>
+import authController from "../services/AuthenticationService";
+
 export default {
   name: "EditProfileForm",
   props: {
@@ -119,79 +127,141 @@ export default {
       default: false
     },
     user: {
-      cin: "string",
-      name: "string",
-      adress: "string",
-      phone: "integer",
-      email: "string",
-      mdp: "string"
+      cin: "",
+      name: "",
+      city: "",
+      area: "",
+      phone: "",
+      email: ""
     }
   },
-  data: () => ({
-    cities: [
-      "أريانة",
-      "باجة",
-      "بنزرت",
-      "بن عروس",
-      "تطاوين",
-      "توزر",
-      "تونس",
-      "جندوبة",
-      "زغوان",
-      "سليانة",
-      "سوسة",
-      "سيدي بوزيد",
-      "صفاقس",
-      "قابس",
-      "قبلي",
-      "القصرين",
-      "قفصة",
-      "القيروان",
-      "الكاف",
-      "مدنين",
-      "المنستير",
-      "منوبة",
-      "المهدية",
-      "نابل"
-    ],
-    items: [
-      "ساقية الزيت",
-      "ساقية الدائر",
-      "العين صفاقس",
-      "قرمدة",
-      "طينة",
-      "الشيحية",
-      "المحرس",
-      "قرقنة",
-      "الصخيرة",
-      "عقارب",
-      "الحنشة",
-      "جبنيانة",
-      "بئر علي صفاقس",
-      "الغريبة",
-      "العامرة",
-      "العوابد - الخزانات",
-      "الناظور",
-      "الحاجب",
-      "حزق",
-      "الأعشاش",
-      "النصر"
-    ],
-    nameRules: [
-      v => !!v || "Name is required",
-      v => (v && v.length <= 10) || "Name must be less than 10 characters"
-    ],
-    emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ]
-  }),
+  data() {
+    return {
+      loading: false,
+      valid: true,
+      newPassword: "",
+      oldPassword: "",
+      cin: this.user.cin,
+      name: this.user.name,
+      city: this.user.city,
+      phone: this.user.phone,
+      email: this.user.email,
+      cities: [
+        "أريانة",
+        "باجة",
+        "بنزرت",
+        "بن عروس",
+        "تطاوين",
+        "توزر",
+        "تونس",
+        "جندوبة",
+        "زغوان",
+        "سليانة",
+        "سوسة",
+        "سيدي بوزيد",
+        "صفاقس",
+        "قابس",
+        "قبلي",
+        "القصرين",
+        "قفصة",
+        "القيروان",
+        "الكاف",
+        "مدنين",
+        "المنستير",
+        "منوبة",
+        "المهدية",
+        "نابل"
+      ],
+      items: [
+        "ساقية الزيت",
+        "ساقية الدائر",
+        "العين صفاقس",
+        "قرمدة",
+        "طينة",
+        "الشيحية",
+        "المحرس",
+        "قرقنة",
+        "الصخيرة",
+        "عقارب",
+        "الحنشة",
+        "جبنيانة",
+        "بئر علي صفاقس",
+        "الغريبة",
+        "العامرة",
+        "العوابد - الخزانات",
+        "الناظور",
+        "الحاجب",
+        "حزق",
+        "الأعشاش",
+        "النصر"
+      ],
+      cinRules: [
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        v => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام"
+      ],
+      phoneRules: [
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
+        v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
+      ],
+      nameRules: [
+        v => (v && v.length <= 30) || "Name must be less than 30 characters"
+      ],
+      emailRules: [v => /.+@.+\..+/.test(v) || "E-mail must be valid"]
+    };
+  },
+  computed: {
+    button() {
+      if (
+        this.name !== this.user.name ||
+        this.cin !== this.user.cin ||
+        this.city !== this.user.city ||
+        this.phone !== this.user.phone ||
+        this.area !== this.user.area ||
+        this.email !== this.user.email ||
+        (this.oldPassword !== "" && this.newPassword != "")
+      ) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.valid = true;
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
   methods: {
     updatePass() {
       if (!this.isClicked) {
         this.isClicked = true;
       } else {
         this.isClicked = false;
+      }
+    },
+    async validate() {
+      this.$refs.form.validate();
+      if (this.valid) {
+        this.loading = true;
+        try {
+          let resp = await authController.update({
+            Id: this.$store.state.currentUser.id(),
+            oldPassword: this.oldPassword,
+            newPassword: this.newPassword,
+            name: this.name,
+            cin: this.CIN,
+            email: this.email,
+            city: this.city,
+            area: this.area,
+            phone: this.phone
+          });
+          this.loading = false;
+          console.log(resp);
+        } catch (e) {
+          this.loading = false;
+          console.log(e.response.data);
+          this.error = e.response.data.err;
+        }
+      } else {
+        //to implement notification v-if here
+        console.log("validation failed");
       }
     }
   }

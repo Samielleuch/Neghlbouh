@@ -117,11 +117,9 @@ export default {
     user: {
       cin: "string",
       name: "string",
-      lastName: "string",
-      adress: "string",
+      city: "string",
       phone: "integer",
       email: "string",
-      mdp: "string"
     }
   }
 };
