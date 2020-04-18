@@ -18,14 +18,6 @@
                 v-model="user.name"
               ></v-text-field>
             </div>
-            <div class="col-md-6">
-              <v-label><h3>بطاقة التعريف الوطنية</h3></v-label>
-              <v-text-field
-                :rules="cinRules"
-                color="#d41b45"
-                v-model="cin"
-              ></v-text-field>
-            </div>
           </v-row>
           <v-row>
             <div class="col-md-6">
@@ -36,7 +28,7 @@
               <v-label><h3>المنطقة</h3></v-label>
               <v-select
                 :items="items"
-                v-model="user.city"
+                v-model="user.area"
               ></v-select>
             </div>
           </v-row>
