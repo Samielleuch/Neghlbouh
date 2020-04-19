@@ -25,15 +25,15 @@
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
-          <div>رقم الهاتف :</div>
+          <div>المنطقة</div>
 
-          <div>{{ user.phone }}</div>
+          <div>: {{ user.area }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
-          <div>بطاقة التعريف الوطنية</div>
+          <div>رقم الهاتف :</div>
 
-          <div>: {{ user.cin }}</div>
+          <div>{{ user.phone }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
@@ -51,7 +51,7 @@ export default {
   name: "UserCardEdit",
   props: {
     user: {
-      cin: "string",
+      area : "string",
       name: "string",
       city: "string",
       phone: "integer",

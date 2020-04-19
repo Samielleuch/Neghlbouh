@@ -1,12 +1,11 @@
 <template>
-  <v-hover  v-slot:default="{ hover }">
+  <v-hover v-slot:default="{ hover }">
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto mt-12"
       max-width="520"
       dir="rtl"
       height="360px"
-
     >
       <div align="center" style="margin-top: 2px">
         <v-avatar size="80">
@@ -45,6 +44,22 @@
       <!-- -->
       <v-row justify="center" align="center">
         <v-col align="center" justify="center" class="pt-0 pb-0">
+          <h5 dir="ltr">{{ user.area }} <strong>: المنطقة </strong></h5>
+        </v-col>
+      </v-row>
+      <!-- Divider-->
+      <v-row justify="center" align="center" class="mt-0 mb-0">
+        <v-col align="center" justify="center" class="pt-2 pb-2">
+          <v-divider
+            class="divider"
+            style="background-color: #AFA8A8;"
+          ></v-divider>
+        </v-col>
+      </v-row>
+      <!-- -->
+      <!-- -->
+      <v-row justify="center" align="center">
+        <v-col align="center" justify="center" class="pt-0 pb-0">
           <h5 dir="ltr">{{ user.phone }} <strong> : رقم الهاتف </strong></h5>
         </v-col>
       </v-row>
@@ -57,24 +72,6 @@
           ></v-divider>
         </v-col>
       </v-row>
-      <!-- -->
-      <v-row justify="center" align="center">
-        <v-col align="center" justify="center" class="pt-0 pb-0">
-          <h5 dir="ltr">
-            {{ user.cin }} <strong> : بطاقة التعريف الوطنية </strong>
-          </h5>
-        </v-col>
-      </v-row>
-      <!-- Divider-->
-      <v-row justify="center" align="center" class="mt-0 mb-0">
-        <v-col align="center" justify="center" class="pt-2 pb-2">
-          <v-divider
-            class="divider"
-            style="background-color: #AFA8A8;"
-          ></v-divider>
-        </v-col>
-      </v-row>
-      <!-- -->
       <v-row justify="center" align="center">
         <v-col align="center" justify="center" class="pt-0 pb-0">
           <h5 dir="ltr">
@@ -115,11 +112,11 @@ export default {
   name: "UserCard",
   props: {
     user: {
-      cin: "string",
+      area: "string",
       name: "string",
       city: "string",
       phone: "integer",
-      email: "string",
+      email: "string"
     }
   }
 };

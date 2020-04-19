@@ -22,14 +22,11 @@
           <v-row>
             <div class="col-md-6">
               <v-label><h3>مكان السكن</h3></v-label>
-              <v-select :items="cities" :placeholder="user.city"></v-select>
+              <v-select :items="cities" v-model="user.city"></v-select>
             </div>
             <div class="col-md-6">
               <v-label><h3>المنطقة</h3></v-label>
-              <v-select
-                :items="items"
-                v-model="user.area"
-              ></v-select>
+              <v-select :items="items" v-model="user.area"></v-select>
             </div>
           </v-row>
           <v-row>
@@ -96,6 +93,7 @@
             تعديل حسابي
           </v-btn>
         </div>
+        <div class="mt-5" v-if="isClicked">تم تعديل المعطيات بنجاح</div>
         <div class="clearfix"></div>
       </div>
     </v-card>
@@ -112,7 +110,6 @@ export default {
       default: false
     },
     user: {
-      cin: "",
       name: "",
       city: "",
       area: "",
@@ -123,10 +120,10 @@ export default {
   data() {
     return {
       loading: false,
+      done: false,
       valid: true,
       newPassword: "",
       oldPassword: "",
-      cin: this.user.cin,
       name: this.user.name,
       city: this.user.city,
       phone: this.user.phone,
@@ -180,10 +177,6 @@ export default {
         "الأعشاش",
         "النصر"
       ],
-      cinRules: [
-        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        v => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام"
-      ],
       phoneRules: [
         v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
         v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
@@ -198,7 +191,6 @@ export default {
     button() {
       if (
         this.name !== this.user.name ||
-        this.cin !== this.user.cin ||
         this.city !== this.user.city ||
         this.phone !== this.user.phone ||
         this.area !== this.user.area ||
@@ -231,7 +223,6 @@ export default {
             oldPassword: this.oldPassword,
             newPassword: this.newPassword,
             name: this.name,
-            cin: this.CIN,
             email: this.email,
             city: this.city,
             area: this.area,
@@ -241,6 +232,7 @@ export default {
           console.log(resp);
         } catch (e) {
           this.loading = false;
+          this.loading = true;
           console.log(e.response.data);
           this.error = e.response.data.err;
         }
