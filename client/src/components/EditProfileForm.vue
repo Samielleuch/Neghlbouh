@@ -15,18 +15,26 @@
               <v-text-field
                 :rules="nameRules"
                 color="#d41b45"
-                v-model="user.name"
+                v-model="name"
+              ></v-text-field>
+            </div>
+            <div class="col-md-6">
+              <v-label><h3>الإسم و اللقب</h3></v-label>
+              <v-text-field
+                :rules="nameRules"
+                color="#d41b45"
+                v-model="cin"
               ></v-text-field>
             </div>
           </v-row>
           <v-row>
             <div class="col-md-6">
               <v-label><h3>مكان السكن</h3></v-label>
-              <v-select :items="cities" v-model="user.city"></v-select>
+              <v-select :items="cities" v-model="city"></v-select>
             </div>
             <div class="col-md-6">
               <v-label><h3>المنطقة</h3></v-label>
-              <v-select :items="items" v-model="user.area"></v-select>
+              <v-select :items="items" v-model="area"></v-select>
             </div>
           </v-row>
           <v-row>
@@ -35,7 +43,7 @@
               <v-text-field
                 :rules="emailRules"
                 color="#d41b45"
-                v-model="user.email"
+                v-model="email"
               ></v-text-field>
             </div>
             <div class="col-md-6">
@@ -43,7 +51,7 @@
               <v-text-field
                 :rules="phoneRules"
                 color="#d41b45"
-                v-model="user.phone"
+                v-model="phone"
               ></v-text-field>
             </div>
           </v-row>
@@ -93,7 +101,7 @@
             تعديل حسابي
           </v-btn>
         </div>
-        <div class="mt-5" v-if="isClicked">تم تعديل المعطيات بنجاح</div>
+        <div class="mt-5" v-if="done">تم تعديل المعطيات بنجاح</div>
         <div class="clearfix"></div>
       </div>
     </v-card>
@@ -114,7 +122,8 @@ export default {
       city: "",
       area: "",
       phone: "",
-      email: ""
+      email: "",
+      cin: ""
     }
   },
   data() {
@@ -126,6 +135,7 @@ export default {
       oldPassword: "",
       name: this.user.name,
       city: this.user.city,
+      cin: this.user.cin,
       phone: this.user.phone,
       email: this.user.email,
       cities: [
@@ -179,7 +189,6 @@ export default {
       ],
       phoneRules: [
         v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
       ],
       nameRules: [
         v => (v && v.length <= 30) || "Name must be less than 30 characters"
@@ -192,6 +201,7 @@ export default {
       if (
         this.name !== this.user.name ||
         this.city !== this.user.city ||
+        this.cin !== this.user.cin ||
         this.phone !== this.user.phone ||
         this.area !== this.user.area ||
         this.email !== this.user.email ||
@@ -219,20 +229,20 @@ export default {
         this.loading = true;
         try {
           let resp = await authController.update({
-            Id: this.$store.state.currentUser.id(),
             oldPassword: this.oldPassword,
             newPassword: this.newPassword,
             name: this.name,
             email: this.email,
             city: this.city,
+            cin: this.cin,
             area: this.area,
             phone: this.phone
           });
           this.loading = false;
+          this.done = true;
           console.log(resp);
         } catch (e) {
           this.loading = false;
-          this.loading = true;
           console.log(e.response.data);
           this.error = e.response.data.err;
         }

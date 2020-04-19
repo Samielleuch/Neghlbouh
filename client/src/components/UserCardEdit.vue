@@ -51,11 +51,11 @@ export default {
   name: "UserCardEdit",
   props: {
     user: {
-      area : "string",
-      name: "string",
-      city: "string",
-      phone: "integer",
-      email: "string",
+      area: "",
+      name: "",
+      city: "",
+      phone: "",
+      email: "",
     }
   }
 };
