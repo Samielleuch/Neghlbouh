@@ -183,7 +183,7 @@ export default {
   margin-top: -25px;
 }
 
->>> .mt--10 {
+.mt--10 {
   margin-top: -50px !important;
 }
 
@@ -209,7 +209,7 @@ export default {
   color: #c70100;
 }
 
->>> .glowing-border {
+.glowing-border {
   box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
     /* middle magenta */ 0 0 10px 1px #6b2028 !important;
 }
