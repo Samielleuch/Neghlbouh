@@ -24,8 +24,8 @@
             <div class="col-md-5" style="margin-right: 30px">
               <v-time-picker
                 color="#d41b45"
-                width="180px"
                 v-model="tempsRetour"
+                width="180px"
               ></v-time-picker>
             </div>
           </v-row>
@@ -55,34 +55,34 @@
 
           <div class="mt-5" v-if="isClicked">
             <v-row align="center" justify="center">
-              <v-col align-self="center" justify="center" cols="4">
+              <v-col align-self="center" cols="4" justify="center">
                 <v-alert
-                  color="red"
                   border="left"
-                  elevation="2"
+                  color="red"
                   colored-border
+                  elevation="2"
                   icon="fas fa-lungs-virus"
                 >
                   عدد المصابين : 5
                 </v-alert>
               </v-col>
-              <v-col align-self="center" justify="center" cols="4">
+              <v-col align-self="center" cols="4" justify="center">
                 <v-alert
-                  color="red"
                   border="left"
-                  elevation="2"
+                  color="red"
                   colored-border
+                  elevation="2"
                   icon="fas fa-head-side-mask"
                 >
                   عدد المواطنين 16
                 </v-alert>
               </v-col>
-              <v-col align-self="center" justify="center" cols="4">
+              <v-col align-self="center" cols="4" justify="center">
                 <v-alert
-                  color="red"
                   border="left"
-                  elevation="2"
+                  color="red"
                   colored-border
+                  elevation="2"
                   icon="fas fa-house-user"
                 >
                   عدد حاملي سوار الحماية: 0
@@ -90,7 +90,7 @@
               </v-col>
             </v-row>
             <v-row align="center" justify="center">
-              <v-col align-self="center" justify="center" cols="3">
+              <v-col align-self="center" cols="3" justify="center">
                 <v-alert dense text type="success" v-if="state == 'Supermodel'">
                   الخطر ضعيف
                 </v-alert>
@@ -131,6 +131,7 @@
 <script>
 import DemandesService from "@/services/DemandesService";
 import { mapActions } from "vuex";
+
 export default {
   name: "FormPage",
   props: {

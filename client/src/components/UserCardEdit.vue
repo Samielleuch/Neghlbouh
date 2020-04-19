@@ -55,7 +55,7 @@ export default {
       name: "string",
       city: "string",
       phone: "integer",
-      email: "string",
+      email: "string"
     }
   }
 };

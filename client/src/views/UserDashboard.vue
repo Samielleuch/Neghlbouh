@@ -1,16 +1,16 @@
 <template>
   <div class="background">
     <v-row justify="center">
-      <v-col cols="12" md="6" lg="5" class="pr-lg-0">
-        <UserCard :user="user"> </UserCard>
+      <v-col class="pr-lg-0" cols="12" lg="5" md="6">
+        <UserCard :user="user"></UserCard>
       </v-col>
-      <v-col cols="12" md="6" lg="5" class="pr-lg-0 pl-lg-12">
-        <MapInfoCard> </MapInfoCard>
+      <v-col class="pr-lg-0 pl-lg-12" cols="12" lg="5" md="6">
+        <MapInfoCard></MapInfoCard>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" class="mt-5">
-        <ApplicationCard> </ApplicationCard>
+      <v-col class="mt-5" cols="12">
+        <ApplicationCard></ApplicationCard>
       </v-col>
     </v-row>
   </div>

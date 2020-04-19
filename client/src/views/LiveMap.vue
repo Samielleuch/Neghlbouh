@@ -2,11 +2,11 @@
   <div>
     <v-row
       align="center"
-      justify="center"
       class="mt-10 text-center"
+      justify="center"
       v-if="alertMe"
     >
-      <v-col align-self="center" justify="center" cols="4">
+      <v-col align-self="center" cols="4" justify="center">
         <v-alert dense text type="error"
           >خطر في منطقتك الرجاء إلتزام المنزل
         </v-alert>
@@ -27,10 +27,10 @@
             <MglNavigationControl position="top-right" />
             <MglScaleControl />
             <MglMarker
-              v-if="visible"
               :coordinates="myCoordinate"
-              color="red"
               :key="mykey"
+              color="red"
+              v-if="visible"
             />
             <MglGeojsonLayer
               :key="index + 30"
@@ -57,17 +57,17 @@
     <v-row class="mr-12 ml-12">
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-5"> اقل 20 مواطن </v-sheet>
+          <v-sheet color="red lighten-5"> اقل 20 مواطن</v-sheet>
         </div>
       </v-col>
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-4"> بين 20 و 50 مواطن </v-sheet>
+          <v-sheet color="red lighten-4"> بين 20 و 50 مواطن</v-sheet>
         </div>
       </v-col>
       <v-col cols="4">
         <div class="text-center">
-          <v-sheet color="red lighten-2"> اكثر من 50 </v-sheet>
+          <v-sheet color="red lighten-2"> اكثر من 50</v-sheet>
         </div>
       </v-col>
     </v-row>

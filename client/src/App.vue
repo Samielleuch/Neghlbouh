@@ -16,6 +16,7 @@
 import Sign_In from "./components/Sign_In";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
 export default {
   name: "App",
   components: {
@@ -30,5 +31,4 @@ export default {
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Cairo|Tajawal&display=swap");
-
 </style>

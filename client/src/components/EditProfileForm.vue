@@ -8,23 +8,23 @@
     >
       <br />
       <div>
-        <v-form class="form" ref="form" method="put">
+        <v-form class="form" method="put" ref="form">
           <div class="row">
             <div class="col-md-6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
+                :placeholder="user.name"
                 :rules="nameRules"
                 color="#d41b45"
-                :placeholder="user.name"
                 v-model="name"
               ></v-text-field>
             </div>
             <div class="col-md-6">
               <v-label><h3>بطاقة التعريف الوطنية</h3></v-label>
               <v-text-field
+                :placeholder="user.cin"
                 :rules="cinRules"
                 color="#d41b45"
-                :placeholder="user.cin"
                 v-model="cin"
               ></v-text-field>
             </div>
@@ -47,18 +47,18 @@
             <div class="col-md-6">
               <v-label><h3>البريد الالكتروني</h3></v-label>
               <v-text-field
+                :placeholder="user.email"
                 :rules="emailRules"
                 color="#d41b45"
-                :placeholder="user.email"
                 v-model="user.email"
               ></v-text-field>
             </div>
             <div class="col-md-6">
               <v-label><h3>رقم الهاتف</h3></v-label>
               <v-text-field
+                :placeholder="user.phone"
                 :rules="phoneRules"
                 color="#d41b45"
-                :placeholder="user.phone"
                 v-model="user.phone"
               ></v-text-field>
             </div>
@@ -101,12 +101,12 @@
           <v-btn
             :disabled="button"
             :loading="loading"
+            @click="validate"
             class="title"
             color="#d41b45"
             dark
             rounded
             style="margin-top: 0px;"
-            @click="validate"
           >
             تعديل حسابي
           </v-btn>

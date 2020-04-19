@@ -9,26 +9,43 @@
       </div>
       <v-row>
         <v-col align="center">
-          <span v-if="Demandes.length == 0"> ليس لديك طلبات </span>
+          <span v-if="loaded && Demandes.length == 0"> ليس لديك طلبات </span>
+        </v-col>
+      </v-row>
+      <v-row v-if="!loaded">
+        <v-col align="center">
+          <v-row>
+            <v-col>
+              <v-progress-circular :width="3" color="red" indeterminate>
+              </v-progress-circular>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <span class="font" color="red">
+                لحظة برك
+              </span>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
       <div>
-        <v-row dense justify="center" align="center">
+        <v-row align="center" dense justify="center">
           <v-col
             :key="i"
-            cols="12"
-            v-for="(item, i) in applications"
-            justify="center"
             align="center"
+            cols="12"
+            justify="center"
+            v-for="(item, i) in applications"
           >
             <v-card class="appcard pb-0 ">
-              <v-row justify="center" align="center">
+              <v-row align="center" justify="center">
                 <v-col
-                  cols="12"
-                  md="3"
-                  justify="center"
                   align-self="center"
                   class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
                 >
                   <div class="mb-0 font">
                     <span> سبب الخروج : {{ item.reason }} </span>
@@ -36,11 +53,11 @@
                   <v-divider inset vertical></v-divider>
                 </v-col>
                 <v-col
-                  cols="12"
-                  md="3"
-                  justify="center"
                   align="center"
                   class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
                 >
                   <div class="mb-0 font">
                     وقت العودة : {{ item.tempsRetour }}
@@ -48,32 +65,59 @@
                   <v-divider inset vertical></v-divider>
                 </v-col>
                 <v-col
-                  cols="12"
-                  md="3"
-                  justify="center"
                   align="center"
                   class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
                 >
                   <div class="mb-0 font">الوجهة : {{ item.where }}</div>
                   <v-divider inset vertical></v-divider>
                 </v-col>
+                <!-- buttons Cancel -->
                 <v-col
-                  justify="center"
                   align="center"
                   class="pb-0 mb-0"
                   cols="12"
+                  justify="center"
                   md="3"
                 >
-                  <div class="mb-0 font">
-                    <v-alert
-                      dense
-                      type="success"
-                      v-if="item.state == 1"
-                      width="70%"
+                  <v-row align="center" justify="center">
+                    <v-col
+                      :md="item.state === 1 ? 5 : 5"
+                      align="center"
+                      class="pb-0 mb-0"
+                      cols="12"
+                      justify="center"
                     >
-                      خطر ضعيف
-                    </v-alert>
-                  </div>
+                      <div class="mb-0 font">
+                        <v-alert
+                          :color="getColorState(item.state)"
+                          width="90%"
+                          dense
+                          outlined
+                        >
+                          {{ states[item.state] }}
+                        </v-alert>
+                      </div>
+                    </v-col>
+                    <v-col
+                      align="center"
+                      class="pb-0 mb-0"
+                      cols="12"
+                      justify="center"
+                      md="5"
+                    >
+                      <div v-if="item.state === 1">
+                        <v-btn class="mb-5  " color="error" fab icon>
+                          <v-icon>fas fa-trash-alt</v-icon>
+                        </v-btn>
+                      </div>
+                      <div v-else>
+                        <v-spacer></v-spacer>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </v-col>
               </v-row>
             </v-card>
@@ -87,8 +131,8 @@
                 class="title "
                 color="#D41B45"
                 dark
-                large
                 height="28px"
+                large
                 rounded
                 v-if="Demandes.length !== 0"
               >
@@ -102,8 +146,8 @@
               class="title "
               color="#D41B45"
               dark
-              large
               height="28px"
+              large
               rounded
             >
               طلب جديد
@@ -116,22 +160,36 @@
 </template>
 <script>
 import DemandesService from "@/services/DemandesService";
+
 export default {
   name: "ApplicationCard",
   data: () => ({
     Demandes: [],
-    applications: []
+    applications: [],
+    states: ["إكتمل", "جاري", "ملغى"],
+    loaded: false
   }),
   created() {
     DemandesService.getDemandes(this.$store.state.currentUser)
       .then(resp => {
-        console.log(resp.data.status);
+        this.loaded = true;
         this.Demandes = resp.data.status;
         this.applications = this.Demandes;
       })
       .catch(err => {
         console.log(err);
       });
+  },
+  methods: {
+    getColorState(itemState) {
+      if (itemState === 0) {
+        return "teal";
+      } else if (itemState === 1) {
+        return "deep-orange";
+      } else {
+        return "red";
+      }
+    }
   }
 };
 </script>
@@ -143,6 +201,7 @@ export default {
 .appcard {
   width: 90%;
 }
+
 .font {
   font-size: 1.2em;
   font-weight: bold;

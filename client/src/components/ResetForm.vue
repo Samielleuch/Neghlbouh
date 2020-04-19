@@ -44,11 +44,11 @@
                   clearable
                   color="black"
                   filled
+                  name="password"
                   outlined
                   prepend-inner-icon="fas fa-lock"
                   required
                   rounded
-                  name="password"
                   v-model="newPassword"
                 >
                 </v-text-field>
@@ -60,18 +60,18 @@
                 <v-text-field
                   :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
                   :label="text.confirmNewPasswordField"
+                  :rules="[passwordConfirmationRule]"
                   :type="show1 ? 'text' : 'password'"
                   @click:append="show1 = !show1"
-                  :rules="[passwordConfirmationRule]"
                   class="mt-0 pb-0"
                   clearable
                   color="black"
                   filled
+                  name="password_confirmation"
                   outlined
                   prepend-inner-icon="fas fa-lock"
                   required
                   rounded
-                  name="password_confirmation"
                   v-model="confirmNewPassword"
                 >
                 </v-text-field>
@@ -104,7 +104,7 @@
       </v-form>
     </div>
     <div v-else>
-      <v-alert prominent type="error" class="mt-12">
+      <v-alert class="mt-12" prominent type="error">
         <v-row align="center">
           <v-col class="grow">{{ error }}</v-col>
         </v-row>

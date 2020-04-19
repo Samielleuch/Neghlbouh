@@ -4,8 +4,8 @@
       :elevation="hover ? 16 : 2"
       class="mx-auto mt-12 "
       dir="rtl"
-      max-width="700"
       height="360px"
+      max-width="700"
     >
       <div align="center">
         <v-avatar class="avatar" size="80">
@@ -19,18 +19,18 @@
       </v-row>
       <v-row align="center">
         <v-col align="center" class="pt-0 pb-0 ">
-          <v-sheet color="#d41b45" class="fill-height mx-2">
+          <v-sheet class="fill-height mx-2" color="#d41b45">
             <v-sparkline
-              auto-draw
               :labels="label"
               :value="value"
+              auto-draw
               color="rgba(255, 255, 255, .97)"
               height="95%"
               padding="5"
-              stroke-linecap="round"
               smooth
+              stroke-linecap="round"
             >
-              <template v-slot:label="item"> {{ item.value }} </template>
+              <template v-slot:label="item"> {{ item.value }}</template>
             </v-sparkline>
           </v-sheet>
         </v-col>
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-.font{
+.font {
   color: #6b2028 !important;
   font-weight: bolder;
   font-size: 14px !important;

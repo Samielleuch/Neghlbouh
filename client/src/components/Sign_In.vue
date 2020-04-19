@@ -10,12 +10,12 @@
         <v-col justify="center">
           <v-card
             :dark="false"
+            class="test"
             color="rgba(250, 250, 250, 1 )"
             elevation="10"
             outlined
             shaped
             width="600px"
-            class="test"
           >
             <SignInForm isModal="true" />
           </v-card>
@@ -52,6 +52,7 @@ export default {
 >>> .background-img {
   background-image: url("../assets/Loginbackground.png");
 }
+
 @media only screen and (max-width: 900px) {
   .test {
     margin-bottom: -20vh;
@@ -59,6 +60,7 @@ export default {
     transform: scale(0.7, 0.7) !important;
   }
 }
+
 @media only screen and (max-height: 550px) {
   .test {
     margin-bottom: -20vh;
@@ -66,6 +68,7 @@ export default {
     transform: scale(0.5, 0.5) !important;
   }
 }
+
 .test {
   margin-bottom: -20vh;
   transform: scale(0.84, 0.84);

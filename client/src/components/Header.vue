@@ -1,6 +1,6 @@
 <template>
   <!-- the z-index of the nav bar is set to 10 so that it doesn't 
-    collide with the form in the sign up page ( this form has been adjusted with transform) -->
+      collide with the form in the sign up page ( this form has been adjusted with transform) -->
   <div
     dir="rtl"
     style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"

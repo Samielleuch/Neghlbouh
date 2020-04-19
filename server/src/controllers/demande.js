@@ -93,7 +93,7 @@ module.exports = {
   },
   checkTime(req, res, next) {
     Demande.find({ state: 1 })
-      .then((all) => {
+      .then(all => {
         all.forEach(a => {
           const time = a.tempsRetour.split(":");
           const tempsRetour = +time[0] * 60 + +time[1];
@@ -101,9 +101,8 @@ module.exports = {
           if (date.getDay() == a.date.getDay()) {
             const temps = date.getHours() * 60 + date.getMinutes();
             if (temps > tempsRetour) {
-              
             }
-          }else{
+          } else {
             Demande.updateOne(
               {
                 _id: a._id
@@ -113,12 +112,14 @@ module.exports = {
                   state: 0
                 }
               }
-            ).then((ai)=>{console.log(ai)});
+            ).then(ai => {
+              console.log(ai);
+            });
           }
         });
-        next()
+        next();
       })
-      .catch((err) => next(err))
+      .catch(err => next(err));
   }
 };
 

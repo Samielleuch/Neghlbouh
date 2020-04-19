@@ -335,7 +335,7 @@ export default {
 <style scoped>
 .form {
   /* This form has been down-scaled and the z-index is made 1
-   with position relative so it doesn't collide with the nav bar */
+         with position relative so it doesn't collide with the nav bar */
   position: relative;
   z-index: 1 !important;
 }

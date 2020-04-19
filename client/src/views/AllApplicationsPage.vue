@@ -1,54 +1,116 @@
 <template>
   <div class="background">
-    <div class="app page">
-
-      <v-row dense>
-        <v-col :key="i" cols="12" v-for="(item, i) in applications">
-          <v-card class="appcard">
-            <div class="d-flex flex-no-wrap">
-              <div class="row">
-                <v-col cols="5">
-                  <div class="app font" style="margin-top: 1px">
-                    سبب الخروج : {{ item.reason }}
-                  </div>
-                </v-col>
+    <div class="background">
+      <v-row align="center" class="pt-12" dense justify="center">
+        <v-row align="center" justify="center" v-if="!loaded">
+          <v-col align="center" justify="center">
+            <v-row>
+              <v-col>
+                <v-progress-circular
+                  :width="5"
+                  color="black"
+                  indeterminate
+                  size="50"
+                >
+                </v-progress-circular>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <span class="font">
+                  لحظة برك
+                </span>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+        <v-col
+          :key="i"
+          align="center"
+          cols="12"
+          justify="center"
+          v-for="(item, i) in applications"
+        >
+          <v-card class="appcard pb-0 ">
+            <v-row align="center" justify="center">
+              <v-col
+                align-self="center"
+                class="pb-0 mb-0"
+                cols="12"
+                justify="center"
+                md="3"
+              >
+                <div class="mb-0 font">
+                  <span> سبب الخروج : {{ item.reason }} </span>
+                </div>
                 <v-divider inset vertical></v-divider>
-                <div class="app font" style="margin-top: 10px">
-                  وقت العودة : {{ item.tempsRetour }}
-                </div>
-                <v-divider
-                  inset
-                  style="margin-right: 80px"
-                  vertical
-                ></v-divider>
-                <div class="app font" style="margin-top: 10px; width: 280px">
-                  الوجهة : {{ item.where }}
-                </div>
-                <div class="app1 font">
-                  <v-alert
-                    dense
-                    text
-                    type="success"
-                    v-if="item.state == 1"
-                    width="170px"
+              </v-col>
+              <v-col
+                align="center"
+                class="pb-0 mb-0"
+                cols="12"
+                justify="center"
+                md="3"
+              >
+                <div class="mb-0 font">وقت العودة : {{ item.tempsRetour }}</div>
+                <v-divider inset vertical></v-divider>
+              </v-col>
+              <v-col
+                align="center"
+                class="pb-0 mb-0"
+                cols="12"
+                justify="center"
+                md="3"
+              >
+                <div class="mb-0 font">الوجهة : {{ item.where }}</div>
+                <v-divider inset vertical></v-divider>
+              </v-col>
+              <!-- buttons Cancel -->
+              <v-col
+                align="center"
+                class="pb-0 mb-0"
+                cols="12"
+                justify="center"
+                md="3"
+              >
+                <v-row align="center" justify="center">
+                  <v-col
+                    :md="item.state === 1 ? 5 : 5"
+                    align="center"
+                    class="pb-0 mb-0"
+                    cols="12"
+                    justify="center"
                   >
-                    الخطر :{{ item.score }}
-                  </v-alert>
-                  <v-alert
-                    dense
-                    text
-                    type="warning"
-                    v-else-if="item.state == 'Super'"
-                    width="170px"
+                    <div class="mb-0 font">
+                      <v-alert
+                        :color="getColorState(item.state)"
+                        width="90%"
+                        dense
+                        outlined
+                      >
+                        {{ states[item.state] }}
+                      </v-alert>
+                    </div>
+                  </v-col>
+                  <v-col
+                    align="center"
+                    class="pb-0 mb-0"
+                    cols="12"
+                    justify="center"
+                    md="5"
                   >
-                    الخطر :{{ item.score }}
-                  </v-alert>
-                  <v-alert dense outlined type="error" v-else width="170px">
-                    الخطر :{{ item.score }}
-                  </v-alert>
-                </div>
-              </div>
-            </div>
+                    <div v-if="item.state === 1">
+                      <v-btn class="mb-5  " color="error" fab icon>
+                        <v-icon>fas fa-trash-alt</v-icon>
+                      </v-btn>
+                    </div>
+                    <div v-else>
+                      <v-spacer></v-spacer>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -57,47 +119,50 @@
 </template>
 <script>
 import DemandesService from "@/services/DemandesService";
+
 export default {
   name: "AllApplicationsPage",
   data: () => ({
-    applications: []
+    applications: [],
+    states: ["إكتمل", "جاري", "ملغى"],
+    loaded: false
   }),
   created() {
     DemandesService.getDemandes(this.$store.state.currentUser)
       .then(resp => {
+        this.loaded = true;
         this.applications = resp.data.status;
       })
       .catch(err => {
         console.log(err);
       });
+  },
+  methods: {
+    getColorState(itemState) {
+      if (itemState === 0) {
+        return "teal";
+      } else if (itemState === 1) {
+        return "deep-orange";
+      } else {
+        return "red";
+      }
+    }
   }
 };
 </script>
 <style>
-.appcard {
-  height: 100px;
-  width: 1000px;
-  margin-bottom: 30px;
-}
-
 .background {
   background-color: #e5dddd;
   height: 100%;
 }
 
-.page {
-  margin-top: 17px;
-}
-
-.app {
-  padding-right: 15px;
-}
-
-.app1 {
-  margin-right: 30px;
+.appcard {
+  width: 90%;
 }
 
 .font {
+  font-size: 1.2em;
+  font-weight: bold;
   font-family: Cairo;
 }
 </style>

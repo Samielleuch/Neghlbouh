@@ -4,5 +4,3 @@ module.exports = {
     res.send({ msg: "cbn" });
   }
 };
-
-

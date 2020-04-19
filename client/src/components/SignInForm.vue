@@ -47,9 +47,9 @@
             <v-col class="mb-0 pb-0" cols="12">
               <v-text-field
                 :label="text.cinField"
+                :rules="notEmpty"
                 class="mb-5 pb-0"
                 clearable
-                :rules="notEmpty"
                 color="black"
                 filled
                 outlined
@@ -66,11 +66,11 @@
               <v-text-field
                 :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
                 :label="text.passWordField"
+                :rules="notEmpty"
                 :type="show1 ? 'text' : 'password'"
                 @click:append="show1 = !show1"
                 class="mt-0 pb-0 mb-5"
                 clearable
-                :rules="notEmpty"
                 color="black"
                 filled
                 outlined
@@ -91,6 +91,7 @@
               <v-btn
                 :class="hover ? 'mt--10 glowing-border' : 'mt--10'"
                 :disabled="!valid"
+                :loading="loading"
                 :ripple="{ class: 'red--text' }"
                 @click="validate"
                 color="#df0100"
@@ -121,9 +122,9 @@
           <v-col align="center" cols="9">
             <router-link to="/Reset">
               <a
+                @click="removeModal"
                 class=" font-weight-bold font-login-pass"
                 href="#"
-                @click="removeModal"
               >
                 {{ text.noPass }}
               </a>
@@ -154,6 +155,7 @@ export default {
       valid: false,
       show1: false,
       error: "",
+      loading: false,
       notEmpty: [v => !!v || " مطلوب"]
     };
   },

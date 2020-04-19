@@ -1,10 +1,10 @@
 <template>
   <div class="row edit">
     <v-row justify="center">
-      <v-col cols="12" md="6" lg="5" class="pr-lg-0">
+      <v-col class="pr-lg-0" cols="12" lg="5" md="6">
         <UserCardEdit :user="user"></UserCardEdit>
       </v-col>
-      <v-col cols="12" md="6" lg="5" class="pr-lg-0 pl-lg-12">
+      <v-col class="pr-lg-0 pl-lg-12" cols="12" lg="5" md="6">
         <EditProfileForm :user="user"></EditProfileForm>
       </v-col>
     </v-row>
