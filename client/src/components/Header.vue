@@ -452,13 +452,13 @@ export default {
       }
     },
     logOut() {
-      this.session.clear();
+      this.storage.clear();
       this.$router.replace({ name: "Home" });
       this.$router.go();
     }
   },
   mounted() {
-    this.session = window.sessionStorage;
+    this.storage = window.localStorage;
   }
 };
 </script>
