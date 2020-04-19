@@ -1,14 +1,14 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover open-delay="200" v-slot:default="{ hover }">
     <v-card
-      class="mx-auto cardcc"
-      max-width="400"
-      dir="rtl"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardcc"
+      dir="rtl"
+      max-width="400"
     >
       <div align="center">
-        <v-avatar size="130" class="avatar">
-          <img src="../assets/user.png" alt="" />
+        <v-avatar class="avatar" size="130">
+          <img alt="" src="../assets/user.png" />
         </v-avatar>
       </div>
       <v-card-text class="text--primary title">
@@ -21,7 +21,7 @@
         <div class="row d">
           <div>مكان السكن :</div>
 
-          <div>{{ user.adress }}</div>
+          <div>{{ user.city }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
@@ -53,11 +53,9 @@ export default {
     user: {
       cin: "string",
       name: "string",
-      lastName: "string",
-      adress: "string",
+      city: "string",
       phone: "integer",
       email: "string",
-      mdp: "string"
     }
   }
 };
@@ -68,14 +66,17 @@ export default {
   padding-left: 20px;
   padding-bottom: 20px;
 }
+
 .d {
   margin-bottom: 8px;
   margin-top: 8px;
   font-family: Cairo;
 }
+
 .divider {
   background-color: #afa8a8;
 }
+
 .avatar {
   margin-top: 10px;
 }

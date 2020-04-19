@@ -1,49 +1,43 @@
 <template>
   <div class="background">
-    <div class="row edit" dir="rtl">
-      <div class="col-xl-6 col-lg-5 col-md-4">
+    <v-row justify="center">
+      <v-col cols="12" md="6" lg="5" class="pr-lg-0">
         <UserCard :user="user"> </UserCard>
-      </div>
-      <div class="col-xl-7 col-lg-7 col-md-8">
+      </v-col>
+      <v-col cols="12" md="6" lg="5" class="pr-lg-0 pl-lg-12">
         <MapInfoCard> </MapInfoCard>
-      </div>
-      <div class="w-100"></div>
-      <div class="col-xl-12 col-lg-12 col-md-12 row">
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" class="mt-5">
         <ApplicationCard> </ApplicationCard>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
 import MapInfoCard from "../components/MapInfoCard.vue";
 import UserCard from "../components/UserCard.vue";
 import ApplicationCard from "../components/ApplicationCard";
+
 export default {
   name: "UserDashboard",
   data() {
     return {
-      user: {
-        cin: "125665223",
-        name: "اميرة دريدي",
-        adress: "بنزرت ",
-        phone: "21053262",
-        email: "kdldj@djkd.com",
-        mdp: "sghj"
-      }
+      user: this.$store.state.currentUser
     };
   },
   components: {
     ApplicationCard,
     MapInfoCard,
     UserCard
-  }
+  },
+  created() {}
 };
 </script>
 <style>
-.edit {
-  margin-top: fill;
-}
 .background {
   background-color: #e5dddd;
+  height: 100%;
 }
 </style>
