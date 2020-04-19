@@ -65,119 +65,111 @@ router.route("/").post((req, res, next) => {
 });
 
 router.route("/").put(authenticate.verifyOrdinaryUser, (req, res, next) => {
-  if (req.params.userId == req.user._id) {
-    let fieldToChange = { init: "" };
-    if (req.body.name !== "") {
-      delete fieldToChange.init;
-      fieldToChange.name = req.body.name;
-    }
-    if (req.body.cin !== "") {
-      delete fieldToChange.init;
-      fieldToChange.cin = req.body.cin;
-    }
-    if (req.body.email !== "") {
-      delete fieldToChange.init;
-      fieldToChange.email = req.body.email;
-    }
-    if (req.body.city !== "") {
-      delete fieldToChange.init;
-      fieldToChange.city = req.body.city;
-    }
-    if (req.body.phone !== "") {
-      delete fieldToChange.init;
-      fieldToChange.phone = req.body.phone;
-    }
-    if (fieldToChange.init) {
-      fieldToChange = null;
-    }
-
-    if (req.body.oldPassword !== "") {
-      User.findById(req.user._id)
-        .then(
-          user => {
-            if (user != null) {
-              user
-                .changePassword(req.body.oldPassword, req.body.newPassword)
-                .then(() => {
-                  console.log("password changed");
-                  if (fieldToChange) {
-                    User.update(
-                      {
-                        _id: req.params.userId
+  let fieldToChange = { init: "" };
+  if (req.body.name !== "") {
+    delete fieldToChange.init;
+    fieldToChange.name = req.body.name;
+  }
+  if (req.body.cin !== "") {
+    delete fieldToChange.init;
+    fieldToChange.cin = req.body.cin;
+  }
+  if (req.body.email !== "") {
+    delete fieldToChange.init;
+    fieldToChange.email = req.body.email;
+  }
+  if (req.body.city !== "") {
+    delete fieldToChange.init;
+    fieldToChange.city = req.body.city;
+  }
+  if (req.body.phone !== "") {
+    delete fieldToChange.init;
+    fieldToChange.phone = req.body.phone;
+  }
+  if (fieldToChange.init) {
+    fieldToChange = null;
+  }
+  if (req.body.oldPassword !== "") {
+    User.findById(req.user._id)
+      .then(
+        user => {
+          if (user != null) {
+            user
+              .changePassword(req.body.oldPassword, req.body.newPassword)
+              .then(() => {
+                console.log("password changed");
+                if (fieldToChange) {
+                  User.updateOne(
+                    {
+                      _id: req.user._id
+                    },
+                    {
+                      $set: fieldToChange
+                    },
+                    { new: true }
+                  )
+                    .then(
+                      user => {
+                        if (user != null) {
+                          res.statusCode = 200;
+                          res.setHeader("Content-Type", "application/json");
+                          res.json(user);
+                        } else {
+                          err = new Error("the request user not found !!");
+                          err.status = 404;
+                          return next(err);
+                        }
                       },
-                      {
-                        $set: fieldToChange
-                      },
-                      { new: true }
+                      err => next(err)
                     )
-                      .then(
-                        user => {
-                          if (user != null) {
-                            res.statusCode = 200;
-                            res.setHeader("Content-Type", "application/json");
-                            res.json(user);
-                          } else {
-                            err = new Error("the request user not found !!");
-                            err.status = 404;
-                            return next(err);
-                          }
-                        },
-                        err => next(err)
-                      )
-                      .catch(err => next(err));
-                  } else {
-                    res.statusCode = 200;
-                    res.setHeader("Content-Type", "application/json");
-                    res.json(user);
-                  }
-                })
-                .catch(error => {
-                  err = new Error("the old password is incorrect !!");
-                  err.status = 404;
-                  return next(err);
-                });
-            } else {
-              err = new Error("the request user not found !!");
-              err.status = 404;
-              return next(err);
-            }
-          },
-          err => next(err)
-        )
-        .catch(err => next(err));
-    } else if (fieldToChange) {
-      User.update(
-        {
-          _id: req.params.userId
+                    .catch(err => next(err));
+                } else {
+                  res.statusCode = 200;
+                  res.setHeader("Content-Type", "application/json");
+                  res.json(user);
+                }
+              })
+              .catch(error => {
+                err = new Error("the old password is incorrect !!");
+                err.status = 404;
+                return next(err);
+              });
+          } else {
+            err = new Error("the request user not found !!");
+            err.status = 404;
+            return next(err);
+          }
         },
-        {
-          $set: fieldToChange
-        },
-        { new: true }
+        err => next(err)
       )
-        .then(
-          user => {
-            if (user != null) {
-              res.statusCode = 200;
-              res.setHeader("Content-Type", "application/json");
-              res.json(user);
-            } else {
-              err = new Error("the request user not found !!");
-              err.status = 404;
-              return next(err);
-            }
-          },
-          err => next(err)
-        )
-        .catch(err => next(err));
-    }
-  } else {
-    err = new Error("You'r not authorized to update this user!!");
-    err.status = 403;
-    return next(err);
+      .catch(err => next(err));
+  } else if (fieldToChange) {
+    User.updateOne(
+      {
+        _id: req.user._id
+      },
+      {
+        $set: fieldToChange
+      },
+      { new: true }
+    )
+      .then(
+        user => {
+          if (user != null) {
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json(user);
+          } else {
+            err = new Error("the request user not found !!");
+            err.status = 404;
+            return next(err);
+          }
+        },
+        err => next(err)
+      )
+      .catch(err => next(err));
   }
 });
-
 router.post("/reset-password", (req, res, next) => {
   const email = req.body.email;
   User.findOne({
@@ -190,7 +182,7 @@ router.post("/reset-password", (req, res, next) => {
       ResetPassword.findOne({ userId: user._id })
         .then(function(resetPassword) {
           if (resetPassword)
-            resetPassword.remove({
+            resetPassword.deleteOne({
               _id: resetPassword.id
             });
           token = crypto.randomBytes(32).toString("hex"); //creating the token to be sent to the forgot password form (react)
@@ -202,7 +194,6 @@ router.post("/reset-password", (req, res, next) => {
                 .then(hash => {
                   //hashing the password to store in the db node.js
                   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
                   var transporter = nodemailer.createTransport({
                     host: "smtp-mail.outlook.com", // hostname
                     secureConnection: false, // TLS requires secureConnection to be false
@@ -215,15 +206,6 @@ router.post("/reset-password", (req, res, next) => {
                       ciphers: "SSLv3"
                     }
                   });
-
-                  /*{
-                        service: config.emailService,
-                        auth: {
-                          user: config.emailUser,
-                          pass: config.emailPassword
-                        },
-                        tls: { rejectUnauthorized: false }
-                      });*/
 
                   ResetPassword.create({
                     userId: user._id,
@@ -244,9 +226,9 @@ router.post("/reset-password", (req, res, next) => {
                           "<p>To reset your password, complete this form:</p>" +
                           '<a href="http://' +
                           config.clientUrl +
-                          "reset/" +
+                          "reset/?id=" +
                           user.id +
-                          "/" +
+                          "&token=" +
                           token +
                           '">Click here to reset your password!</a>' +
                           "<br><br>" +
@@ -290,45 +272,57 @@ router.post("/store-password", (req, res, next) => {
   const userId = req.body.userId;
   const token = req.body.token;
   const password = req.body.password;
-  ResetPassword.findOne({ userId: userId })
+  ResetPassword.findOne({ userId: userId }).then(function(resetPassword) {
+    if (!resetPassword) {
+      next(Error("Invalid or expired reset token."));
+    }
+    bcrypt.compare(token, resetPassword.token, function(errBcrypt, resBcrypt) {
+      // the token and the hashed token in the db are verified befor updating the password
+      let expireTime = moment.utc(resetPassword.expire);
+      let currentTime = new Date();
+      User.findById(userId)
+        .then(user => {
+          if (user != null) {
+            user
+              .setPassword(password)
+              .then(user => {
+                user.save();
+                ResetPassword.deleteOne({ _id: resetPassword.id })
+                  .then(msg => {
+                    res.json({
+                      success: true,
+                      message: "Password Updated successfully."
+                    });
+                  })
+                  .catch(err => {
+                    next(err);
+                  });
+              })
+              .catch(err => {
+                next(err);
+              });
+          }
+        })
+        .catch(err => {
+          next(err);
+        });
+    });
+  });
+});
+
+router.post("/verify-token", (req, res, next) => {
+  //handles the new password from the front
+  const token = req.body.token;
+  ResetPassword.findOne({ resetPasswordToken: token })
     .then(function(resetPassword) {
       if (!resetPassword) {
-        next(Error("Invalid or expired reset token."));
+        err = new Error("Invalid or expired reset token.");
+        err.status = 404;
+        next(err);
+      } else {
+        err.status = 200;
+        res.json({ success: true, message: "token is valid!" });
       }
-      bcrypt.compare(token, resetPassword.token, function(
-        errBcrypt,
-        resBcrypt
-      ) {
-        // the token and the hashed token in the db are verified befor updating the password
-        let expireTime = moment.utc(resetPassword.expire);
-        let currentTime = new Date();
-        User.findById(userId)
-          .then(user => {
-            if (user != null) {
-              user
-                .setPassword(password)
-                .then(user => {
-                  user.save();
-                  ResetPassword.remove({ _id: resetPassword.id })
-                    .then(msg => {
-                      res.json({
-                        success: true,
-                        message: "Password Updated successfully."
-                      });
-                    })
-                    .catch(err => {
-                      next(err);
-                    });
-                })
-                .catch(err => {
-                  next(err);
-                });
-            }
-          })
-          .catch(err => {
-            next(err);
-          });
-      });
     })
     .catch(error => {
       next(error);

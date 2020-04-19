@@ -8,8 +8,8 @@
     >
       <br />
       <div>
-        <v-form class="form" method="put" ref="form">
-          <div class="row">
+        <v-form class="form" ref="form" method="put">
+          <v-row>
             <div class="col-md-6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
@@ -20,37 +20,32 @@
               ></v-text-field>
             </div>
             <div class="col-md-6">
-              <v-label><h3>بطاقة التعريف الوطنية</h3></v-label>
+              <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
-                :placeholder="user.cin"
-                :rules="cinRules"
+                :rules="nameRules"
                 color="#d41b45"
                 v-model="cin"
               ></v-text-field>
             </div>
-          </div>
-          <div class="row">
+          </v-row>
+          <v-row>
             <div class="col-md-6">
               <v-label><h3>مكان السكن</h3></v-label>
-              <v-select :items="cities" :placeholder="user.city"></v-select>
+              <v-select :items="cities" v-model="city"></v-select>
             </div>
             <div class="col-md-6">
               <v-label><h3>المنطقة</h3></v-label>
-              <v-select
-                :items="items"
-                :placeholder="user.city"
-                v-model="user.city"
-              ></v-select>
+              <v-select :items="items" v-model="area"></v-select>
             </div>
-          </div>
-          <div class="row">
+          </v-row>
+          <v-row>
             <div class="col-md-6">
               <v-label><h3>البريد الالكتروني</h3></v-label>
               <v-text-field
                 :placeholder="user.email"
                 :rules="emailRules"
                 color="#d41b45"
-                v-model="user.email"
+                v-model="email"
               ></v-text-field>
             </div>
             <div class="col-md-6">
@@ -59,10 +54,10 @@
                 :placeholder="user.phone"
                 :rules="phoneRules"
                 color="#d41b45"
-                v-model="user.phone"
+                v-model="phone"
               ></v-text-field>
             </div>
-          </div>
+          </v-row>
           <v-btn
             @click="updatePass"
             class="title"
@@ -79,7 +74,6 @@
               <v-text-field
                 :rules="rules"
                 color="red"
-                placeholder="كلمة السر"
                 type="password"
                 v-model="oldPassword"
               ></v-text-field>
@@ -89,7 +83,6 @@
               <v-text-field
                 :rules="rules"
                 color="red"
-                placeholder="كلمة السر"
                 type="password"
                 v-model="newPassword"
               ></v-text-field>
@@ -111,6 +104,7 @@
             تعديل حسابي
           </v-btn>
         </div>
+        <div class="mt-5" v-if="done">تم تعديل المعطيات بنجاح</div>
         <div class="clearfix"></div>
       </div>
     </v-card>
@@ -127,23 +121,24 @@ export default {
       default: false
     },
     user: {
-      cin: "",
       name: "",
       city: "",
       area: "",
       phone: "",
-      email: ""
+      email: "",
+      cin: ""
     }
   },
   data() {
     return {
       loading: false,
+      done: false,
       valid: true,
       newPassword: "",
       oldPassword: "",
-      cin: this.user.cin,
       name: this.user.name,
       city: this.user.city,
+      cin: this.user.cin,
       phone: this.user.phone,
       email: this.user.email,
       cities: [
@@ -195,13 +190,8 @@ export default {
         "الأعشاش",
         "النصر"
       ],
-      cinRules: [
-        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        v => (v && v.length <= 8) || "يجب أن يتكون من 8 أرقام"
-      ],
       phoneRules: [
-        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
-        v => (v && v.length == 8) || "يجب أن يتكون من 8 أرقام"
+        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم"
       ],
       nameRules: [
         v => (v && v.length <= 30) || "Name must be less than 30 characters"
@@ -213,8 +203,8 @@ export default {
     button() {
       if (
         this.name !== this.user.name ||
-        this.cin !== this.user.cin ||
         this.city !== this.user.city ||
+        this.cin !== this.user.cin ||
         this.phone !== this.user.phone ||
         this.area !== this.user.area ||
         this.email !== this.user.email ||
@@ -242,17 +232,17 @@ export default {
         this.loading = true;
         try {
           let resp = await authController.update({
-            Id: this.$store.state.currentUser.id(),
             oldPassword: this.oldPassword,
             newPassword: this.newPassword,
             name: this.name,
-            cin: this.CIN,
             email: this.email,
             city: this.city,
+            cin: this.cin,
             area: this.area,
             phone: this.phone
           });
           this.loading = false;
+          this.done = true;
           console.log(resp);
         } catch (e) {
           this.loading = false;
