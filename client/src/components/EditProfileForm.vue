@@ -13,7 +13,6 @@
             <div class="col-md-6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
-                :placeholder="user.name"
                 :rules="nameRules"
                 color="#d41b45"
                 v-model="name"
@@ -42,7 +41,6 @@
             <div class="col-md-6">
               <v-label><h3>البريد الالكتروني</h3></v-label>
               <v-text-field
-                :placeholder="user.email"
                 :rules="emailRules"
                 color="#d41b45"
                 v-model="email"
@@ -51,7 +49,6 @@
             <div class="col-md-6">
               <v-label><h3>رقم الهاتف</h3></v-label>
               <v-text-field
-                :placeholder="user.phone"
                 :rules="phoneRules"
                 color="#d41b45"
                 v-model="phone"
@@ -72,7 +69,6 @@
             <div class="col-md-6">
               <v-label><h3>كلمة السر القديمة</h3></v-label>
               <v-text-field
-                :rules="rules"
                 color="red"
                 type="password"
                 v-model="oldPassword"
@@ -81,7 +77,6 @@
             <div class="col-md-6">
               <v-label><h3>كلمة السر الجديدة</h3></v-label>
               <v-text-field
-                :rules="rules"
                 color="red"
                 type="password"
                 v-model="newPassword"
@@ -92,7 +87,7 @@
         <br />
         <div class="text-center">
           <v-btn
-            :disabled="button"
+            :disabled="button()"
             :loading="loading"
             @click="validate"
             class="title"
@@ -116,10 +111,6 @@ import authController from "../services/AuthenticationService";
 export default {
   name: "EditProfileForm",
   props: {
-    isClicked: {
-      Boolean,
-      default: false
-    },
     user: {
       name: "",
       city: "",
@@ -134,10 +125,12 @@ export default {
       loading: false,
       done: false,
       valid: true,
+      isClicked: false,
       newPassword: "",
       oldPassword: "",
       name: this.user.name,
       city: this.user.city,
+      area: this.user.area,
       cin: this.user.cin,
       phone: this.user.phone,
       email: this.user.email,
@@ -199,32 +192,10 @@ export default {
       emailRules: [v => /.+@.+\..+/.test(v) || "E-mail must be valid"]
     };
   },
-  computed: {
-    button() {
-      if (
-        this.name !== this.user.name ||
-        this.city !== this.user.city ||
-        this.cin !== this.user.cin ||
-        this.phone !== this.user.phone ||
-        this.area !== this.user.area ||
-        this.email !== this.user.email ||
-        (this.oldPassword !== "" && this.newPassword != "")
-      ) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.valid = true;
-        return false;
-      } else {
-        return true;
-      }
-    }
-  },
+  computed: {},
   methods: {
     updatePass() {
-      if (!this.isClicked) {
-        this.isClicked = true;
-      } else {
-        this.isClicked = false;
-      }
+      this.isClicked = !this.isClicked;
     },
     async validate() {
       this.$refs.form.validate();
@@ -252,6 +223,22 @@ export default {
       } else {
         //to implement notification v-if here
         console.log("validation failed");
+      }
+    },
+    button() {
+      if (
+        this.name !== this.user.name ||
+        this.city !== this.user.city ||
+        this.cin !== this.user.cin ||
+        this.phone !== this.user.phone ||
+        this.area !== this.user.area ||
+        this.email !== this.user.email ||
+        (this.oldPassword !== "" && this.newPassword != "")
+      ) {
+        this.valid = true;
+        return false;
+      } else {
+        return true;
       }
     }
   }

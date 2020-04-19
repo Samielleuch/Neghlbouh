@@ -74,6 +74,10 @@ router.route("/").put(authenticate.verifyOrdinaryUser, (req, res, next) => {
     delete fieldToChange.init;
     fieldToChange.cin = req.body.cin;
   }
+  if (req.body.area !== "") {
+    delete fieldToChange.init;
+    fieldToChange.area = req.body.area;
+  }
   if (req.body.email !== "") {
     delete fieldToChange.init;
     fieldToChange.email = req.body.email;
