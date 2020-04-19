@@ -67,7 +67,6 @@ router.route('/')
 
 router.route('/')
 .put(authenticate.verifyOrdinaryUser,(req, res, next) => {
-  if(req.params.userId==req.user._id){
     let fieldToChange={init:''};
     if(req.body.name!==""){
       delete fieldToChange.init;
@@ -92,7 +91,6 @@ router.route('/')
     if(fieldToChange.init){
       fieldToChange=null;
     }
-
     if(req.body.oldPassword!==""){
       User.findById(req.user._id) 
       .then((user) => {
@@ -101,8 +99,8 @@ router.route('/')
           .then(() => {
             console.log('password changed');
             if(fieldToChange){
-              User.update({
-                '_id': req.params.userId
+              User.updateOne({
+                '_id': req.user._id
                 }, {
                     $set: fieldToChange
                 }, { new: true })
@@ -142,8 +140,8 @@ router.route('/')
       .catch((err) => next(err));  
     }
     else if(fieldToChange){
-      User.update({
-        '_id': req.params.userId
+      User.updateOne({
+        '_id': req.user._id
         }, {
             $set: fieldToChange
         }, { new: true })
@@ -161,12 +159,6 @@ router.route('/')
         }, (err) => next(err))
         .catch((err) => next(err));  
     } 
-  }
-  else{
-    err = new Error('You\'r not authorized to update this user!!');
-    err.status = 403;
-    return next(err);
-  }
 })
 
 
@@ -182,7 +174,7 @@ router.post('/reset-password',(req, res,next) => {
           ResetPassword
             .findOne({userId: user._id}).then(function (resetPassword) {
             if (resetPassword)
-                resetPassword.remove({
+                resetPassword.deleteOne({
                   '_id': resetPassword.id
                 })
             token = crypto.randomBytes(32).toString('hex')//creating the token to be sent to the forgot password form (react)
@@ -203,16 +195,6 @@ router.post('/reset-password',(req, res,next) => {
                     }
                 });
                   
-                  /*{
-                  service: config.emailService,
-                  auth: {
-                    user: config.emailUser,
-                    pass: config.emailPassword
-                  },
-                  tls: { rejectUnauthorized: false }
-                });*/
-
-               
                 
                 ResetPassword.create({
                       userId: user._id,
@@ -227,7 +209,7 @@ router.post('/reset-password',(req, res,next) => {
                           subject: 'Reset your account password',
                           html: '<h4><b>Reset Password</b></h4>' +
                           '<p>To reset your password, complete this form:</p>' +
-                          '<a href="http:\/\/' + config.clientUrl + 'reset\/' + user.id + '\/' + token + '">Click here to reset your password!</a>' +
+                          '<a href="http:\/\/' + config.clientUrl + 'reset\/?id=' + user.id + '&token=' + token + '">Click here to reset your password!</a>' +
                           '<br><br>' +
                           '<p>--Neghlbouh Support</p>'
                       }
@@ -262,7 +244,7 @@ router.post('/store-password',(req, res, next) => {//handles the new password fr
             user.setPassword(password)
             .then((user) => {
               user.save();
-            ResetPassword.remove({'_id' : resetPassword.id})
+            ResetPassword.deleteOne({'_id' : resetPassword.id})
               .then((msg) => {
                 res.json({ success: true, message: 'Password Updated successfully.' })
               }).catch(err=>{next(err)});
@@ -272,6 +254,24 @@ router.post('/store-password',(req, res, next) => {//handles the new password fr
     });
   }).catch(error=>{next(error);});
 })
+
+
+router.post('/verify-token',(req, res, next) => {//handles the new password from the front 
+  const token = req.body.token
+  ResetPassword.findOne({resetPasswordToken: token})
+    .then(function (resetPassword) {
+      if (!resetPassword) {
+       err = new Error('Invalid or expired reset token.');
+       err.status = 404;
+       next(err);
+      }
+      else{
+        err.status = 200;
+        res.json({ success: true, message: 'token is valid!' }) 
+      }
+  }).catch(error=>{next(error);});
+})
+
 
 module.exports = router;
 
