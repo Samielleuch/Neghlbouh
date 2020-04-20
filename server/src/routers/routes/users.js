@@ -192,6 +192,7 @@ router.post("/reset-password", (req, res, next) => {
               _id: resetPassword.id
             });
           token = crypto.randomBytes(32).toString("hex"); //creating the token to be sent to the forgot password form (react)
+          
           bcrypt
             .genSalt(10)
             .then(salt => {
@@ -230,9 +231,9 @@ router.post("/reset-password", (req, res, next) => {
                         html:
                           "<h4><b>Reset Password</b></h4>" +
                           "<p>To reset your password, complete this form:</p>" +
-                          '<a href="http://' +
+                          '<a href="http:\/\/' +
                           config.clientUrl +
-                          "reset/?id=" +
+                          "reset?id=" +
                           user.id +
                           "&token=" +
                           token +
@@ -317,9 +318,9 @@ router.post("/store-password", (req, res, next) => {
 });
 
 router.post("/verify-token", (req, res, next) => {
-  //handles the new password from the front
-  const token = req.body.token;
-  ResetPassword.findOne({ resetPasswordToken: token })
+  //verify if the reset is expired or not
+  const userId= req.body.userId;
+  ResetPassword.findOne({ userId: userId })
     .then(function(resetPassword) {
       if (!resetPassword) {
         err = new Error("Invalid or expired reset token.");
