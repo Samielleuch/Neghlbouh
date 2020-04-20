@@ -29,7 +29,7 @@ router.post('/signup', (req, res, next) => {
     req.body.password, (err, user) => {
      
     if(err) {
-      res.statusCode = 401;
+      res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
       res.json({err: err});
     }
@@ -65,7 +65,7 @@ router.route('/')
   .then(message => console.log(message.sid));
 })
 
-router.route('/')
+router.route('/:userId')
 .put(authenticate.verifyOrdinaryUser,(req, res, next) => {
     let fieldToChange={init:''};
     if(req.body.name!==""){
@@ -92,6 +92,7 @@ router.route('/')
       fieldToChange=null;
     }
     if(req.body.oldPassword!==""){
+
       User.findById(req.user._id) 
       .then((user) => {
         if(user!=null){
@@ -101,8 +102,9 @@ router.route('/')
             if(fieldToChange){
               User.updateOne({
                 '_id': req.user._id
+
                 }, {
-                    $set: fieldToChange
+                    $set: req.body.otherFields
                 }, { new: true })
                 .then((user) => {
                   if(user!=null){
@@ -142,8 +144,9 @@ router.route('/')
     else if(fieldToChange){
       User.updateOne({
         '_id': req.user._id
+
         }, {
-            $set: fieldToChange
+            $set: req.body.otherFields
         }, { new: true })
         .then((user) => {
           if(user!=null){
@@ -226,7 +229,7 @@ router.post('/reset-password',(req, res,next) => {
 })
 
 
-router.post('/store-password',(req, res, next) => {//handles the new password from the front 
+router.post('/store-password',(req, res) => {//handles the new password from the front 
   const userId = req.body.userId
   const token = req.body.token
   const password = req.body.password
@@ -251,7 +254,7 @@ router.post('/store-password',(req, res, next) => {//handles the new password fr
             }).catch(err=>{next(err);})
           }
         }).catch(err=>{next(err);});
-    });
+    }).catch(error => new Error(''))
   }).catch(error=>{next(error);});
 })
 
