@@ -366,7 +366,7 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.demande,
           icon: "fas fa-paper-plane",
-          link: this.infoRedirection()
+          link: "FormPage"
         },
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,
