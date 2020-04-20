@@ -109,7 +109,14 @@
                       md="5"
                     >
                       <div v-if="item.state === 1">
-                        <v-btn class="mb-5  " color="error" fab icon>
+                        <v-btn
+                          class="mb-5  "
+                          color="error"
+                          fab
+                          icon
+                          @click="cancelDemande(item._id)"
+                          :loading="trashLoading"
+                        >
                           <v-icon>fas fa-trash-alt</v-icon>
                         </v-btn>
                       </div>
@@ -167,7 +174,8 @@ export default {
     Demandes: [],
     applications: [],
     states: ["إكتمل", "جاري", "ملغى"],
-    loaded: false
+    loaded: false,
+    trashLoading: false
   }),
   created() {
     DemandesService.getDemandes(this.$store.state.currentUser)
@@ -185,10 +193,20 @@ export default {
       if (itemState === 0) {
         return "teal";
       } else if (itemState === 1) {
-        return "deep-orange";
+        return "orange";
       } else {
         return "red";
       }
+    },
+    cancelDemande(_id) {
+      this.trashLoading = true;
+      DemandesService.cancelDemande({
+        id: _id,
+        state: 2
+      }).then(() => {
+        this.trashLoading = false;
+        this.$router.go();
+      });
     }
   }
 };

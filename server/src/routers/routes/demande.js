@@ -19,7 +19,8 @@ router.post("/add", (req, res) => {
 
 // accept demande (state -> 1)
 //deny demande (state -> 2)
-router.put("/state/:id", (req, res) => {
+//changed to body
+router.put("/state/", (req, res) => {
   DemandeController.changeState(req, res);
 });
 
@@ -107,10 +108,10 @@ router.get(
 );
 //get demande by id for a specific user
 router
-  .route("/:demandId")
+  .route("/")
   .get(authenticate.verifyOrdinaryUser, (req, res, next) => {
     Demande.find({
-      _id: req.params.demandId,
+      _id: req.body.demandId,
       cin: req.user.cin
     })
       .then(demand => {
@@ -136,7 +137,7 @@ router
   .put(authenticate.verifyOrdinaryUser, (req, res, next) => {
     Demande.update(
       {
-        _id: req.params.demandId,
+        _id: req.body.demandId,
         cin: req.user.cin
       },
       {
@@ -169,7 +170,7 @@ router
 
   .delete(authenticate.verifyOrdinaryUser, (req, res, next) => {
     Demande.remove({
-      _id: req.params.demandId
+      _id: req.body.demandId
       //'cin': req.user.cin
     })
       .then(resp => {

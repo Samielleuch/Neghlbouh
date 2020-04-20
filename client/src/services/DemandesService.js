@@ -1,5 +1,4 @@
 import Api from "@/services/Api";
-import store from "./../store"; // path to your Vuex store
 export default {
   getDemandes(payload) {
     return Api().get("demande", payload);
@@ -8,6 +7,9 @@ export default {
     return Api().post("demande/add", payload);
   },
   deleteDemande() {
-    return Api().delete(`demande/${store.state.currentDemandeId}`);
+    return Api().delete(`demande/`);
+  },
+  cancelDemande(payload) {
+    return Api().put("demande/state/", payload);
   }
 };

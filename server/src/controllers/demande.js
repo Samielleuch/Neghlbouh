@@ -59,14 +59,16 @@ module.exports = {
   changeState(req, res) {
     if (
       typeof req.body.state == "number" &&
-      Object.keys(req.body).length == 1 &&
-      Object.keys(req.body).includes("state")
+      Object.keys(req.body).length == 2 &&
+      Object.keys(req.body).includes("state") &&
+      Object.keys(req.body).includes("id")
     ) {
       if (
         req.body.state.toString() === "0" ||
-        req.body.state.toString() === "1"
+        req.body.state.toString() === "1" ||
+        req.body.state.toString() === "2"
       ) {
-        Demande.findOneAndUpdate({ _id: req.params.id }, req.body)
+        Demande.findOneAndUpdate({ _id: req.body.id }, req.body)
           .then(() => {
             res.json({
               success: true,

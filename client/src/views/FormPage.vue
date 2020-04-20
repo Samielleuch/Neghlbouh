@@ -45,7 +45,7 @@
 
           <div class="text-center">
             <v-btn
-              @click="verify"
+              @click="isClicked = !isClicked"
               :class="
                 hover && !fieldControl ? 'mt--10 glowing-border' : 'mt--10'
               "
@@ -62,7 +62,6 @@
               </span>
             </v-btn>
           </div>
-
           <div class="mt-5" v-if="isClicked">
             <v-row align="center" justify="center">
               <v-col align-self="center" cols="4" justify="center">
@@ -99,21 +98,26 @@
                 </v-alert>
               </v-col>
             </v-row>
-            <v-row align="center" justify="center">
-              <v-col align-self="center" cols="3" justify="center">
-                <v-alert dense text type="success" v-if="state == 'Supermodel'">
-                  الخطر ضعيف
+            <v-row
+              align="center"
+              justify="center"
+              v-if="error !== ''"
+              class="my-0 py-0"
+            >
+              <v-col align="center" cols="5" justify="center" class="my-0 py-0">
+                <v-alert dense text type="error" class="my-0 py-2">
+                  {{ error }}
                 </v-alert>
               </v-col>
             </v-row>
 
-            <div class="text-center">
+            <div class="text-center pt-5">
               <v-btn
-                @click="accept"
+                @click="verify"
                 class="title ml-3"
                 color="#D41B45"
                 dark
-                height="50px"
+                height="40px"
                 rounded
                 width="120px"
               >
@@ -124,7 +128,7 @@
                 class="title mr-3"
                 color="#D41B45"
                 dark
-                height="50px"
+                height="40px"
                 rounded
                 width="120px"
               >
@@ -140,19 +144,14 @@
 
 <script>
 import DemandesService from "@/services/DemandesService";
-import { mapActions } from "vuex";
 
 export default {
   name: "FormPage",
-  props: {
-    isClicked: {
-      Boolean,
-      default: false
-    }
-  },
   data: () => ({
     valid: false,
+    error: "",
     reason: "",
+    isClicked: false,
     isMinutesAllowed: true,
     zone: "",
     tempsRetour: "",
@@ -220,39 +219,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["addDemande"]),
     async verify() {
-      if (!this.isClicked) {
-        this.isClicked = true;
-      } else {
-        this.isClicked = false;
-      }
-
       try {
-        let resp = await DemandesService.addDemandes({
+        await DemandesService.addDemandes({
           cin: this.$store.state.currentUser.cin,
           zone: this.zone,
           where: "sfax",
           tempsRetour: this.tempsRetour,
           reason: this.reason
+        }).then(() => {
+          this.$router.replace({ name: "UserDashboard" });
         });
-        console.log(resp);
-        this.addDemande(resp.data.status);
-        this.score = resp.data.status.score;
       } catch (e) {
-        console.log(e.response.data);
+        this.error = e.response.data.err;
       }
     },
-    accept() {
+    reject() {
       this.$router.replace({ name: "UserDashboard" });
-    },
-    async reject() {
-      try {
-        let resp = await DemandesService.deleteDemande();
-        console.log(resp);
-      } catch (e) {
-        console.log(e.response.data);
-      }
     },
     getAllowedHours: v => v >= new Date().getHours(),
     HandleHours(payload) {

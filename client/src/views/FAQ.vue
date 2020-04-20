@@ -185,9 +185,9 @@ export default {
       "6": false,
       "7": false,
       "8": false,
-      "9": false,
+      "9": false
     },
-    contentFAQ,
-  }),
+    contentFAQ
+  })
 };
 </script>
