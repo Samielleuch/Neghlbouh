@@ -29,11 +29,15 @@ router.post("/signup", (req, res, next) => {
     req.body.password,
     (err, user) => {
       if (err) {
+        console.log(err);
         let message="";
-        Object.keys(err.errors).forEach(key => {
-          message+=err['errors'][key].message+" , "
-          
-        });
+        if(err.message) message=err.message;
+        if(err.errors){
+          Object.keys(err.errors).forEach(key => {
+            message+=err['errors'][key].message+" , "
+            
+          });
+        }
         res.statusCode = 403;
         res.setHeader("Content-Type", "application/json");
         res.json({ err: {message:message} });
@@ -264,6 +268,8 @@ router.post("/reset-password", (req, res, next) => {
                       transporter
                         .sendMail(mailOptions)
                         .then(info => {
+                          res.statusCode = 200;
+                          res.setHeader("Content-Type", "application/json");
                           res.json({
                             success: true,
                             message: "Check your mail to reset your password."
@@ -316,6 +322,8 @@ router.post("/store-password", (req, res, next) => {
                 user.save();
                 ResetPassword.deleteOne({ _id: resetPassword.id })
                   .then(msg => {
+                    res.statusCode = 200;
+                    res.setHeader("Content-Type", "application/json");
                     res.json({
                       success: true,
                       message: "Password Updated successfully."
@@ -339,19 +347,22 @@ router.post("/store-password", (req, res, next) => {
 
 router.post("/verify-token", (req, res, next) => {
   //verify if the reset is expired or not
-  const userId= req.body.userId;
-  ResetPassword.findOne({ userId: userId })
+  const id= req.body.userId;
+  ResetPassword.findOne({ userId: id })
     .then(function(resetPassword) {
+     
       if (!resetPassword) {
         err = new Error("Invalid or expired reset token.");
         err.status = 404;
         next(err);
       } else {
-        err.status = 200;
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
         res.json({ success: true, message: "token is valid!" });
       }
     })
     .catch(error => {
+      console.log(error);
       next(error);
     });
 });
