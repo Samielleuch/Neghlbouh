@@ -37,20 +37,20 @@ module.exports = {
       .then(() => {
         today = new Date(); //
         today.setHours(0, 0, 0, 0);
-        return Demande.find({state: 1})// search for accepted demands
+        return Demande.find({ state: 1 })// search for accepted demands
       })
       .then(async (demandes) => {
         let a = await Array();
         for (let i = 0; i < demandes.length; i++) {
           let demande = demandes[i];
-              a[i] = Area.updateOne(
-                { name: demande.zone.trim() },
-                {
-                  $inc: {
-                    countPeople: 1
-                  }
-                }
-              ).then((ai) => console.log(ai.n))
+          a[i] = Area.updateOne(
+            { name: demande.zone.trim() },
+            {
+              $inc: {
+                countPeople: 1
+              }
+            }
+          ).then((ai) => console.log(ai.n))
         }
         return a;
       })
@@ -58,17 +58,18 @@ module.exports = {
         return Area.find({})
       })
       .then((areasFound) => {
-        console.log(areasFound);
+        let result = {
+          faible : [],
+          moyen: [],
+          grave:[]
+        }
+        result.faible = areasFound.filter(el=> el.countPeople<=10);
+        result.moyen = areasFound.filter(el=> el.countPeople>10 && el.countPeople<30)
+        result.grave = areasFound.filter(el=>el.countPeople>30)
         res.setHeader("Content-Type", "application/json");
-        let returnedValue = areasFound.map(area => {
-          return {
-            name: area.name,
-            number: area.countPeople
-          };
-        });
         res.json({
           success: true,
-          status: returnedValue
+          data: result
         });
       })
       .catch(e => res.json({ err: e.message }));
