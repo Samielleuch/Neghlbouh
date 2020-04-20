@@ -29,6 +29,7 @@ const User = new Schema({
     }
 });
 
+
 User.plugin(passportLocalMongoose, {
   usernameField: 'cin',
   passwordField: 'password'
