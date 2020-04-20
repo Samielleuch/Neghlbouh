@@ -1,6 +1,6 @@
 <template>
   <!-- the z-index of the nav bar is set to 10 so that it doesn't 
-    collide with the form in the sign up page ( this form has been adjusted with transform) -->
+      collide with the form in the sign up page ( this form has been adjusted with transform) -->
   <div
     dir="rtl"
     style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"
@@ -366,7 +366,7 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.demande,
           icon: "fas fa-paper-plane",
-          link: this.infoRedirection()
+          link: "FormPage"
         },
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,
@@ -452,12 +452,13 @@ export default {
       }
     },
     logOut() {
-      this.session.clear();
+      this.storage.clear();
       this.$router.replace({ name: "Home" });
+      this.$router.go();
     }
   },
   mounted() {
-    this.session = window.sessionStorage;
+    this.storage = window.localStorage;
   }
 };
 </script>

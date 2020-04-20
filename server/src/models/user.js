@@ -19,6 +19,10 @@ const User = new Schema({
     type: String,
     required: true
   },
+  area: {
+    type: String,
+    required: true
+  },
   phone: {
     type: Number,
     required: true
@@ -26,10 +30,6 @@ const User = new Schema({
   admin: {
     type: Boolean,
     default: false
-  },
-  zone: {
-    type: String,
-    require: true
   }
 });
 

@@ -24,8 +24,8 @@
             <div class="col-md-5" style="margin-right: 30px">
               <v-time-picker
                 color="#d41b45"
-                width="180px"
                 v-model="tempsRetour"
+                width="180px"
               ></v-time-picker>
             </div>
           </v-row>
@@ -42,6 +42,8 @@
           <div class="text-center">
             <v-btn
               @click="verify"
+              :class="hover ? 'mt--10 glowing-border' : 'mt--10'"
+              :ripple="{ class: 'red--text' }"
               class="title "
               color="#D41B45"
               dark
@@ -52,52 +54,70 @@
               تقييم
             </v-btn>
           </div>
-          <div style="margin-top: 5px" v-if="isClicked">
-            <div class="app1">
-              <v-alert
-                dense
-                height="70px"
-                text
-                type="success"
-                v-if="state == 'Supermodel'"
-                width="200px"
-              >
-                الخطر :{{ score }}
-              </v-alert>
-              <v-alert
-                dense
-                text
-                type="warning"
-                v-else-if="state == 'Super'"
-                width="170px"
-              >
-                الخطر :{{ score }}
-              </v-alert>
-              <v-alert dense outlined type="error" v-else width="170px">
-                الخطر :{{ score }}
-              </v-alert>
-            </div>
+
+          <div class="mt-5" v-if="isClicked">
+            <v-row align="center" justify="center">
+              <v-col align-self="center" cols="4" justify="center">
+                <v-alert
+                  border="left"
+                  color="red"
+                  colored-border
+                  elevation="2"
+                  icon="fas fa-lungs-virus"
+                >
+                  عدد المصابين : 5
+                </v-alert>
+              </v-col>
+              <v-col align-self="center" cols="4" justify="center">
+                <v-alert
+                  border="left"
+                  color="red"
+                  colored-border
+                  elevation="2"
+                  icon="fas fa-head-side-mask"
+                >
+                  عدد المواطنين 16
+                </v-alert>
+              </v-col>
+              <v-col align-self="center" cols="4" justify="center">
+                <v-alert
+                  border="left"
+                  color="red"
+                  colored-border
+                  elevation="2"
+                  icon="fas fa-house-user"
+                >
+                  عدد حاملي سوار الحماية: 0
+                </v-alert>
+              </v-col>
+            </v-row>
+            <v-row align="center" justify="center">
+              <v-col align-self="center" cols="3" justify="center">
+                <v-alert dense text type="success" v-if="state == 'Supermodel'">
+                  الخطر ضعيف
+                </v-alert>
+              </v-col>
+            </v-row>
+
             <div class="text-center">
               <v-btn
                 @click="accept"
-                class="title"
+                class="title ml-3"
                 color="#D41B45"
                 dark
                 height="50px"
                 rounded
-                style="margin-top: 80px;margin-left: 15px"
                 width="120px"
               >
                 تثبيت الخروج
               </v-btn>
               <v-btn
                 @click="reject"
-                class="title"
+                class="title mr-3"
                 color="#D41B45"
                 dark
                 height="50px"
                 rounded
-                style="margin-top: 80px;margin-left: 15px"
                 width="120px"
               >
                 الغاء الخروج
@@ -113,6 +133,7 @@
 <script>
 import DemandesService from "@/services/DemandesService";
 import { mapActions } from "vuex";
+
 export default {
   name: "FormPage",
   props: {
@@ -122,8 +143,7 @@ export default {
     }
   },
   data: () => ({
-    valid: true,
-
+    valid: false,
     state: "Supermodel",
     score: "75%",
     reason: "",
@@ -209,13 +229,8 @@ export default {
 h3 {
   color: #d41b45;
 }
-
-.txt {
-  margin-bottom: 25px;
-}
-
-.app1 {
-  margin-right: 300px;
-  margin-top: 30px;
+>>> .glowing-border {
+  box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
+    /* middle magenta */ 0 0 10px 1px #6b2028 !important;
 }
 </style>

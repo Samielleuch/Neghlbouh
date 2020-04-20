@@ -24,7 +24,7 @@
                 v-if="error !== ''"
                 width="80%"
               >
-                {{ error }}
+                {{ error.message }}
               </v-alert>
             </v-col>
           </v-row>
@@ -80,7 +80,7 @@
                     prepend-inner-icon="fas fa-thumbtack"
                     required
                     rounded
-                    v-model="city"
+                    v-model="area"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -230,6 +230,7 @@ export default {
         v => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف"
       ],
       city: "",
+      area:"",
       phone: "",
       phoneRules: [
         v => !!v || "رقم الهاتف مطلوب",
@@ -304,6 +305,7 @@ export default {
     ...mapActions(["pressLogin"]),
     async validate() {
       this.$refs.form.validate();
+      console.log(this.area)
       if (this.valid) {
         this.loading = true;
         try {
@@ -313,7 +315,8 @@ export default {
             email: this.email,
             city: this.city,
             phone: this.phone,
-            password: this.password
+            password: this.password,
+            area: this.area
           });
           this.loading = false;
           this.$router.replace({ name: "SignIn" });
@@ -335,7 +338,7 @@ export default {
 <style scoped>
 .form {
   /* This form has been down-scaled and the z-index is made 1
-   with position relative so it doesn't collide with the nav bar */
+         with position relative so it doesn't collide with the nav bar */
   position: relative;
   z-index: 1 !important;
 }

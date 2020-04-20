@@ -1,5 +1,5 @@
 <template>
-  <v-hover open-delay="200" v-slot:default="{ hover }">
+  <v-hover v-slot:default="{ hover }">
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto cardcc"
@@ -21,19 +21,19 @@
         <div class="row d">
           <div>مكان السكن :</div>
 
-          <div>{{ user.adress }}</div>
+          <div>{{ user.city }}</div>
+        </div>
+        <v-divider class="divider"></v-divider>
+        <div class="row d">
+          <div>المنطقة</div>
+
+          <div>: {{ user.area }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
           <div>رقم الهاتف :</div>
 
           <div>{{ user.phone }}</div>
-        </div>
-        <v-divider class="divider"></v-divider>
-        <div class="row d">
-          <div>بطاقة التعريف الوطنية</div>
-
-          <div>: {{ user.cin }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
@@ -51,13 +51,11 @@ export default {
   name: "UserCardEdit",
   props: {
     user: {
-      cin: "string",
-      name: "string",
-      lastName: "string",
-      adress: "string",
-      phone: "integer",
-      email: "string",
-      mdp: "string"
+      area: "",
+      name: "",
+      city: "",
+      phone: "",
+      email: ""
     }
   }
 };
@@ -68,17 +66,14 @@ export default {
   padding-left: 20px;
   padding-bottom: 20px;
 }
-
 .d {
   margin-bottom: 8px;
   margin-top: 8px;
   font-family: Cairo;
 }
-
 .divider {
   background-color: #afa8a8;
 }
-
 .avatar {
   margin-top: 10px;
 }

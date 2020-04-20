@@ -24,6 +24,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "twilio": "^3.42.0",
     "web-push": "^3.4.3"
   }

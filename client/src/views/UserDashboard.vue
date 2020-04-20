@@ -1,18 +1,17 @@
 <template>
   <div class="background">
-
-    <v-row>
-      <v-col class="col-md-4">
-        <UserCard :user="user"> </UserCard>
+    <v-row justify="center">
+      <v-col class="pr-lg-0" cols="12" lg="5" md="6">
+        <UserCard :user="user"></UserCard>
       </v-col>
-      <v-col class="col-md-8">
-        <MapInfoCard> </MapInfoCard>
+      <v-col class="pr-lg-0 pl-lg-12" cols="12" lg="5" md="6">
+        <MapInfoCard></MapInfoCard>
       </v-col>
     </v-row>
     <v-row>
-      <div class="col-md-12">
-        <ApplicationCard> </ApplicationCard>
-      </div>
+      <v-col class="mt-5" cols="12">
+        <ApplicationCard></ApplicationCard>
+      </v-col>
     </v-row>
   </div>
 </template>

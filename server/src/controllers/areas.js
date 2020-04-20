@@ -39,7 +39,7 @@ module.exports = {
         today.setHours(0, 0, 0, 0);
         return Demande.find({ state: 1 })// search for accepted demands
       })
-      .then(async (demandes) => {
+      .then(async demandes => {
         let a = await Array();
         for (let i = 0; i < demandes.length; i++) {
           let demande = demandes[i];
@@ -50,12 +50,12 @@ module.exports = {
                 countPeople: 1
               }
             }
-          ).then((ai) => console.log(ai.n))
+          ).then(ai => console.log(ai.n));
         }
         return a;
       })
-      .then((a) => {
-        return Area.find({})
+      .then(a => {
+        return Area.find({});
       })
       .then((areasFound) => {
         let result = {

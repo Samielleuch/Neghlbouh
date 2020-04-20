@@ -19,7 +19,7 @@
       <!-- icon -->
       <v-row justify="center">
         <v-col align="center" cols="12">
-          <v-img aspect-ratio="3" src="../assets/logo.png" width="400"></v-img>
+          <v-img aspect-ratio="3" src="../assets/logo.png" width="250"></v-img>
         </v-col>
       </v-row>
       <!---->
@@ -47,7 +47,8 @@
             <v-col class="mb-0 pb-0" cols="12">
               <v-text-field
                 :label="text.cinField"
-                class="mb-0 pb-0"
+                :rules="notEmpty"
+                class="mb-5 pb-0"
                 clearable
                 color="black"
                 filled
@@ -65,9 +66,10 @@
               <v-text-field
                 :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
                 :label="text.passWordField"
+                :rules="notEmpty"
                 :type="show1 ? 'text' : 'password'"
                 @click:append="show1 = !show1"
-                class="mt-0 pb-0"
+                class="mt-0 pb-0 mb-5"
                 clearable
                 color="black"
                 filled
@@ -89,6 +91,7 @@
               <v-btn
                 :class="hover ? 'mt--10 glowing-border' : 'mt--10'"
                 :disabled="!valid"
+                :loading="loading"
                 :ripple="{ class: 'red--text' }"
                 @click="validate"
                 color="#df0100"
@@ -103,15 +106,29 @@
             </v-hover>
           </v-col>
         </v-row>
-        <!-- Forgot Password section -->
+        <!-- Create Account section -->
         <v-row justify="center">
           <v-col align="center" cols="9">
             <em>
-              {{ text.forgotPass }}
+              {{ text.noAcc }}
             </em>
             <a class=" font-weight-bold font-login-pass" href="#">
               {{ text.makeAccount }}
             </a>
+          </v-col>
+        </v-row>
+        <!-- Forgot Password section -->
+        <v-row justify="center">
+          <v-col align="center" cols="9">
+            <router-link to="/ResetMail">
+              <a
+                @click="removeModal"
+                class=" font-weight-bold font-login-pass"
+                href="#"
+              >
+                {{ text.noPass }}
+              </a>
+            </router-link>
           </v-col>
         </v-row>
       </v-card-text>
@@ -137,7 +154,9 @@ export default {
       CIN: "",
       valid: false,
       show1: false,
-      error: ""
+      error: "",
+      loading: false,
+      notEmpty: [v => !!v || " مطلوب"]
     };
   },
   computed: {
@@ -167,12 +186,15 @@ export default {
         } catch (e) {
           this.loading = false;
           console.log(e.response.data.err);
-          this.error = e.response.data.err;
+          this.error = e.response.data;
         }
       } else {
         //to implement notification v-if here
         console.log("validation failed");
       }
+    },
+    removeModal() {
+      this.pressLogin(false);
     }
   }
 };
