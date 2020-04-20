@@ -133,7 +133,10 @@ export default {
   // verifyToken must be implemented
   created() {
     authController.verifyToken(this.$route.params.auth).then(resp => {
-      console.log(resp);
+      if (resp.success == true )
+      {
+        this.tokenValid = true;
+      }
     });
   },
   computed: {
