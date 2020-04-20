@@ -93,6 +93,7 @@
               <v-btn
                 :disabled="button()"
                 :loading="loading"
+
                 @click="validate"
                 class=" pt-0 pb-0"
                 color="#d41b45"
