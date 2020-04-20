@@ -4,6 +4,7 @@
       :elevation="hover ? 16 : 2"
       class="mx-auto mt-12"
       dir="rtl"
+      max-width="400"
       height="360px"
     >
       <div align="center" style="margin-top: 2px">

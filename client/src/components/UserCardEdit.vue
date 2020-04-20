@@ -1,5 +1,5 @@
 <template>
-  <v-hover open-delay="200" v-slot:default="{ hover }">
+  <v-hover v-slot:default="{ hover }">
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto cardcc"
@@ -66,17 +66,14 @@ export default {
   padding-left: 20px;
   padding-bottom: 20px;
 }
-
 .d {
   margin-bottom: 8px;
   margin-top: 8px;
   font-family: Cairo;
 }
-
 .divider {
   background-color: #afa8a8;
 }
-
 .avatar {
   margin-top: 10px;
 }

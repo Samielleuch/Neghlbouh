@@ -1,106 +1,112 @@
 <template>
-  <v-hover open-delay="200" v-slot:default="{ hover }">
+  <v-hover v-slot:default="{ hover }">
     <v-card
       :elevation="hover ? 16 : 2"
       class="mx-auto cardc"
       dir="rtl"
       max-width="700"
     >
-      <br />
       <div>
         <v-form class="form" ref="form" method="put">
           <v-row>
-            <div class="col-md-6">
+            <v-col md="6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
                 :rules="nameRules"
                 color="#d41b45"
                 v-model="name"
               ></v-text-field>
-            </div>
-            <div class="col-md-6">
+            </v-col>
+            <v-col md="6">
               <v-label><h3>الإسم و اللقب</h3></v-label>
               <v-text-field
                 :rules="nameRules"
                 color="#d41b45"
                 v-model="cin"
               ></v-text-field>
-            </div>
+            </v-col>
           </v-row>
           <v-row>
-            <div class="col-md-6">
+            <v-col md="6">
               <v-label><h3>مكان السكن</h3></v-label>
               <v-select :items="cities" v-model="city"></v-select>
-            </div>
-            <div class="col-md-6">
+            </v-col>
+            <v-col md="6">
               <v-label><h3>المنطقة</h3></v-label>
               <v-select :items="items" v-model="area"></v-select>
-            </div>
+            </v-col>
           </v-row>
+
           <v-row>
-            <div class="col-md-6">
+            <v-col md="6">
               <v-label><h3>البريد الالكتروني</h3></v-label>
               <v-text-field
                 :rules="emailRules"
                 color="#d41b45"
                 v-model="email"
               ></v-text-field>
-            </div>
-            <div class="col-md-6">
+            </v-col>
+            <v-col md="6">
               <v-label><h3>رقم الهاتف</h3></v-label>
               <v-text-field
                 :rules="phoneRules"
                 color="#d41b45"
                 v-model="phone"
               ></v-text-field>
-            </div>
+            </v-col>
           </v-row>
-          <v-btn
-            @click="updatePass"
-            class="title"
-            color="#d41b45"
-            dark
-            height="25px"
-            rounded
-          >
-            تغيير كلمة السر
-          </v-btn>
-          <div class="row" v-if="isClicked">
-            <div class="col-md-6">
+          <v-row justify="center">
+            <v-col justify="center" align="start">
+              <v-btn
+                @click="updatePass"
+                class="title textwhite"
+                color="#d41b45"
+ tile
+                rounded
+              >
+                تغيير كلمة السر
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <v-row v-if="isClicked" class="pb-0 mb-0">
+            <v-col md="6">
               <v-label><h3>كلمة السر القديمة</h3></v-label>
               <v-text-field
                 color="red"
                 type="password"
                 v-model="oldPassword"
               ></v-text-field>
-            </div>
-            <div class="col-md-6">
+            </v-col>
+
+            <v-col md="6">
               <v-label><h3>كلمة السر الجديدة</h3></v-label>
               <v-text-field
                 color="red"
                 type="password"
                 v-model="newPassword"
               ></v-text-field>
-            </div>
-          </div>
+            </v-col>
+          </v-row>
+          <v-row justify="center" align="center" :class="isClicked? 'pt-0' :'pt-12'">
+            <v-col justify="center" align="center" class="pt-0">
+              <v-btn
+                :disabled="button()"
+                :loading="loading"
+                @click="validate"
+                class=" pt-0 pb-0"
+                color="#d41b45"
+                rounded
+              >
+                <span class="textwhite">
+                  تعديل حسابي
+                </span>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-form>
-        <br />
-        <div class="text-center">
-          <v-btn
-            :disabled="button()"
-            :loading="loading"
-            @click="validate"
-            class="title"
-            color="#d41b45"
-            dark
-            rounded
-            style="margin-top: 0px;"
-          >
-            تعديل حسابي
-          </v-btn>
-        </div>
+
         <div class="mt-5" v-if="done">تم تعديل المعطيات بنجاح</div>
-        <div class="clearfix"></div>
       </div>
     </v-card>
   </v-hover>
@@ -259,5 +265,10 @@ h3 {
   color: #d41b45;
   height: 3px;
   font-family: Cairo;
+}
+.textwhite {
+  color: white !important;
+  font-weight: 900 !important;
+    font-size: 20px;
 }
 </style>
