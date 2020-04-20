@@ -120,7 +120,7 @@
         <!-- Forgot Password section -->
         <v-row justify="center">
           <v-col align="center" cols="9">
-            <router-link to="/Reset">
+            <router-link to="/ResetMail">
               <a
                 @click="removeModal"
                 class=" font-weight-bold font-login-pass"

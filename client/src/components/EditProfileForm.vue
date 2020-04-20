@@ -61,7 +61,7 @@
                 @click="updatePass"
                 class="title textwhite"
                 color="#d41b45"
- tile
+                tile
                 rounded
               >
                 تغيير كلمة السر
@@ -88,7 +88,11 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row justify="center" align="center" :class="isClicked? 'pt-0' :'pt-12'">
+          <v-row
+            justify="center"
+            align="center"
+            :class="isClicked ? 'pt-0' : 'pt-12'"
+          >
             <v-col justify="center" align="center" class="pt-0">
               <v-btn
                 :disabled="button()"
@@ -123,8 +127,8 @@ export default {
       area: "",
       phone: "",
       email: "",
-      cin: ""
-    }
+      cin: "",
+    },
   },
   data() {
     return {
@@ -164,7 +168,7 @@ export default {
         "المنستير",
         "منوبة",
         "المهدية",
-        "نابل"
+        "نابل",
       ],
       items: [
         "ساقية الزيت",
@@ -187,15 +191,15 @@ export default {
         "الحاجب",
         "حزق",
         "الأعشاش",
-        "النصر"
+        "النصر",
       ],
       phoneRules: [
-        v => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم"
+        (v) => (!isNaN(parseFloat(v)) && !isNaN(v - 0)) || "يجب أن يكون رقم",
       ],
       nameRules: [
-        v => (v && v.length <= 30) || "Name must be less than 30 characters"
+        (v) => (v && v.length <= 30) || "Name must be less than 30 characters",
       ],
-      emailRules: [v => /.+@.+\..+/.test(v) || "E-mail must be valid"]
+      emailRules: [(v) => /.+@.+\..+/.test(v) || "E-mail must be valid"],
     };
   },
   computed: {},
@@ -216,7 +220,7 @@ export default {
             city: this.city,
             cin: this.cin,
             area: this.area,
-            phone: this.phone
+            phone: this.phone,
           });
           this.loading = false;
           this.done = true;
@@ -246,8 +250,8 @@ export default {
       } else {
         return true;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -269,6 +273,6 @@ h3 {
 .textwhite {
   color: white !important;
   font-weight: 900 !important;
-    font-size: 20px;
+  font-size: 20px;
 }
 </style>

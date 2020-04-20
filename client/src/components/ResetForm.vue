@@ -38,6 +38,7 @@
                 <v-text-field
                   :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
                   :label="text.newPasswordField"
+                  :rules="requiredRules"
                   :type="show1 ? 'text' : 'password'"
                   @click:append="show1 = !show1"
                   class="mt-0 pb-0"
@@ -55,14 +56,14 @@
               </v-col>
             </v-row>
             <!-- COnfirm new Password  -->
-            <v-row class="mt--5">
+            <v-row class="mt--5 mb-5">
               <v-col cols="12">
                 <v-text-field
-                  :append-icon="show1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                  :append-icon="show2 ? 'fas fa-eye' : 'fas fa-eye-slash'"
                   :label="text.confirmNewPasswordField"
-                  :rules="[passwordConfirmationRule]"
-                  :type="show1 ? 'text' : 'password'"
-                  @click:append="show1 = !show1"
+                  :rules="newPassRules"
+                  :type="show2 ? 'text' : 'password'"
+                  @click:append="show2 = !show2"
                   class="mt-0 pb-0"
                   clearable
                   color="black"
@@ -121,34 +122,40 @@ export default {
   name: "ResetForm",
   data() {
     return {
+      id: this.$route.query.id,
+      token: this.$route.query.token,
       oldPassword: "",
       newPassword: "",
       confirmNewPassword: "",
-      tokenValid: true,
+      requiredRules: [
+        v => !!v || "كلمة السر مطلوبة"
+      ],
+      newPassRules: [
+        v => !!v || "كلمة السر مطلوبة",
+        v => this.newPassword === v ||"يجب أن تكون كلمة السر مطابقة"
+      ],
+      tokenValid: false,
       valid: false,
       show1: false,
-      error: ""
+      show2: false,
+      error: "",
     };
   },
   // verifyToken must be implemented
   created() {
-    authController.verifyToken(this.$route.params.auth).then(resp => {
-      if (resp.success == true )
-      {
-        this.tokenValid = true;
-      }
-    });
+    authController
+      .verifyToken({ token: this.token })
+      .then((resp) => {
+        if (resp.data.success == true) {
+          this.tokenValid = true;
+        }
+      });
   },
   computed: {
     ...mapState(["langPack"]),
     text() {
       return this.langPack.Reset;
     },
-    passwordConfirmationRule() {
-      return () =>
-        this.newPassword === this.confirmNewPassword ||
-        "يجب أن تكون كلمة السر مطابقة";
-    }
   },
   methods: {
     async validate() {
@@ -157,10 +164,10 @@ export default {
         this.loading = true;
         try {
           let resp = await authController.reset({
-            token: this.$route.params.token,
-            userId: this.$route.params.id,
+            token: this.$route.query.token,
+            userId: this.$route.query.id,
             //cin: this.$store.state.currentUser.cin,
-            password: this.newPassword
+            password: this.newPassword,
           });
           console.log(resp);
           if (this.$route.name !== "SignIn") {
@@ -176,8 +183,8 @@ export default {
         //to implement notification v-if here
         console.log("validation failed");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
