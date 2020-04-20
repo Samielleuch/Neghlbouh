@@ -28,11 +28,15 @@ router.post("/signup", (req, res, next) => {
     }),
     req.body.password,
     (err, user) => {
-      console.log(err);
       if (err) {
-        res.statusCode = 401;
+        let message="";
+        Object.keys(err.errors).forEach(key => {
+          message+=err['errors'][key].message+" , "
+          
+        });
+        res.statusCode = 403;
         res.setHeader("Content-Type", "application/json");
-        res.json({ err: err });
+        res.json({ err: {message:message} });
       } else {
         passport.authenticate("local")(req, res, () => {
           res.statusCode = 200;
@@ -44,15 +48,31 @@ router.post("/signup", (req, res, next) => {
   );
 });
 
-router.post("/signin", passport.authenticate("local"), (req, res) => {
-  const token = authenticate.getToken({ _id: req.user._id });
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
-  let user = req.user.toObject();
+router.post("/signin",  (req, res, next) => {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    if (! user) {
+      res.statusCode = 403;
+      return res.send({err:{message:"Cin or password are incorrect!"}});
+    }
+    req.login(user, loginErr => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+      const token = authenticate.getToken({ _id: req.user._id });
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      let user = req.user.toObject();
+      delete user.hash;
+      delete user.salt;
+     
+      return  res.json({ success: true, token: token, user: user });
+    });      
+  })(req, res, next);
 
-  delete user.hash;
-  delete user.salt;
-  res.json({ success: true, token: token, user: user });
+  
 });
 
 router.route("/").post((req, res, next) => {
