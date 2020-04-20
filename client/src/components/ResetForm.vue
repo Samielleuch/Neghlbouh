@@ -127,35 +127,31 @@ export default {
       oldPassword: "",
       newPassword: "",
       confirmNewPassword: "",
-      requiredRules: [
-        v => !!v || "كلمة السر مطلوبة"
-      ],
+      requiredRules: [v => !!v || "كلمة السر مطلوبة"],
       newPassRules: [
         v => !!v || "كلمة السر مطلوبة",
-        v => this.newPassword === v ||"يجب أن تكون كلمة السر مطابقة"
+        v => this.newPassword === v || "يجب أن تكون كلمة السر مطابقة"
       ],
       tokenValid: false,
       valid: false,
       show1: false,
       show2: false,
-      error: "",
+      error: ""
     };
   },
   // verifyToken must be implemented
   created() {
-    authController
-      .verifyToken({ token: this.token })
-      .then((resp) => {
-        if (resp.data.success == true) {
-          this.tokenValid = true;
-        }
-      });
+    authController.verifyToken({ token: this.token }).then(resp => {
+      if (resp.data.success == true) {
+        this.tokenValid = true;
+      }
+    });
   },
   computed: {
     ...mapState(["langPack"]),
     text() {
       return this.langPack.Reset;
-    },
+    }
   },
   methods: {
     async validate() {
@@ -167,7 +163,7 @@ export default {
             token: this.$route.query.token,
             userId: this.$route.query.id,
             //cin: this.$store.state.currentUser.cin,
-            password: this.newPassword,
+            password: this.newPassword
           });
           console.log(resp);
           if (this.$route.name !== "SignIn") {
@@ -183,8 +179,8 @@ export default {
         //to implement notification v-if here
         console.log("validation failed");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -4,7 +4,7 @@
       <v-col class="pr-lg-0" cols="12" lg="5" md="6">
         <UserCard :user="user"></UserCard>
       </v-col>
-      <v-col class="pr-lg-0 pl-lg-12" cols="12" lg="5" md="6">
+      <v-col class="pr-lg-0 pl-12" cols="12" lg="5" md="6">
         <MapInfoCard></MapInfoCard>
       </v-col>
     </v-row>

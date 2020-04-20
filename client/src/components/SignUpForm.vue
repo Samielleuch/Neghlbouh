@@ -230,7 +230,7 @@ export default {
         v => (v && v.length <= 35) || "يجب أن يكون أقل من 35 حرف"
       ],
       city: "",
-      area:"",
+      area: "",
       phone: "",
       phoneRules: [
         v => !!v || "رقم الهاتف مطلوب",
@@ -305,7 +305,7 @@ export default {
     ...mapActions(["pressLogin"]),
     async validate() {
       this.$refs.form.validate();
-      console.log(this.area)
+      console.log(this.area);
       if (this.valid) {
         this.loading = true;
         try {

@@ -1,6 +1,6 @@
 <template dir="rtl">
   <div class="background">
-    <v-hover open-delay="200" v-slot:default="{ hover }">
+    <v-hover v-slot:default="{ hover }">
       <v-card
         :elevation="hover ? 16 : 2"
         class="mx-auto"
@@ -21,11 +21,15 @@
             <div class="col-md-4">
               <v-label><h3>وقت العودة</h3></v-label>
             </div>
-            <div class="col-md-5" style="margin-right: 30px">
+            <div class="col-md-6 ">
               <v-time-picker
+                @click:hour="HandleHours"
                 color="#d41b45"
                 v-model="tempsRetour"
-                width="180px"
+                width="250px"
+                format="24hr"
+                :allowed-hours="getAllowedHours"
+                :allowed-minutes="getAllowedMinutes"
               ></v-time-picker>
             </div>
           </v-row>
@@ -42,16 +46,20 @@
           <div class="text-center">
             <v-btn
               @click="verify"
-              :class="hover ? 'mt--10 glowing-border' : 'mt--10'"
+              :class="
+                hover && !fieldControl ? 'mt--10 glowing-border' : 'mt--10'
+              "
               :ripple="{ class: 'red--text' }"
               class="title "
+              :disabled="fieldControl"
               color="#D41B45"
-              dark
               height="30px"
               rounded
               width="100px"
             >
-              تقييم
+              <span class="fontwhite">
+                تقييم
+              </span>
             </v-btn>
           </div>
 
@@ -144,9 +152,8 @@ export default {
   },
   data: () => ({
     valid: false,
-    state: "Supermodel",
-    score: "75%",
     reason: "",
+    isMinutesAllowed: true,
     zone: "",
     tempsRetour: "",
     reasonRules: [v => !!v || "الرجاء ادخال سبب الخروج"],
@@ -175,6 +182,43 @@ export default {
       "النصر"
     ]
   }),
+  computed: {
+    getAllowedMinutes() {
+      let allowed = [];
+      console.log(this.tempsRetour);
+      if (this.isMinutesAllowed) {
+        allowed = [];
+        for (let i = 0; i < 60; i += 5) {
+          allowed.push(i);
+        }
+      } else {
+        let mins = new Date().getMinutes();
+        for (let i = 0; i < 60; i += 5) {
+          if (i >= mins) {
+            mins = i;
+            break;
+          }
+        }
+        allowed = [];
+        for (let i = mins; i < 60; i += 5) {
+          allowed.push(i);
+        }
+      }
+      return allowed;
+    },
+    fieldControl() {
+      if (this.tempsRetour === "" || this.zone === "" || this.reason === "") {
+        return true;
+      } else {
+        let currH = new Date().getHours();
+        let currM = new Date().getMinutes();
+        let time = this.tempsRetour.split(":");
+        console.log(time);
+        if (time[0] == currH && time[1] <= currM) return true;
+        return false;
+      }
+    }
+  },
   methods: {
     ...mapActions(["addDemande"]),
     async verify() {
@@ -209,6 +253,15 @@ export default {
       } catch (e) {
         console.log(e.response.data);
       }
+    },
+    getAllowedHours: v => v >= new Date().getHours(),
+    HandleHours(payload) {
+      let date = new Date().getHours();
+      if (payload.toString() == date) {
+        this.isMinutesAllowed = false;
+      } else {
+        this.isMinutesAllowed = true;
+      }
     }
   }
 };
@@ -224,6 +277,9 @@ export default {
   margin-top: 15px;
   padding-top: 35px;
   padding-bottom: 100px;
+}
+.fontwhite {
+  color: white !important;
 }
 
 h3 {
