@@ -19,6 +19,7 @@ router.use(bodyParser.json());
 router.post("/signup", (req, res, next) => {
   User.register(
     new User({
+      area: req.body.area,
       cin: req.body.cin,
       name: req.body.name,
       email: req.body.email,
@@ -27,6 +28,7 @@ router.post("/signup", (req, res, next) => {
     }),
     req.body.password,
     (err, user) => {
+      console.log(err);
       if (err) {
         res.statusCode = 401;
         res.setHeader("Content-Type", "application/json");
