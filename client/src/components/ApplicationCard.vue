@@ -71,7 +71,7 @@
                   justify="center"
                   md="3"
                 >
-                  <div class="mb-0 font">الوجهة : {{ item.where }}</div>
+                  <div class="mb-0 font">الوجهة : {{ item.zone }}</div>
                   <v-divider inset vertical></v-divider>
                 </v-col>
                 <!-- buttons Cancel -->
