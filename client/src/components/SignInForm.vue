@@ -36,7 +36,7 @@
             v-if="error !== ''"
             width="80%"
           >
-            {{ error }}
+            {{ error.message }}
           </v-alert>
         </v-col>
       </v-row>
@@ -185,8 +185,7 @@ export default {
           this.loading = false;
         } catch (e) {
           this.loading = false;
-          console.log(e.response.data.err);
-          this.error = e.response.data;
+          this.error = e.response.data.err;
         }
       } else {
         //to implement notification v-if here
