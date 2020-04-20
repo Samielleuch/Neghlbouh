@@ -42,6 +42,8 @@
           <div class="text-center">
             <v-btn
               @click="verify"
+              :class="hover ? 'mt--10 glowing-border' : 'mt--10'"
+              :ripple="{ class: 'red--text' }"
               class="title "
               color="#D41B45"
               dark
@@ -141,7 +143,7 @@ export default {
     }
   },
   data: () => ({
-    valid: true,
+    valid: false,
     state: "Supermodel",
     score: "75%",
     reason: "",
@@ -226,5 +228,9 @@ export default {
 
 h3 {
   color: #d41b45;
+}
+>>> .glowing-border {
+  box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
+    /* middle magenta */ 0 0 10px 1px #6b2028 !important;
 }
 </style>

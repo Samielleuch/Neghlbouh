@@ -14,7 +14,7 @@ export default {
     return Api().post("users/store-password", credentials);
   },
   verifyToken(token) {
-    return Api().get("users/verify-token", token);
+    return Api().post("users/verify-token", token);
   },
   sendResetMail(data) {
     return Api().post("users/reset-password", data);
