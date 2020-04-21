@@ -347,14 +347,8 @@ router.post("/store-password", (req, res, next) => {
 
 router.post("/verify-token", (req, res, next) => {
   //verify if the reset is expired or not
-<<<<<<< HEAD
-  const userId= req.body.userId;
-  console.log(userId)
-  ResetPassword.findOne({ userId: userId })
-=======
   const id= req.body.userId;
   ResetPassword.findOne({ userId: id })
->>>>>>> 34a7de33f66019b72f2eec12fe53baa759b135f7
     .then(function(resetPassword) {
      
       if (!resetPassword) {
