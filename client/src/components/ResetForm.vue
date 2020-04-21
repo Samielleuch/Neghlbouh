@@ -141,7 +141,7 @@ export default {
   },
   // verifyToken must be implemented
   created() {
-    authController.verifyToken({ token: this.token }).then(resp => {
+    authController.verifyToken({ userId : this.id }).then(resp => {
       if (resp.data.success == true) {
         this.tokenValid = true;
       }
