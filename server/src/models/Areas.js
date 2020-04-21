@@ -9,11 +9,11 @@ const AreaSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-  Gouvernorat:{
-    type: String,
+  Gouvernorat: {
+    type: String
   },
   cord: {
-    type: Array,
+    type: Array
   }
 });
 

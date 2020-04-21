@@ -30,17 +30,16 @@ router.post("/signup", (req, res, next) => {
     (err, user) => {
       if (err) {
         console.log(err);
-        let message="";
-        if(err.message) message=err.message;
-        if(err.errors){
+        let message = "";
+        if (err.message) message = err.message;
+        if (err.errors) {
           Object.keys(err.errors).forEach(key => {
-            message+=err['errors'][key].message+" , "
-            
+            message += err["errors"][key].message + " , ";
           });
         }
         res.statusCode = 403;
         res.setHeader("Content-Type", "application/json");
-        res.json({ err: {message:message} });
+        res.json({ err: { message: message } });
       } else {
         passport.authenticate("local")(req, res, () => {
           res.statusCode = 200;
@@ -52,14 +51,14 @@ router.post("/signup", (req, res, next) => {
   );
 });
 
-router.post("/signin",  (req, res, next) => {
-  passport.authenticate('local', function(err, user, info) {
+router.post("/signin", (req, res, next) => {
+  passport.authenticate("local", function(err, user, info) {
     if (err) {
       return next(err); // will generate a 500 error
     }
-    if (! user) {
+    if (!user) {
       res.statusCode = 403;
-      return res.send({err:{message:"Cin or password are incorrect!"}});
+      return res.send({ err: { message: "Cin or password are incorrect!" } });
     }
     req.login(user, loginErr => {
       if (loginErr) {
@@ -71,12 +70,10 @@ router.post("/signin",  (req, res, next) => {
       let user = req.user.toObject();
       delete user.hash;
       delete user.salt;
-     
-      return  res.json({ success: true, token: token, user: user });
-    });      
-  })(req, res, next);
 
-  
+      return res.json({ success: true, token: token, user: user });
+    });
+  })(req, res, next);
 });
 
 router.route("/").post((req, res, next) => {
@@ -216,7 +213,7 @@ router.post("/reset-password", (req, res, next) => {
               _id: resetPassword.id
             });
           token = crypto.randomBytes(32).toString("hex"); //creating the token to be sent to the forgot password form (react)
-          
+
           bcrypt
             .genSalt(10)
             .then(salt => {
@@ -255,7 +252,7 @@ router.post("/reset-password", (req, res, next) => {
                         html:
                           "<h4><b>Reset Password</b></h4>" +
                           "<p>To reset your password, complete this form:</p>" +
-                          '<a href="http:\/\/' +
+                          '<a href="http://' +
                           config.clientUrl +
                           "reset?id=" +
                           user.id +
@@ -347,10 +344,9 @@ router.post("/store-password", (req, res, next) => {
 
 router.post("/verify-token", (req, res, next) => {
   //verify if the reset is expired or not
-  const id= req.body.userId;
+  const id = req.body.userId;
   ResetPassword.findOne({ userId: id })
     .then(function(resetPassword) {
-     
       if (!resetPassword) {
         err = new Error("Invalid or expired reset token.");
         err.status = 404;

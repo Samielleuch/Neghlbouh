@@ -37,7 +37,7 @@ module.exports = {
       .then(() => {
         today = new Date(); //
         today.setHours(0, 0, 0, 0);
-        return Demande.find({ state: 1 })// search for accepted demands
+        return Demande.find({ state: 1 }); // search for accepted demands
       })
       .then(async demandes => {
         let a = await Array();
@@ -57,15 +57,17 @@ module.exports = {
       .then(a => {
         return Area.find({});
       })
-      .then((areasFound) => {
+      .then(areasFound => {
         let result = {
-          faible : [],
+          faible: [],
           moyen: [],
-          grave:[]
-        }
-        result.faible = areasFound.filter(el=> el.countPeople<=10);
-        result.moyen = areasFound.filter(el=> el.countPeople>10 && el.countPeople<30)
-        result.grave = areasFound.filter(el=>el.countPeople>30)
+          grave: []
+        };
+        result.faible = areasFound.filter(el => el.countPeople <= 10);
+        result.moyen = areasFound.filter(
+          el => el.countPeople > 10 && el.countPeople < 30
+        );
+        result.grave = areasFound.filter(el => el.countPeople > 30);
         res.setHeader("Content-Type", "application/json");
         res.json({
           success: true,

@@ -27,11 +27,12 @@ router.put("/state/", (req, res) => {
 //get all demands for user connected
 router.get("/", authenticate.verifyOrdinaryUser, (req, res, next) => {
   let demandTotal = 0;
-  if(req.body.demandTotal)
-  demandTotal = req.body.demandTotal;
+  if (req.body.demandTotal) demandTotal = req.body.demandTotal;
   Demande.find({
     cin: req.user.cin
-  }).sort({"date": -1}).limit(demandTotal)
+  })
+    .sort({ date: -1 })
+    .limit(demandTotal)
     .then(resp => {
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
