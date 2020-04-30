@@ -9,7 +9,7 @@
         "
         cols="12"
       >
-        نحن هنا لمساعدتك
+        أهم الارشادات
 
         <h4
           :class="
@@ -18,7 +18,7 @@
               : 'mt-sm-12 grey--text text--lighten-1 subtitle mb-12'
           "
         >
-          تصفح الأسئلة الأكثر شيوعًا
+          تصفح الارشادات التالية
         </h4>
       </v-col>
     </v-row>
@@ -44,7 +44,7 @@
           >
             {{ item.question }}
           </v-col>
-          <v-col class="text-right " cols="10" md="4">
+          <v-col class="text-right " cols="6" md="4">
             <v-expand-transition>
               <div
                 :style="$vuetify.breakpoint.xs ? 'font-size:4vw;' : ''"
@@ -168,24 +168,19 @@ body * {
   background: #f7f5f8;
 }
 </style>
+
 <script>
-// @ is an alias to /src
-import contentFAQ from "../assets/contentFAQ.js";
+import contentFAQ from "../assets/info.js";
 
 export default {
-  name: "Home",
-  components: {},
+  name: "HygieneInfoPage",
   data: () => ({
     current: {
       "1": false,
       "2": false,
       "3": false,
       "4": false,
-      "5": false,
-      "6": false,
-      "7": false,
-      "8": false,
-      "9": false
+      "5": false
     },
     contentFAQ
   })

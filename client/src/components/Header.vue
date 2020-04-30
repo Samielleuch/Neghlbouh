@@ -1,5 +1,11 @@
 <template>
-  <div dir="rtl" style="padding-bottom: 30px;height: 40px; margin-bottom: 10px">
+
+  <!-- the z-index of the nav bar is set to 10 so that it doesn't 
+      collide with the form in the sign up page ( this form has been adjusted with transform) -->
+  <div
+    dir="rtl"
+    style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"
+  >
     <v-app-bar color="white">
       <v-app-bar-nav-icon
         @click="drawer = true"
@@ -7,23 +13,70 @@
       ></v-app-bar-nav-icon>
       <v-spacer class="d-flex d-md-none"></v-spacer>
       <v-img
-        style="margin-left: 20px"
         alt="Neghlbouh"
         class="shrink mr-1"
         contain
         src="../assets/logo.png"
+        style="margin-left: 20px"
         transition="scale-transition"
         width="150"
       />
       <v-toolbar-title class="d-none d-md-flex">
+        <!--  User Dashboard --->
+        <v-hover
+          v-if="
+            this.$store.state.currentUser !== undefined &&
+              !this.$store.state.currentUser.admin
+          "
+          v-slot:default="{ hover }"
+        >
+          <span
+            :class="
+              hover
+                ? 'Navbar animation cool-link mr-0 '
+                : 'Navbar  cool-link mr-0 '
+            "
+            @click="$router.replace({ name: 'UserDashboard' })"
+            elevation="0"
+            v-ripple="false"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              userDashboardButton.icon
+            }}</v-icon>
+            <span class="mr-1">{{ userDashboardButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
+        <!--  Admin Dashboard --->
+        <v-hover
+          v-if="
+            this.$store.state.currentUser !== undefined &&
+              this.$store.state.currentUser.admin
+          "
+          v-slot:default="{ hover }"
+        >
+          <span
+            :class="
+              hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
+            "
+            @click="$router.replace({ name: 'AdminDashboard' })"
+            elevation="0"
+            v-ripple="false"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              adminDashboardButton.icon
+            }}</v-icon>
+            <span class="mr-1">{{ adminDashboardButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
         <!-- Menu Items -->
         <v-hover
-          v-slot:default="{ hover }"
-          v-for="(item, index) in HeaderMenu"
           :key="index"
+          v-for="(item, index) in HeaderMenu"
+          v-slot:default="{ hover }"
         >
           <router-link
-            :to="{ name: item.link }"
             :class="
               activeClass(
                 hover,
@@ -33,23 +86,64 @@
                 'Navbar  cool-link '
               )
             "
-            v-ripple="false"
+            :to="{ name: item.link }"
             depressed
             elevation="0"
+            v-ripple="false"
           >
             <v-icon
               :color="
                 activeClass(hover, item.link, item.name, '#A93226  ', 'black')
               "
-              >{{ item.icon }}</v-icon
-            >
-            <span @click="checkLoginPressed(item.name)" class="mr-2">
+              >{{ item.icon }}
+            </v-icon>
+            <span class="mr-2">
               {{ item.name }}
             </span>
           </router-link>
         </v-hover>
+        <!-- -->
+        <!--  Sign UP--->
+        <v-hover
+          v-if="this.$store.state.currentUser === undefined"
+          v-slot:default="{ hover }"
+        >
+          <span
+            :class="
+              activeClass(
+                hover,
+                signupButton.link,
+                signupButton.name,
+                'Navbar animation cool-link ',
+                'Navbar  cool-link '
+              )
+            "
+            @click="checkSignUpPressed"
+            depressed
+            elevation="0"
+            v-ripple="false"
+          >
+            <v-icon
+              :color="
+                activeClass(
+                  hover,
+                  signupButton.link,
+                  signupButton.name,
+                  '#A93226 ',
+                  'black'
+                )
+              "
+              >{{ signupButton.icon }}</v-icon
+            >
+            <span>{{ signupButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
         <!--  Sign In --->
-        <v-hover v-slot:default="{ hover }">
+        <v-hover
+          v-if="this.$store.state.currentUser === undefined"
+          v-slot:default="{ hover }"
+        >
           <span
             :class="
               activeClass(
@@ -60,9 +154,10 @@
                 'Navbar  cool-link '
               )
             "
-            v-ripple="false"
+            @click="checkLoginPressed(loginButton.name)"
             depressed
             elevation="0"
+            v-ripple="false"
           >
             <v-icon
               :color="
@@ -76,27 +171,92 @@
               "
               >{{ loginButton.icon }}</v-icon
             >
-            <span @click="checkLoginPressed(loginButton.name)"
-              >{{ loginButton.name }}
-            </span>
+            <span>{{ loginButton.name }} </span>
+          </span>
+        </v-hover>
+        <!-- -->
+        <!--  Log Out Button  --->
+        <v-hover
+          v-if="this.$store.state.currentUser !== undefined"
+          v-slot:default="{ hover }"
+        >
+          <span
+            :class="
+              hover ? 'Navbar animation cool-link ' : 'Navbar  cool-link '
+            "
+            @click="logOut"
+            elevation="0"
+            v-ripple="false"
+          >
+            <v-icon :color="hover ? '#A93226 ' : 'black'">{{
+              logOutButton.icon
+            }}</v-icon>
+            <span>{{ logOutButton.name }} </span>
           </span>
         </v-hover>
         <!-- -->
       </v-toolbar-title>
     </v-app-bar>
     <!-- Responsive Menu here !! -->
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav dense>
+    <v-navigation-drawer absolute temporary v-model="drawer">
+      <v-list dense nav>
         <v-list-item-group>
+          <!-- userDash Button -->
           <v-list-item
-            v-for="(item, index) in HeaderMenu"
+            class="text-justify "
+            v-if="
+              this.$store.state.currentUser !== undefined &&
+                !this.$store.state.currentUser.admin
+            "
+          >
+            <v-list-item-title
+              @click="$router.replace({ name: 'UserDashboard' })"
+              class="hamburgerMenu "
+            >
+              <span
+                class="Navbar  cool-link listItem   "
+                depressed
+                elevation="0"
+                v-ripple="false"
+              >
+                <v-icon color=" black ">{{ userDashboardButton.icon }}</v-icon>
+                <span class="mr-1">{{ userDashboardButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
+          <!-- adminDash Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="
+              this.$store.state.currentUser !== undefined &&
+                this.$store.state.currentUser.admin
+            "
+          >
+            <v-list-item-title
+              @click="$router.replace({ name: 'AdminDashboard' })"
+              class="hamburgerMenu "
+            >
+              <span
+                class="Navbar  cool-link listItem   "
+                depressed
+                elevation="0"
+                v-ripple="false"
+              >
+                <v-icon color=" black ">{{ adminDashboardButton.icon }}</v-icon>
+                <span class="mr-1">{{ adminDashboardButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
+          <v-list-item
             :key="index"
             :to="{ name: item.link }"
             class="text-justify "
+            v-for="(item, index) in HeaderMenu"
           >
             <v-list-item-title class="hamburgerMenu listItem">
               <router-link
-                :to="{ name: item.link }"
                 :class="
                   activeClass(
                     false,
@@ -106,31 +266,70 @@
                     'Navbar  cool-link listItem '
                   )
                 "
-                v-ripple="false"
+                :to="{ name: item.link }"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ item.icon }}</v-icon>
                 <span class="mr-3">{{ item.name }}</span>
               </router-link>
             </v-list-item-title>
           </v-list-item>
+          <!-- Sign Up Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser === undefined"
+          >
+            <v-list-item-title
+              @click="checkSignUpPressed()"
+              class="hamburgerMenu "
+            >
+              <span
+                @click="checkLoginPressed(signupButton.name)"
+                class="Navbar  cool-link listItem   "
+                depressed
+                elevation="0"
+                v-ripple="false"
+              >
+                <v-icon color=" black ">{{ signupButton.icon }}</v-icon>
+                <span>{{ signupButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
           <!-- Login Button -->
           <v-list-item class="text-justify ">
             <v-list-item-title
-              class="hamburgerMenu "
               @click="checkLoginPressed(loginButton.name)"
+              class="hamburgerMenu "
             >
               <span
                 class="Navbar  cool-link listItem   "
-                v-ripple="false"
                 depressed
                 elevation="0"
+                v-ripple="false"
               >
                 <v-icon color=" black ">{{ loginButton.icon }}</v-icon>
-                <span @click="checkLoginPressed(loginButton.name)"
-                  >{{ loginButton.name }}
-                </span>
+                <span>{{ loginButton.name }} </span>
+              </span>
+            </v-list-item-title>
+          </v-list-item>
+          <!-- -->
+          <!-- LogOut Button -->
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser !== undefined"
+          >
+            <v-list-item-title @click="logOut" class="hamburgerMenu ">
+              <span
+                class="Navbar  cool-link listItem   "
+                depressed
+                elevation="0"
+                v-ripple="false"
+              >
+                <v-icon color=" black ">{{ logOutButton.icon }}</v-icon>
+                <span>{{ logOutButton.name }} </span>
               </span>
             </v-list-item-title>
           </v-list-item>
@@ -143,6 +342,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+
 export default {
   name: "Header",
   data() {
@@ -163,7 +363,7 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.demande,
           icon: "fas fa-paper-plane",
-          link: "Home"
+          link: "FormPage"
         },
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,
@@ -196,6 +396,14 @@ export default {
   },
   methods: {
     ...mapActions(["pressLogin"]),
+    infoRedirection() {
+      if (
+        this.$store.state.currentUser !== undefined &&
+        !this.$store.state.currentUser.admin
+      ) {
+        return "FormPage";
+      } else return "Home";
+    },
     checkLoginPressed(name) {
       if (name === "دخول") {
         if (this.$vuetify.breakpoint.mdAndUp) {
@@ -225,9 +433,16 @@ export default {
           return otherclass;
         }
       }
+    },
+    logOut() {
+      this.storage.clear();
+      this.$router.replace({ name: "Home" });
+      this.$router.go();
     }
   },
-  created() {}
+  mounted() {
+    this.storage = window.localStorage;
+  }
 };
 </script>
 <style scoped>
@@ -266,9 +481,11 @@ export default {
   width: 100%;
   //transition: width .3s;
 }
+
 .animation {
   color: #d41b45;
 }
+
 .animation::after {
   border-radius: 100%;
   content: "";
@@ -280,16 +497,22 @@ export default {
   background: #d41b45;
   transition: width 0.3s;
 }
+
 .hamburgerMenu {
   font-size: 20px !important;
   font-family: Cairo;
 
   text-align: center !important;
 }
+
 .listItem {
   font-family: Cairo;
 
   background-color: rgba(255, 255, 255, 1) !important;
   font-size: 18px !important;
+}
+
+.login-btn {
+  cursor: pointer;
 }
 </style>

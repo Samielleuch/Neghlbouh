@@ -1,57 +1,112 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover v-slot:default="{ hover }">
     <v-card
-      class="mx-auto cardcc"
-      max-width="520"
-      dir="rtl"
       :elevation="hover ? 16 : 2"
+      class="mx-auto mt-12"
+      dir="rtl"
+      max-width="400"
+      height="360px"
     >
       <div align="center" style="margin-top: 2px">
-        <v-avatar size="65">
-          <img src="../assets/user.png" alt="" />
+        <v-avatar size="80">
+          <img alt="" src="../assets/user.png" />
         </v-avatar>
       </div>
-      <div class="text--primary ">
-        <div class="row d">
-          <h5>الإسم و اللقب :</h5>
+      <v-row align="center">
+        <v-col align="center" class="pt-0 pb-0">
+          <h5 dir="ltr">{{ user.name }} <strong> : الإسم و اللقب </strong></h5>
+        </v-col>
+      </v-row>
+      <!-- Divider-->
+      <v-row align="center" class="pt-0 pb-0" justify="center">
+        <v-col align="center" class="pt-2 pb-2" justify="center">
+          <v-divider
+            class="divider"
+            style="background-color: #AFA8A8;"
+          ></v-divider>
+        </v-col>
+      </v-row>
+      <!-- -->
+      <v-row align="center" justify="center">
+        <v-col align="center" class="pt-0 pb-0" justify="center">
+          <h5 dir="rtl"><strong> مكان السكن : </strong> {{ user.city }}</h5>
+        </v-col>
+      </v-row>
+      <!-- Divider-->
+      <v-row align="center" class="mt-0 mb-0" justify="center">
+        <v-col align="center" class="pt-2 pb-2" justify="center">
+          <v-divider
+            class="divider"
+            style="background-color: #AFA8A8;"
+          ></v-divider>
+        </v-col>
+      </v-row>
+      <!-- -->
 
-          <h5>{{ user.name }}</h5>
-        </div>
-        <v-divider
-          class="divider"
-          style="background-color: #AFA8A8;"
-        ></v-divider>
-        <div class="row d">
-          <h5>مكان السكن :</h5>
+      <v-row justify="center" align="center">
+        <v-col align="center" justify="center" class="pt-0 pb-0">
+          <h5 dir="ltr">{{ user.area }} <strong>: المنطقة </strong></h5>
+        </v-col>
+      </v-row>
+      <!-- Divider-->
+      <v-row align="center" class="mt-0 mb-0" justify="center">
+        <v-col align="center" class="pt-2 pb-2" justify="center">
+          <v-divider
+            class="divider"
+            style="background-color: #AFA8A8;"
+          ></v-divider>
+        </v-col>
+      </v-row>
+      <!-- -->
 
-          <h5>{{ user.adress }}</h5>
-        </div>
-        <v-divider class="divider"></v-divider>
-        <div class="row d">
-          <h5>رقم الهاتف :</h5>
+      <!-- -->
+      <v-row justify="center" align="center">
+        <v-col align="center" justify="center" class="pt-0 pb-0">
+          <h5 dir="ltr">{{ user.phone }} <strong> : رقم الهاتف </strong></h5>
+        </v-col>
+      </v-row>
+      <!-- Divider-->
+      <v-row align="center" class="mt-0 mb-0" justify="center">
+        <v-col align="center" class="pt-2 pb-2" justify="center">
+          <v-divider
+            class="divider"
+            style="background-color: #AFA8A8;"
+          ></v-divider>
+        </v-col>
+      </v-row>
 
-          <h5>{{ user.phone }}</h5>
-        </div>
-        <v-divider class="divider"></v-divider>
-        <div class="row d">
-          <h5>بطاقة التعريف الوطنية</h5>
+      <v-row justify="center" align="center">
+        <v-col align="center" justify="center" class="pt-0 pb-0">
+          <h5 dir="ltr">
+            {{ user.email }} <strong> :البريد الالكتروني </strong>
+          </h5>
+        </v-col>
+      </v-row>
+      <v-row align="center" class="mt-0 mb-0" justify="center">
+        <v-col align="center" class="pt-2 pb-2" justify="center">
+          <v-divider
+            class="divider"
+            style="background-color: #AFA8A8;"
+          ></v-divider>
+        </v-col>
+      </v-row>
+      <!-- -->
 
-          <h5>: {{ user.cin }}</h5>
-        </div>
-        <v-divider class="divider"></v-divider>
-        <div class="row d">
-          <h5>البريد الالكتروني</h5>
-
-          <h5>: {{ user.email }}</h5>
-        </div>
-        <v-divider class="divider"></v-divider>
-      </div>
-
-      <div class="text-center" v-if="checkPage">
-        <v-btn class="font title" dark rounded color="#d41b45" height="30">
-          تعديل حسابي
-        </v-btn>
-      </div>
+      <v-row align="center" class="mt-0 mb-0" justify="center">
+        <v-col align="center" class="pt-6 pb-6" justify="center">
+          <v-btn
+            class="font title"
+            color="#d41b45"
+            dark
+            height="30"
+            large
+            rounded
+            to="/EditProfilePage"
+          >
+            تعديل حسابي
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card>
   </v-hover>
 </template>
@@ -60,48 +115,33 @@ export default {
   name: "UserCard",
   props: {
     user: {
-      cin: "string",
+      area: "string",
       name: "string",
-      lastName: "string",
-      adress: "string",
+      city: "string",
       phone: "integer",
-      email: "string",
-      mdp: "string"
-    }
-  },
-  methods: {
-    checkPage() {
-      if (this.$route.name === "UserDashboard") {
-        return true;
-      } else {
-        return false;
-      }
+      email: "string"
     }
   }
 };
 </script>
-<style>
-.cardcc {
-  height: 270px;
-  padding-right: 20px;
-  padding-left: 20px;
-}
+<style scoped>
 .font {
-  margin-top: 20px;
   font-family: Cairo;
 }
+
 h5 {
+  font-size: 16px;
   font-family: Cairo;
   margin-top: 2px;
 }
 
-.d {
-  margin-right: 85px;
+strong {
+  padding-left: 9px;
+  color: #6b2028;
 }
+
 .divider {
-  background-color: #AFA8A8;
-  margin-top: 8px;
-  margin-right: 75px;
-  width: 300px;
+  background-color: #afa8a8;
+  width: 70%;
 }
 </style>

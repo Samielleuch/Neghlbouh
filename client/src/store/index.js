@@ -5,6 +5,11 @@ import arPack from "../language/arabic";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      storage: window.localStorage
+    })
+  ],
   state: {
     isLoginPressed: false,
     language: "ar",

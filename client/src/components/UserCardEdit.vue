@@ -1,14 +1,14 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
+  <v-hover v-slot:default="{ hover }">
     <v-card
-      class="mx-auto cardcc"
-      max-width="400"
-      dir="rtl"
       :elevation="hover ? 16 : 2"
+      class="mx-auto cardcc"
+      dir="rtl"
+      max-width="400"
     >
       <div align="center">
-        <v-avatar size="130" class="avatar">
-          <img src="../assets/user.png" alt="" />
+        <v-avatar class="avatar" size="130">
+          <img alt="" src="../assets/user.png" />
         </v-avatar>
       </div>
       <v-card-text class="text--primary title">
@@ -21,19 +21,19 @@
         <div class="row d">
           <div>مكان السكن :</div>
 
-          <div>{{ user.adress }}</div>
+          <div>{{ user.city }}</div>
+        </div>
+        <v-divider class="divider"></v-divider>
+        <div class="row d">
+          <div>المنطقة</div>
+
+          <div>: {{ user.area }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
           <div>رقم الهاتف :</div>
 
           <div>{{ user.phone }}</div>
-        </div>
-        <v-divider class="divider"></v-divider>
-        <div class="row d">
-          <div>بطاقة التعريف الوطنية</div>
-
-          <div>: {{ user.cin }}</div>
         </div>
         <v-divider class="divider"></v-divider>
         <div class="row d">
@@ -51,13 +51,11 @@ export default {
   name: "UserCardEdit",
   props: {
     user: {
-      cin: "string",
-      name: "string",
-      lastName: "string",
-      adress: "string",
-      phone: "integer",
-      email: "string",
-      mdp: "string"
+      area: "",
+      name: "",
+      city: "",
+      phone: "",
+      email: ""
     }
   }
 };

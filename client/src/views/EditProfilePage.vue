@@ -1,28 +1,24 @@
 <template>
-  <div class="row edit">
-    <div class="col-xl-6 col-lg-5 col-md-4">
-      <UserCardEdit :user="user"> </UserCardEdit>
-    </div>
-    <div class="col-xl-7 col-lg-7 col-md-8">
-      <EditProfileForm :user="user"> </EditProfileForm>
-    </div>
+  <div class="row edit pt-12">
+    <v-row justify="center">
+      <v-col class="pr-lg-0" cols="12" lg="5" md="6">
+        <UserCardEdit :user="user"></UserCardEdit>
+      </v-col>
+      <v-col class="pr-lg-0  pl-12" cols="12" lg="5" md="6">
+        <EditProfileForm :user="user"></EditProfileForm>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
 import EditProfileForm from "../components/EditProfileForm.vue";
 import UserCardEdit from "../components/UserCardEdit.vue";
+
 export default {
   name: "EditProfilePage",
   data() {
     return {
-      user: {
-        cin: "125665223",
-        name: "اميرة دريدي",
-        adress: "بنزرت ",
-        phone: "21053262",
-        email: "kdldj@djkd.com",
-        mdp: "sghj"
-      }
+      user: this.$store.state.currentUser
     };
   },
   components: {
@@ -33,7 +29,7 @@ export default {
 </script>
 <style>
 .edit {
-  height: 550px;
+  height: 100%;
   margin-top: 17px;
   background-color: #e5dddd;
 }

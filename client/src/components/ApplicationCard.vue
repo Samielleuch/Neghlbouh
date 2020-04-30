@@ -1,105 +1,228 @@
 <template>
-  <v-hover v-slot:default="{ hover }" open-delay="200">
-    <v-card
-      dir="rtl"
-      class="mx-auto cardc"
-      width="1300"
-      :elevation="hover ? 16 : 2"
-    >
+  <v-hover v-slot:default="{ hover }">
+    <v-card :elevation="hover ? 16 : 2" class="mx-auto cardc" dir="rtl">
       <div align="center">
-        <v-avatar size="50" class="avatar">
-          <img src="../assets/appcard.png" alt="" />
+        <v-avatar class="avatar" size="80">
+          <img alt="" src="../assets/appcard.png" />
         </v-avatar>
-        <h4>الطلبات</h4>
+        <h4 class="font">خرجاتي</h4>
       </div>
-      <div v-if="applications.length == 0">you don't have any request</div>
-      <div v-else>
-        <v-row dense>
-          <v-col v-for="(item, i) in applications" :key="i" cols="12">
-            <v-card class="appcard">
-              <div class="d-flex flex-no-wrap">
-                <div class="row">
-                  <v-col>
-                    <div class="app font" style="margin-top: 1px">
-                      طلب الخروج إلى : {{ item.destination }}
-                    </div>
-                  </v-col>
-                  <v-divider vertical inset></v-divider>
-                  <div class="app font" style="margin-top: 10px">
-                    الوقت : {{ item.time }}
+      <v-row>
+        <v-col align="center">
+          <span v-if="loaded && Demandes.length == 0"> ليس لديك طلبات </span>
+        </v-col>
+      </v-row>
+      <v-row v-if="!loaded">
+        <v-col align="center">
+          <v-row>
+            <v-col>
+              <v-progress-circular :width="3" color="red" indeterminate>
+              </v-progress-circular>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <span class="font" color="red">
+                لحظة برك
+              </span>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <div>
+        <v-row align="center" dense justify="center">
+          <v-col
+            :key="i"
+            align="center"
+            cols="12"
+            justify="center"
+            v-for="(item, i) in applications"
+          >
+            <v-card class="appcard pb-0 ">
+              <v-row align="center" justify="center">
+                <v-col
+                  align-self="center"
+                  class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
+                >
+                  <div class="mb-0 font">
+                    <span> سبب الخروج : {{ item.reason }} </span>
                   </div>
-                  <v-divider
-                    vertical
-                    inset
-                    style="margin-right: 80px"
-                  ></v-divider>
-                  <div class="app font" style="margin-top: 10px">
-                    وضعية الطلب : {{ item.state }}
+                  <v-divider inset vertical></v-divider>
+                </v-col>
+                <v-col
+                  align="center"
+                  class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
+                >
+                  <div class="mb-0 font">
+                    وقت العودة : {{ item.tempsRetour }}
                   </div>
-                  <v-col class="text-left">
-                    <v-btn
-                      class="title font"
-                      dark
-                      height="25px"
-                      color="#D41B45"
-                      rounded
-                      style="margin-top: 1px"
+                  <v-divider inset vertical></v-divider>
+                </v-col>
+                <v-col
+                  align="center"
+                  class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
+                >
+                  <div class="mb-0 font">الوجهة : {{ item.zone }}</div>
+                  <v-divider inset vertical></v-divider>
+                </v-col>
+                <!-- buttons Cancel -->
+                <v-col
+                  align="center"
+                  class="pb-0 mb-0"
+                  cols="12"
+                  justify="center"
+                  md="3"
+                >
+                  <v-row align="center" justify="center">
+                    <v-col
+                      :md="item.state === 1 ? 5 : 5"
+                      align="center"
+                      class="pb-0 mb-0"
+                      cols="12"
+                      justify="center"
                     >
-                      المزيد
-                    </v-btn></v-col
-                  >
-                </div>
-              </div>
+                      <div class="mb-0 font">
+                        <v-alert
+                          :color="getColorState(item.state)"
+                          width="90%"
+                          dense
+                          outlined
+                        >
+                          {{ states[item.state] }}
+                        </v-alert>
+                      </div>
+                    </v-col>
+                    <v-col
+                      align="center"
+                      class="pb-0 mb-0"
+                      cols="12"
+                      justify="center"
+                      md="5"
+                    >
+                      <div v-if="item.state === 1">
+                        <v-btn
+                          class="mb-5  "
+                          color="error"
+                          fab
+                          icon
+                          @click="cancelDemande(item._id)"
+                          :loading="trashLoading"
+                        >
+                          <v-icon>fas fa-trash-alt</v-icon>
+                        </v-btn>
+                      </div>
+                      <div v-else>
+                        <v-spacer></v-spacer>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
-        <div class="text-center">
-          <v-btn class="title " dark rounded color="#D41B45" height="28px">
-            المزيد
-          </v-btn>
-        </div>
+        <v-row class="py-5">
+          <v-col align="center">
+            <div class="text-center">
+              <v-btn
+                :to="{ name: 'AllApplicationsPage' }"
+                class="title "
+                color="#D41B45"
+                dark
+                height="28px"
+                large
+                rounded
+                v-if="Demandes.length !== 0"
+              >
+                المزيد
+              </v-btn>
+            </div>
+          </v-col>
+          <v-col align="center">
+            <v-btn
+              :to="{ name: 'FormPage' }"
+              class="title "
+              color="#D41B45"
+              dark
+              height="28px"
+              large
+              rounded
+            >
+              طلب جديد
+            </v-btn>
+          </v-col>
+        </v-row>
       </div>
     </v-card>
   </v-hover>
 </template>
 <script>
+import DemandesService from "@/services/DemandesService";
+
 export default {
   name: "ApplicationCard",
   data: () => ({
-    applications: [
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "مقبول"
-      },
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "مقبول"
-      },
-      {
-        destination: "Supermodel",
-        time: "15:00",
-        state: "مقبول"
+    Demandes: [],
+    applications: [],
+    states: ["إكتمل", "جاري", "ملغى"],
+    loaded: false,
+    trashLoading: false
+  }),
+  created() {
+    DemandesService.getDemandes({ demandTotal: 3 })
+      .then(resp => {
+        this.loaded = true;
+        this.Demandes = resp.data.status;
+        this.applications = this.Demandes;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  methods: {
+    getColorState(itemState) {
+      if (itemState === 0) {
+        return "teal";
+      } else if (itemState === 1) {
+        return "orange";
+      } else {
+        return "red";
       }
-    ]
-  })
+    },
+    cancelDemande(_id) {
+      this.trashLoading = true;
+      DemandesService.cancelDemande({
+        id: _id,
+        state: 2
+      }).then(() => {
+        this.trashLoading = false;
+        this.$router.go();
+      });
+    }
+  }
 };
 </script>
-<style>
+<style scoped>
 .cardc {
-  height: 250px;
+  width: 85%;
 }
+
 .appcard {
-  height: 40px;
+  width: 90%;
 }
-.avatar {
-  margin-top: 2px;
-}
-.app {
-  padding-right: 15px;
-}
+
 .font {
+  font-size: 1.2em;
+  font-weight: bold;
   font-family: Cairo;
 }
 </style>

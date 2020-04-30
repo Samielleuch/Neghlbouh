@@ -55,6 +55,33 @@ const routes = [
     path: "/LiveMap",
     name: "LiveMap",
     component: () => import("../views/LiveMap.vue")
+  },
+  {
+    path: "/FormPage",
+    name: "FormPage",
+    component: () => import("../views/FormPage.vue")
+  },
+  {
+    path: "/Info",
+    name: "Info",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/InfoPage.vue")
+  },
+  {
+    path: "/reset",
+    name: "ResetPassword",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ResetPassword.vue")
+  },
+  {
+    path: "/ResetMail",
+    name: "ResetMail",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ResetMailSend.vue")
+  },
+  {
+    path: "/*",
+    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
   }
 ];
 

@@ -1,7 +1,14 @@
 <template>
-  <v-row justify="center" align-content="center" class="fill-height">
-    <v-col cols=" 12 " md="6" class="text-center">
-      <h1 class=" Hometext ">
+  <v-row align-content="center" class="fill-height" justify="center">
+    <v-col class="text-center" cols=" 12 " md="6">
+      <h1
+        class=" Hometext mt-12"
+        v-if="this.$store.state.currentUser !== undefined"
+      >
+        {{ this.$store.state.langPack.HeaderMenu.Userwelcome }}
+        {{ this.$store.state.currentUser.name }} !
+      </h1>
+      <h1 class=" Hometext mt-8">
         {{ HomePageBanner.title1 }}
       </h1>
       <h1 class="Subtext">
@@ -17,17 +24,17 @@
       </v-row>
     </v-col>
     <v-col
-      cols=" 12 "
-      md="6"
       align-self="center"
       class="text-center  d-none d-md-flex "
+      cols=" 12 "
+      md="6"
     >
       <v-img
-        contain
-        class=" text-center imgCenter"
-        src="@/assets/HomePage.png"
-        max-width="600"
         aspect-ratio="1.129"
+        class=" text-center imgCenter"
+        contain
+        max-width="600"
+        src="@/assets/HomePage.png"
       ></v-img>
     </v-col>
   </v-row>
@@ -48,6 +55,7 @@ export default {
 .imgCenter {
   margin-right: 2vw !important;
 }
+
 .Hometext {
   font-family: Cairo;
   color: white;
@@ -55,6 +63,7 @@ export default {
   font-size: 2.4vw !important;
   margin-top: 5vw !important;
 }
+
 .Subtext {
   font-family: Cairo;
 
@@ -71,6 +80,7 @@ export default {
   font-weight: bold !important;
   font-family: Cairo;
 }
+
 @media only screen and (max-width: 958px) {
   .Hometext {
     color: white;
@@ -79,12 +89,14 @@ export default {
     margin-top: 7vw !important;
     font-family: Cairo;
   }
+
   .Subtext {
     font-weight: bold !important;
     font-size: 20px !important;
     margin-top: 4vw !important;
     font-family: Cairo;
   }
+
   .btnHome {
     margin-top: 20px;
     font-weight: bold !important;

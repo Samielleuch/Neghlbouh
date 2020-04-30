@@ -1,19 +1,19 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-col cols="12" md="11" sm="11">
-        <SignUpForm />
+      <v-col cols="12" md="7" sm="11">
+        <ResetForm />
       </v-col>
     </v-row>
   </div>
 </template>
 <script>
-import SignUpForm from "@/components/SignUpForm";
+import ResetForm from "../components/ResetForm";
 
 export default {
-  name: "Sign_Up_Page",
+  name: "ResetPassword",
   components: {
-    SignUpForm
+    ResetForm
   }
 };
 </script>

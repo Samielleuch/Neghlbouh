@@ -1,49 +1,112 @@
 <template>
   <div>
-    <v-row justify="center">
-      <v-col cols="9">
-        <div id="map" class="mapboxgl-map">
-          <MglMap
-            container="map"
-            :center.sync="center"
-            :accessToken="accessToken"
-            :mapStyle.sync="mapStyle"
-            :zoom="zoom"
-            :minZoom="minZoom"
-            :maxBounds="maxBounds"
-          >
-            <MglGeolocateControl position="top-right" />
-            <MglNavigationControl position="top-right" />
-            <MglGeolocateControl position="top-right" />
-            <MglScaleControl />
-            <MglMarker :coordinates.sync="markerCoordinates" color="red" />
-            <MglGeojsonLayer
-              :sourceId="geoJsonSource.data.id"
-              :source="geoJsonSource"
-              layerId="somethingSomething"
-              :layer="geoJsonLayer"
-            />
-          </MglMap>
-        </div>
-      </v-col>
-    </v-row>
     <v-row>
-      <v-col cols="12">
-        <div>
-          hi
-        </div>
+      <v-col cols="12" v-if="loaded">
+        <v-row
+          align="center"
+          class="mt-10 text-center"
+          justify="center"
+          v-if="alertMe"
+        >
+          <v-col align-self="center" cols="4" justify="center">
+            <v-alert dense text type="error"
+              >خطر في منطقتك الرجاء إلتزام المنزل
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-col cols="9">
+            <div class="mapboxgl-map" id="map">
+              <MglMap
+                :accessToken="accessToken"
+                :center.sync="center"
+                :mapStyle.sync="mapStyle"
+                :maxBounds="maxBounds"
+                :zoom="zoom"
+                container="map"
+              >
+                <MglGeolocateControl position="top-right" show="true" />
+                <MglScaleControl />
+                <MglMarker
+                  :coordinates="myCoordinate"
+                  :key="mykey"
+                  color="red"
+                  v-if="visible"
+                />
+                <MglGeojsonLayer
+                  :key="index + 30"
+                  :layer="getGeoJsonLayer(index)"
+                  :layerId="index.toString()"
+                  :source="getGeoJsonSource(index, zone)"
+                  :sourceId="index.toString()"
+                  v-for="(zone, index) in miniZones"
+                >
+                </MglGeojsonLayer>
+                <MglGeojsonLayer
+                  :key="index + 500"
+                  :layer="getTextLayer()"
+                  :layerId="(index + 500).toString()"
+                  :source="getGeoJsonSource(index + 500, zone)"
+                  :sourceId="(index + 500).toString()"
+                  v-for="(zone, index) in miniZones"
+                >
+                </MglGeojsonLayer>
+              </MglMap>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row class="mr-12 ml-12">
+          <v-col cols="4">
+            <div class="text-center">
+              <v-sheet color="red lighten-5"> اقل 20 مواطن</v-sheet>
+            </div>
+          </v-col>
+          <v-col cols="4">
+            <div class="text-center">
+              <v-sheet color="red lighten-4"> بين 20 و 50 مواطن</v-sheet>
+            </div>
+          </v-col>
+          <v-col cols="4">
+            <div class="text-center">
+              <v-sheet color="red lighten-2"> اكثر من 50</v-sheet>
+            </div>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
-  </div></template
->
+    <v-row align="center" justify="center" v-if="!loaded">
+      <v-col align="center" justify="center">
+        <v-row>
+          <v-col>
+            <v-progress-circular
+              :width="5"
+              color="black"
+              indeterminate
+              size="50"
+            >
+            </v-progress-circular>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <span class="font">
+              لحظة برك
+            </span>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </div>
+</template>
 
 <script>
 import Mapbox from "mapbox-gl";
+import gps from "@/services/GpsService";
+import cord from "@/store/coordonnees.json";
 import {
   MglMap,
   MglMarker,
   MglGeojsonLayer,
-  MglNavigationControl,
   MglGeolocateControl,
   MglScaleControl
 } from "vue-mapbox";
@@ -54,63 +117,90 @@ export default {
     MglMap,
     MglMarker,
     MglGeojsonLayer,
-    MglNavigationControl,
     MglGeolocateControl,
     MglScaleControl
   },
   data() {
     return {
-      myCoordinate: [10.4, 35.8],
+      geoJson: "",
+      loaded: false,
+      alertMe: false,
+      visible: false,
+      mykey: "100",
+      numb: "0",
+      myCoordinate: [10.5449929, 34.7267589],
       accessToken:
         "pk.eyJ1Ijoic2FtaWVsbGV1Y2giLCJhIjoiY2s4ZmYxanp5MDA5MDNmcWowY3FuZm1tbSJ9.neFuBaRgOGr8khOj2FGweA",
       mapStyle: "mapbox://styles/mapbox/light-v10",
       center: [10.5375, 35.2],
-      markerCoordinates: [10.5375, 36.8],
       zoom: 6,
-      minZoom: 0,
       maxBounds: [
         [6.5, 28.8869],
         [12.5375, 38.1]
       ],
-      geoJsonLayer: {
+      Zones: cord.Zones,
+      miniZones: [[], [], []]
+    };
+  },
+  methods: {
+    getGeoJsonSource(idd, cord) {
+      let createdFeatures = [];
+      for (let i = 0; i < cord.length; i++) {
+        createdFeatures.push({
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: cord[i].cord
+          },
+          properties: { title: cord[i].name + "\n" + cord[i].countPeople }
+        });
+      }
+      return {
+        type: "geojson",
+        data: {
+          id: idd.toString(),
+          type: "FeatureCollection",
+          features: createdFeatures
+        }
+      };
+    },
+    getGeoJsonLayer(nb) {
+      console.log("nb " + nb);
+      let opacity = 0;
+      if (nb == "faible") {
+        opacity = 0.1;
+      } else if (nb == "moyen") {
+        opacity = 0.3;
+      } else {
+        opacity = 0.5;
+      }
+      return {
         type: "circle",
         paint: {
           "circle-color": "red",
           "circle-radius": {
             stops: [
               [0, 0],
-              [20, 100000]
+              [20, 18000]
               //distance here
             ],
             base: 2
           },
           "circle-stroke-color": "white",
-          "circle-opacity": 0.3,
+          "circle-opacity": opacity,
           "circle-pitch-scale": "viewport"
         }
-      }
-    };
-  },
-  computed: {
-    geoJsonSource() {
+      };
+    },
+    getTextLayer() {
       return {
-        type: "geojson",
-        data: {
-          id: "thisIsMySource",
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              geometry: {
-                type: "Point",
-                coordinates: this.myCoordinate
-              },
-              properties: {
-                description: "Ford's Theater",
-                id: "value0"
-              }
-            }
-          ]
+        type: "symbol",
+        minzoom: 9,
+        maxzoom: 0,
+        layout: {
+          "text-field": ["get", "title"],
+          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+          "text-size": 13
         }
       };
     }
@@ -118,6 +208,22 @@ export default {
   created() {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox;
+    //to be removed and changed to api call
+  },
+  async mounted() {
+    if (this.mapbox.getRTLTextPluginStatus() !== "loaded") {
+      this.mapbox.setRTLTextPlugin(
+        "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js",
+        null,
+        true // Lazy load the plugin
+      );
+    }
+    let Zones = await gps.requestGPS();
+    this.miniZones = Zones.data.data;
+    console.log(this.miniZones);
+    this.loaded = true;
+
+    //every 10 second request the api !
   }
 };
 </script>
@@ -127,7 +233,9 @@ export default {
   width: 100%;
   height: 900px;
 }
+.font {
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: Cairo;
+}
 </style>
-//TO DO ADD TEXT LAYER !
-//https://stackoverflow.com/questions/56762563/how-to-add-a-text-inside-a-circle-in-mapbox-gl-js
-//https://soal.github.io/vue-mapbox/api/controls.html#navigationcontrol
