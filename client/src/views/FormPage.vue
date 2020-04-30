@@ -184,7 +184,7 @@ export default {
   computed: {
     getAllowedMinutes() {
       let allowed = [];
-       
+
       if (this.isMinutesAllowed) {
         allowed = [];
         for (let i = 0; i < 60; i += 5) {
@@ -212,7 +212,7 @@ export default {
         let currH = new Date().getHours();
         let currM = new Date().getMinutes();
         let time = this.tempsRetour.split(":");
-         
+
         if (time[0] == currH && time[1] <= currM) return true;
         return false;
       }

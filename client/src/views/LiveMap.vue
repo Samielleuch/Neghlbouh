@@ -104,10 +104,10 @@ import Mapbox from "mapbox-gl";
 import gps from "@/services/GpsService";
 import cord from "@/store/coordonnees.json";
 import {
-  MglMap,
-  MglMarker,
   MglGeojsonLayer,
   MglGeolocateControl,
+  MglMap,
+  MglMarker,
   MglScaleControl
 } from "vue-mapbox";
 
@@ -165,7 +165,6 @@ export default {
       };
     },
     getGeoJsonLayer(nb) {
-       
       let opacity = 0;
       if (nb == "faible") {
         opacity = 0.1;
@@ -220,7 +219,7 @@ export default {
     }
     let Zones = await gps.requestGPS();
     this.miniZones = Zones.data.data;
-     
+
     this.loaded = true;
 
     //every 10 second request the api !

@@ -212,7 +212,7 @@ export default {
       if (this.valid) {
         this.loading = true;
         try {
-          let resp = await authController.update({
+          await authController.update({
             oldPassword: this.oldPassword,
             newPassword: this.newPassword,
             name: this.name,
@@ -224,15 +224,13 @@ export default {
           });
           this.loading = false;
           this.done = true;
-           
         } catch (e) {
           this.loading = false;
-           
+
           this.error = e.response.data.err;
         }
       } else {
         //to implement notification v-if here
-         
       }
     },
     button() {

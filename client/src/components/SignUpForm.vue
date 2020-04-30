@@ -305,11 +305,11 @@ export default {
     ...mapActions(["pressLogin"]),
     async validate() {
       this.$refs.form.validate();
-       
+
       if (this.valid) {
         this.loading = true;
         try {
-          let resp = await authController.register({
+          await authController.register({
             name: this.name,
             cin: this.CIN,
             email: this.email,
@@ -320,15 +320,13 @@ export default {
           });
           this.loading = false;
           this.$router.replace({ name: "SignIn" });
-           
         } catch (e) {
           this.loading = false;
-           
+
           this.error = e.response.data.err;
         }
       } else {
         //to implement notification v-if here
-         
       }
     }
   }

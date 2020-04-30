@@ -141,9 +141,7 @@ export default {
         this.loaded = true;
         this.applications = resp.data.status;
       })
-      .catch(err => {
-         
-      });
+      .catch(() => {});
   },
   methods: {
     getColorState(itemState) {

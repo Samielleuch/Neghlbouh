@@ -184,8 +184,7 @@ export default {
         this.Demandes = resp.data.status;
         this.applications = this.Demandes;
       })
-      .catch(err => {
-      });
+      .catch(() => {});
   },
   methods: {
     getColorState(itemState) {

@@ -176,7 +176,7 @@ export default {
             cin: this.CIN,
             password: this.password
           });
-           
+
           this.pressLogin(false);
           if (this.$route.name !== "Home") {
             this.$router.replace({ name: "Home" });
@@ -189,7 +189,6 @@ export default {
         }
       } else {
         //to implement notification v-if here
-         
       }
     },
     removeModal() {

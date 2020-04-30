@@ -141,7 +141,7 @@ export default {
   },
   // verifyToken must be implemented
   created() {
-    authController.verifyToken({ userId : this.id }).then(resp => {
+    authController.verifyToken({ userId: this.id }).then(resp => {
       if (resp.data.success == true) {
         this.tokenValid = true;
       }
@@ -159,25 +159,24 @@ export default {
       if (this.valid) {
         this.loading = true;
         try {
-          let resp = await authController.reset({
+          await authController.reset({
             token: this.$route.query.token,
             userId: this.$route.query.id,
             //cin: this.$store.state.currentUser.cin,
             password: this.newPassword
           });
-           
+
           if (this.$route.name !== "SignIn") {
             this.$router.replace({ name: "SignIn" });
           }
           this.loading = false;
         } catch (e) {
           this.loading = false;
-           
+
           this.error = e.response.data;
         }
       } else {
         //to implement notification v-if here
-         
       }
     }
   }
