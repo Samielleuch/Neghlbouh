@@ -43,6 +43,6 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-app.listen(config.port, config.hostname, () => {
+app.listen(config.port,() => {
   console.log(`Server running at http://${config.hostname}:${config.port}/`);
 });

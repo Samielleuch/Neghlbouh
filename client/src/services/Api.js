@@ -4,7 +4,7 @@ import router from "../router";
 
 export default () => {
   const api = axios.create({
-    baseURL: "http://localhost:8081/api/v1/",
+    baseURL: "http://intense-meadow-28547.herokuapp.com/api/v1/",
     headers: {
       Authorization: `Bearer ${store.state.token}`
     }
