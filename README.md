@@ -1,3 +1,6 @@
+# our Frontend is Deployed  on Vercel : https://neghlbouh.now.sh/
+# our Backend is Deployed on Heroku : https://intense-meadow-28547.herokuapp.com/api/v1/test/Hello
+
 
 #  what is this Project 
 
@@ -6,6 +9,7 @@ To guarantee the safety of people and in order to stop the COVID-19 spread ,we n
 ## Try it out !
  FrontEnd is written using Vue js + Vuetify
  Backend is written using Node js + passport (jwt) + mongoose
+
 #
 ## start Server  
 #
