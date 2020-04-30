@@ -4,7 +4,6 @@
       :class="isLoginPressed ? 'background-img' : ''"
       :dark="false"
       :value="isLoginPressed"
-      @click="log"
     >
       <v-row justify="center">
         <v-col justify="center">
@@ -40,11 +39,7 @@ export default {
   computed: {
     ...mapState(["isLoginPressed"])
   },
-  methods: {
-    log() {
-      console.log("clicked");
-    }
-  }
+  methods: {}
 };
 </script>
 
