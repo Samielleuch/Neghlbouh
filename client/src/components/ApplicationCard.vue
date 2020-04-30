@@ -185,7 +185,6 @@ export default {
         this.applications = this.Demandes;
       })
       .catch(err => {
-        console.log(err);
       });
   },
   methods: {

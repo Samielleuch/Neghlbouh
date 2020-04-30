@@ -142,7 +142,7 @@ export default {
         this.applications = resp.data.status;
       })
       .catch(err => {
-        console.log(err);
+         
       });
   },
   methods: {

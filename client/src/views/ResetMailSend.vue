@@ -114,7 +114,7 @@ export default {
           let resp = await authController.sendResetMail({
             email: this.email
           });
-          console.log(resp);
+           
           this.pressLogin(false);
           if (this.$route.name !== "Home") {
             this.$router.replace({ name: "Home" });
@@ -123,12 +123,12 @@ export default {
           this.loading = false;
         } catch (e) {
           this.loading = false;
-          console.log(e.response.data.err);
+           
           this.error = e.response.data;
         }
       } else {
         //to implement notification v-if here
-        console.log("validation failed");
+         
       }
     }
   }

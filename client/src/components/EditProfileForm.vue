@@ -224,15 +224,15 @@ export default {
           });
           this.loading = false;
           this.done = true;
-          console.log(resp);
+           
         } catch (e) {
           this.loading = false;
-          console.log(e.response.data);
+           
           this.error = e.response.data.err;
         }
       } else {
         //to implement notification v-if here
-        console.log("validation failed");
+         
       }
     },
     button() {

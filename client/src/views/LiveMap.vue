@@ -165,7 +165,7 @@ export default {
       };
     },
     getGeoJsonLayer(nb) {
-      console.log("nb " + nb);
+       
       let opacity = 0;
       if (nb == "faible") {
         opacity = 0.1;
@@ -220,7 +220,7 @@ export default {
     }
     let Zones = await gps.requestGPS();
     this.miniZones = Zones.data.data;
-    console.log(this.miniZones);
+     
     this.loaded = true;
 
     //every 10 second request the api !

@@ -165,19 +165,19 @@ export default {
             //cin: this.$store.state.currentUser.cin,
             password: this.newPassword
           });
-          console.log(resp);
+           
           if (this.$route.name !== "SignIn") {
             this.$router.replace({ name: "SignIn" });
           }
           this.loading = false;
         } catch (e) {
           this.loading = false;
-          console.log(e.response.data.err);
+           
           this.error = e.response.data;
         }
       } else {
         //to implement notification v-if here
-        console.log("validation failed");
+         
       }
     }
   }
