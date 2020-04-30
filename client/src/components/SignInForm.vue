@@ -138,7 +138,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-
+import authController from "../services/AuthenticationService"
 export default {
   name: "SignInForm",
   props: {
