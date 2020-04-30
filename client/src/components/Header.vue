@@ -1,5 +1,4 @@
 <template>
-
   <!-- the z-index of the nav bar is set to 10 so that it doesn't 
       collide with the form in the sign up page ( this form has been adjusted with transform) -->
   <div
@@ -299,7 +298,10 @@
           </v-list-item>
           <!-- -->
           <!-- Login Button -->
-          <v-list-item class="text-justify ">
+          <v-list-item
+            class="text-justify "
+            v-if="this.$store.state.currentUser === undefined"
+          >
             <v-list-item-title
               @click="checkLoginPressed(loginButton.name)"
               class="hamburgerMenu "
@@ -347,6 +349,7 @@ export default {
   name: "Header",
   data() {
     return {
+      session: undefined,
       drawer: false,
       // Data to transport to Vuex
       HeaderMenu: [
@@ -368,25 +371,36 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,
           icon: "fas fa-hand-sparkles",
-          link: "Home"
+          link: "Info"
         },
-        // { name: "الإجراءات المُتّخذة", icon: "fas fa-viruses", link: "Home" },
         {
           name: this.$store.state.langPack.HeaderMenu.faq,
           icon: "fas fa-question-circle",
-          link: "FAQ"
-        },
 
-        {
-          name: this.$store.state.langPack.HeaderMenu.signup,
-          icon: "fas fa-user-plus",
-          link: "SignUp"
+          link: "FAQ"
         }
       ],
       loginButton: {
         name: this.$store.state.langPack.HeaderMenu.loginButton,
         icon: "fas fa-door-open",
         link: "SignIn"
+      },
+      signupButton: {
+        name: this.$store.state.langPack.HeaderMenu.signup,
+        icon: "fas fa-user-plus",
+        link: "SignUp"
+      },
+      logOutButton: {
+        name: this.$store.state.langPack.HeaderMenu.logOutButton,
+        icon: "fas fa-door-closed"
+      },
+      userDashboardButton: {
+        name: this.$store.state.langPack.HeaderMenu.userDashboardButton,
+        icon: "fas fa-user-circle"
+      },
+      adminDashboardButton: {
+        name: this.$store.state.langPack.HeaderMenu.adminDashboardButton,
+        icon: "fas fa-user-shield"
       }
       //  End of Data to transport
     };
@@ -413,6 +427,9 @@ export default {
             this.$router.push({ name: "SignIn" });
         }
       }
+    },
+    checkSignUpPressed() {
+      if (this.$route.name !== "SignUn") this.$router.push({ name: "SignUp" });
     },
     activeClass(hover, link, name, classwhenactive, otherclass) {
       if (link === this.$route.name) {
@@ -479,7 +496,7 @@ export default {
 
 .cool-link:hover::after {
   width: 100%;
-  //transition: width .3s;
+  transition: width 0.3s;
 }
 
 .animation {

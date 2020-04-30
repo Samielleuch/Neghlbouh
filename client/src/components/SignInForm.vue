@@ -16,7 +16,7 @@
           </span>
         </v-col>
       </v-row>
-      <!-- Forgot Password section -->
+      <!-- icon -->
       <v-row justify="center">
         <v-col align="center" cols="12">
           <v-img aspect-ratio="3" src="../assets/logo.png" width="250"></v-img>
@@ -137,8 +137,9 @@
 </template>
 
 <script>
+import authController from "@/services/AuthenticationService";
 import { mapActions, mapState } from "vuex";
-import authController from "../services/AuthenticationService"
+
 export default {
   name: "SignInForm",
   props: {

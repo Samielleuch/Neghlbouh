@@ -14,6 +14,11 @@ export default {
   name: "Sign_Up_Page",
   components: {
     SignUpForm
+  },
+  created() {
+    if (this.$store.state.currentUser !== undefined) {
+      this.$router.replace({ name: "Home" });
+    }
   }
 };
 </script>

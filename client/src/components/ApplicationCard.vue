@@ -3,7 +3,7 @@
     <v-card :elevation="hover ? 16 : 2" class="mx-auto cardc" dir="rtl">
       <div align="center">
         <v-avatar class="avatar" size="80">
-          <img alt="" src="../assets/SignUpPic.png" />
+          <img alt="" src="../assets/appcard.png" />
         </v-avatar>
         <h4 class="font">خرجاتي</h4>
       </div>

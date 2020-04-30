@@ -204,6 +204,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import authController from "@/services/AuthenticationService";
+
 export default {
   name: "SignUpForm",
   props: {
@@ -341,42 +342,52 @@ export default {
   position: relative;
   z-index: 1 !important;
 }
+
 body * {
   font-family: Cairo;
 }
+
 .mt--5 {
   margin-top: -25px;
 }
+
 .mt--10 {
   margin-top: -50px !important;
 }
+
 .font-login {
   font-size: 2rem !important;
 }
+
 .font-login-popup2 {
   font-size: 1.4rem !important;
   background-color: rgba(255, 255, 255, 0);
   color: #616161;
 }
+
 .font-login-white {
   font-size: 1.5rem !important;
   background-color: rgba(255, 255, 255, 0);
   color: #ffffff;
 }
+
 .font-login-pass {
   font-size: 1rem !important;
   background-color: rgba(255, 255, 255, 0);
   color: #c70100;
 }
+
 .glowing-border {
   box-shadow: 0px 0 10px 1px #df0100, /* inner white */ 0px 0 10px 1px #770000,
     /* middle magenta */ 0 0 10px 1px #6b2028 !important;
 }
+
 .side-image {
   height: 90vh;
   width: 70vw;
   padding-bottom: 120px !important;
 }
+
 .text-photo {
   font-size: 45px;
   color: white;
