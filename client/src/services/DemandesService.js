@@ -1,7 +1,7 @@
 import Api from "@/services/Api";
 export default {
   getDemandes(payload) {
-    return Api().get("demande", payload);
+    return Api().post("demande", payload);
   },
   addDemandes(payload) {
     return Api().post("demande/add", payload);

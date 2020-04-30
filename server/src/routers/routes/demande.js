@@ -25,8 +25,9 @@ router.put("/state/", (req, res) => {
 });
 
 //get all demands for user connected
-router.get("/", authenticate.verifyOrdinaryUser, (req, res, next) => {
+router.post("/", authenticate.verifyOrdinaryUser, (req, res, next) => {
   let demandTotal = 0;
+  console.log(req.body);
   if (req.body.demandTotal) demandTotal = req.body.demandTotal;
   Demande.find({
     cin: req.user.cin
@@ -112,7 +113,7 @@ router.get(
 );
 //get demande by id for a specific user
 router
-  .route("/")
+  .route("/id")
   .get(authenticate.verifyOrdinaryUser, (req, res, next) => {
     Demande.find({
       _id: req.body.demandId,

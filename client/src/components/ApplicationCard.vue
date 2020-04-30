@@ -178,8 +178,7 @@ export default {
     trashLoading: false
   }),
   created() {
-    let Demandesobj = { ...this.$store.state.currentUser, ...{ demandTotal: "3" } };
-    DemandesService.getDemandes(Demandesobj)
+    DemandesService.getDemandes({ demandTotal: 3 })
       .then(resp => {
         this.loaded = true;
         this.Demandes = resp.data.status;
