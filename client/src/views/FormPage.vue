@@ -63,41 +63,6 @@
             </v-btn>
           </div>
           <div class="mt-5" v-if="isClicked">
-            <v-row align="center" justify="center">
-              <v-col align-self="center" cols="4" justify="center">
-                <v-alert
-                  border="left"
-                  color="red"
-                  colored-border
-                  elevation="2"
-                  icon="fas fa-lungs-virus"
-                >
-                  عدد المصابين : 5
-                </v-alert>
-              </v-col>
-              <v-col align-self="center" cols="4" justify="center">
-                <v-alert
-                  border="left"
-                  color="red"
-                  colored-border
-                  elevation="2"
-                  icon="fas fa-head-side-mask"
-                >
-                  عدد المواطنين 16
-                </v-alert>
-              </v-col>
-              <v-col align-self="center" cols="4" justify="center">
-                <v-alert
-                  border="left"
-                  color="red"
-                  colored-border
-                  elevation="2"
-                  icon="fas fa-house-user"
-                >
-                  عدد حاملي سوار الحماية: 0
-                </v-alert>
-              </v-col>
-            </v-row>
             <v-row
               align="center"
               justify="center"
@@ -125,7 +90,7 @@
               </v-btn>
               <v-btn
                 @click="reject"
-                class="title mr-3"
+                class="title mr-3 mt-2"
                 color="#D41B45"
                 dark
                 height="40px"
