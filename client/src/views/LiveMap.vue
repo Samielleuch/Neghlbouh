@@ -15,7 +15,7 @@
           </v-col>
         </v-row>
         <v-row justify="center">
-          <v-col cols="9">
+          <v-col md="9" cols="11">
             <div class="mapboxgl-map" id="map">
               <MglMap
                 :accessToken="accessToken"
