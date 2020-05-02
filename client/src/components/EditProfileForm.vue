@@ -200,7 +200,6 @@ export default {
             area: this.area,
             phone: this.phone
           });
-          this.$store.state.currentUser;
           this.loading = false;
           this.done = true;
         } catch (e) {
