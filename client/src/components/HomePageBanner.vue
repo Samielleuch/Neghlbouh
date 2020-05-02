@@ -15,7 +15,7 @@
         {{ HomePageBanner.title2 }}
       </h1>
       <v-row justify="center">
-        <v-btn class="btnHome ml-4" dark rounded>
+        <v-btn class="btnHome ml-4" dark rounded to="LiveMap">
           {{ HomePageBanner.btn1 }}
         </v-btn>
         <v-btn class="btnHome mr-4" dark rounded>

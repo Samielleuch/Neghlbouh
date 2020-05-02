@@ -112,7 +112,7 @@
             <em>
               {{ text.noAcc }}
             </em>
-            <a class=" font-weight-bold font-login-pass" href="#">
+            <a class=" font-weight-bold font-login-pass" href="SignUp">
               {{ text.makeAccount }}
             </a>
           </v-col>

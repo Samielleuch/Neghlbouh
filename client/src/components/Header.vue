@@ -11,7 +11,7 @@
         class="d-flex d-md-none"
       ></v-app-bar-nav-icon>
       <v-spacer class="d-flex d-md-none"></v-spacer>
-      <v-img
+      <a href="Home"><v-img
         alt="Neghlbouh"
         class="shrink mr-1"
         contain
@@ -19,7 +19,7 @@
         style="margin-left: 20px"
         transition="scale-transition"
         width="150"
-      />
+      /></a>
       <v-toolbar-title class="d-none d-md-flex">
         <!--  User Dashboard --->
         <v-hover
