@@ -164,7 +164,7 @@ export default {
   },
   computed: {
     areaCal() {
-      if (!(this.user)) {
+      if (!this.user) {
         return data.allAreas;
       } else {
         return data.areas[this.user.city];
