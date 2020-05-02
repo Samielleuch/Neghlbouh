@@ -5,10 +5,10 @@
     dir="rtl"
     style="padding-bottom: 30px;height: 40px; margin-bottom: 10px; z-index:10;"
   >
-    <v-app-bar color="white">
+    <v-app-bar color="white" style="position: fixed ;">
       <v-app-bar-nav-icon
         @click="drawer = true"
-        class="d-flex d-md-none"
+        class="d-flex d-md-none "
       ></v-app-bar-nav-icon>
       <v-spacer class="d-flex d-md-none"></v-spacer>
       <a href="Home"
