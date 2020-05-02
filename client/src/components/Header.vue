@@ -204,7 +204,7 @@
       </v-toolbar-title>
     </v-app-bar>
     <!-- Responsive Menu here !! -->
-    <v-navigation-drawer absolute temporary v-model="drawer">
+    <v-navigation-drawer absolute temporary v-model="drawer" style="position: fixed ;">
       <v-list dense nav>
         <v-list-item-group>
           <!-- userDash Button -->
