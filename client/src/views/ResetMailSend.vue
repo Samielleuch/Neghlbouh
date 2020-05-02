@@ -60,6 +60,7 @@
                     :class="hover ? 'mt--10 glowing-border' : 'mt--10'"
                     :disabled="!valid"
                     :ripple="{ class: 'red--text' }"
+                    :loading="loading"
                     @click="validate"
                     color="#df0100"
                     height="225%"
@@ -89,6 +90,7 @@ export default {
   data() {
     return {
       email: "",
+      loading: false,
       valid: false,
       show1: false,
       error: "",

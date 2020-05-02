@@ -6,7 +6,7 @@ module.exports = {
   accountSid: "ACeb9fb9438bc91ed334d8072d0fbad69b",
   authToken: "11774312d204e45785212261055b7f4b",
   numero: "+12029527100",
-  clientUrl: "https://neghlbouh.now.sh/",
+  clientUrl: "neghlbouh.now.sh/",
   tokenExpiry: 3600,
   emailService: "hormail",
   emailUser: "neghlbouh-team@hotmail.com",
