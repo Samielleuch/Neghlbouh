@@ -107,7 +107,9 @@
     <div v-else>
       <v-alert class="mt-12" prominent type="error">
         <v-row align="center">
-          <v-col class="grow">{{ error }}</v-col>
+          <v-col class="grow">{{
+            error.err.message || error.err || error
+          }}</v-col>
         </v-row>
       </v-alert>
     </div>

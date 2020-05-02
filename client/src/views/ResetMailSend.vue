@@ -27,7 +27,7 @@
                 v-if="error !== ''"
                 width="80%"
               >
-                {{ error }}
+                {{ error.err.message || error.err || error }}
               </v-alert>
             </v-col>
           </v-row>
@@ -116,7 +116,6 @@ export default {
           let resp = await authController.sendResetMail({
             email: this.email
           });
-
           this.pressLogin(false);
           if (this.$route.name !== "Home") {
             this.$router.replace({ name: "Home" });
