@@ -35,7 +35,7 @@
           </v-row>
           <v-label><h3>الوجهة</h3></v-label>
           <v-select
-            :items="items"
+            :items="areaCal"
             :rules="[v => !!v || 'الرجاء اختيار الوجهة']"
             class="txt"
             color="#d41b45"
@@ -144,47 +144,35 @@
 
 <script>
 import DemandesService from "@/services/DemandesService";
+import data from "../store/data.json";
 
 export default {
   name: "FormPage",
-  data: () => ({
-    valid: false,
-    error: "",
-    reason: "",
-    isClicked: false,
-    isMinutesAllowed: true,
-    zone: "",
-    tempsRetour: "",
-    reasonRules: [v => !!v || "الرجاء ادخال سبب الخروج"],
-    select: null,
-    items: [
-      "ساقية الزيت",
-      "ساقية الدائر",
-      "العين صفاقس",
-      "Gremda",
-      "طينة",
-      "الشيحية",
-      "المحرس",
-      "قرقنة",
-      "الصخيرة",
-      "عقارب",
-      "الحنشة",
-      "جبنيانة",
-      "بئر علي صفاقس",
-      "الغريبة",
-      "العامرة",
-      "العوابد - الخزانات",
-      "الناظور",
-      "الحاجب",
-      "حزق",
-      "الأعشاش",
-      "النصر"
-    ]
-  }),
+  data() {
+    return {
+      user: this.$store.state.currentUser,
+      valid: false,
+      error: "",
+      reason: "",
+      isClicked: false,
+      isMinutesAllowed: true,
+      zone: "",
+      tempsRetour: "",
+      reasonRules: [v => !!v || "الرجاء ادخال سبب الخروج"],
+      select: null
+    };
+  },
   computed: {
+    areaCal() {
+      if (!(this.user)) {
+        return data.allAreas;
+      } else {
+        return data.areas[this.user.city];
+      }
+    },
     getAllowedMinutes() {
       let allowed = [];
-
+      console.log(this.tempsRetour);
       if (this.isMinutesAllowed) {
         allowed = [];
         for (let i = 0; i < 60; i += 5) {
@@ -212,7 +200,7 @@ export default {
         let currH = new Date().getHours();
         let currM = new Date().getMinutes();
         let time = this.tempsRetour.split(":");
-
+        console.log(time);
         if (time[0] == currH && time[1] <= currM) return true;
         return false;
       }

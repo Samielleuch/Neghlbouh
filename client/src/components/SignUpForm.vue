@@ -70,7 +70,7 @@
               <v-row class="mb-0 pb-0" justify="center">
                 <v-col class="mb-0 pb-0" cols="10">
                   <v-select
-                    :items="areas"
+                    :items="areaCal"
                     :label="text.areaField"
                     class="mb-0 pb-0"
                     clearable
@@ -204,6 +204,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import authController from "@/services/AuthenticationService";
+import data from "../store/data.json";
 
 export default {
   name: "SignUpForm",
@@ -244,59 +245,19 @@ export default {
       ],
       valid: false,
       show1: false,
-      cities: [
-        "أريانة",
-        "تونس",
-        "صفاقس",
-        "باجة",
-        "بنزرت",
-        "بن عروس",
-        "تطاوين",
-        "توزر",
-        "جندوبة",
-        "زغوان",
-        "سليانة",
-        "سوسة",
-        "سيدي بوزيد",
-        "قابس",
-        "قبلي",
-        "القصرين",
-        "قفصة",
-        "القيروان",
-        "الكاف",
-        "مدنين",
-        "المنستير",
-        "منوبة",
-        "المهدية",
-        "نابل"
-      ],
-      areas: [
-        "	ساقية الزيت",
-        "ساقية الدائر",
-        "	العين",
-        "قرمدة",
-        "	طينة",
-        "	الشيحية",
-        "المحرس",
-        "	قرقنة",
-        "	الصخيرة",
-        "عقارب",
-        "	الحنشة",
-        "جبنيانة",
-        "بئر علي",
-        "الغريبة",
-        "	العامرة",
-        "العوابد - الخزانات",
-        "الناظور - سيدي علي بن عابد",
-        "الحاجب",
-        "حزق - اللوزة",
-        "الأعشاش",
-        "النصر"
-      ]
+      cities: data.cities,
+      areas: []
     };
   },
   computed: {
     ...mapState(["langPack"]),
+    areaCal() {
+      if (!this.city) {
+        return data.allAreas;
+      } else {
+        return data.areas[this.city];
+      }
+    },
     text() {
       return this.langPack.Sign_Up;
     }
@@ -305,11 +266,11 @@ export default {
     ...mapActions(["pressLogin"]),
     async validate() {
       this.$refs.form.validate();
-
+      console.log(this.area);
       if (this.valid) {
         this.loading = true;
         try {
-          await authController.register({
+          let resp = await authController.register({
             name: this.name,
             cin: this.CIN,
             email: this.email,
@@ -320,13 +281,15 @@ export default {
           });
           this.loading = false;
           this.$router.replace({ name: "SignIn" });
+          console.log(resp);
         } catch (e) {
           this.loading = false;
-
+          console.log(e.response.data);
           this.error = e.response.data.err;
         }
       } else {
         //to implement notification v-if here
+        console.log("validation failed");
       }
     }
   }
@@ -336,7 +299,7 @@ export default {
 <style scoped>
 .form {
   /* This form has been down-scaled and the z-index is made 1
-         with position relative so it doesn't collide with the nav bar */
+           with position relative so it doesn't collide with the nav bar */
   position: relative;
   z-index: 1 !important;
 }
