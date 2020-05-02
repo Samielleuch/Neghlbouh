@@ -200,7 +200,6 @@ export default {
         let currH = new Date().getHours();
         let currM = new Date().getMinutes();
         let time = this.tempsRetour.split(":");
-        console.log(time);
         if (time[0] == currH && time[1] <= currM) return true;
         return false;
       }
