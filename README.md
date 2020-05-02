@@ -39,7 +39,6 @@
 <p align="center">
  Live now on : https://neghlbouh.now.sh/
  </p>
----
 
 
 ![Recordit GIF](http://g.recordit.co/XilqtPwCJF.gif)
@@ -48,8 +47,7 @@
 
 ## Developed Using 
 - NodeJs ExpressJs PassportJs JWT and Mongoose for the Backend
-- VueJs Vuex Vuetify for the frontend 
-
+- VueJs Vuex Vuetify Mapbox-gl-js for the Frontend 
 ---
 ## Key Features 
 
