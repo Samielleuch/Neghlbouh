@@ -18,7 +18,7 @@
               ></v-text-field>
             </v-col>
             <v-col md="6">
-              <v-label><h3>رقم بطاقة التعريف </h3></v-label>
+              <v-label><h3>رقم بطاقة التعريف</h3></v-label>
               <v-text-field
                 :rules="nameRules"
                 color="#d41b45"
@@ -157,8 +157,7 @@ export default {
   },
   computed: {
     areaCal() {
-      if (!this.city) {
-        console.log(this.city);
+      if (!this.user) {
         return data.allAreas;
       } else {
         return data.areas[this.city];
