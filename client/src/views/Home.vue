@@ -15,8 +15,15 @@
     <v-row class=" mt-0 text-center">
       <v-col class="mt-0 pt-0 " cols=" 12 " md="4">
         <div class="step1">
-          <v-img class="pt-0" contain max-height="100" src="@/assets/step1.png">
-          </v-img>
+          <a :href="$store.state.currentUser !== undefined ? 'Home' : 'SignUp'">
+            <v-img
+              class="pt-0"
+              contain
+              max-height="100"
+              src="@/assets/step1.png"
+            >
+            </v-img>
+          </a>
           <h1>
             {{ Steps.step1.Title }}
           </h1>
@@ -27,8 +34,15 @@
       </v-col>
       <v-col class="mt-0 pt-0" cols=" 12 " md="4">
         <div class="step2">
-          <v-img class="pt-0" contain max-height="100" src="@/assets/step2.png">
-          </v-img>
+          <a href="LiveMap">
+            <v-img
+              class="pt-0"
+              contain
+              max-height="100"
+              src="@/assets/step2.png"
+            >
+            </v-img>
+          </a>
           <h1>
             {{ Steps.step2.Title }}
           </h1>
@@ -39,8 +53,17 @@
       </v-col>
       <v-col class="mt-0 pt-0" cols=" 12 " md="4">
         <div class="step3">
-          <v-img class="pt-0" contain max-height="100" src="@/assets/step3.png">
-          </v-img>
+          <a
+            :href="$store.state.currentUser !== undefined ? 'FormPage' : 'Home'"
+          >
+            <v-img
+              class="pt-0"
+              contain
+              max-height="100"
+              src="@/assets/step3.png"
+            >
+            </v-img>
+          </a>
           <h1>
             {{ Steps.step3.Title }}
           </h1>
