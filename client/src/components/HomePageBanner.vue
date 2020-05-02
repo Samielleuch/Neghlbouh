@@ -91,7 +91,6 @@ export default {
     color: white;
     font-weight: bold !important;
     font-size: 40px !important;
-    margin-top: 7vw !important;
     font-family: Cairo;
   }
 
