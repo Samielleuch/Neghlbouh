@@ -66,7 +66,6 @@ export default {
   color: white;
   font-weight: bold !important;
   font-size: 2.4vw !important;
-  margin-top: 5vw !important;
 }
 
 .Subtext {
