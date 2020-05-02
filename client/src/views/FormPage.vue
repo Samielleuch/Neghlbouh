@@ -172,7 +172,6 @@ export default {
     },
     getAllowedMinutes() {
       let allowed = [];
-      console.log(this.tempsRetour);
       if (this.isMinutesAllowed) {
         allowed = [];
         for (let i = 0; i < 60; i += 5) {
