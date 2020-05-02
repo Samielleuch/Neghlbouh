@@ -11,14 +11,15 @@
         class="d-flex d-md-none"
       ></v-app-bar-nav-icon>
       <v-spacer class="d-flex d-md-none"></v-spacer>
-      <a href="Home"><v-img
-        alt="Neghlbouh"
-        class="shrink mr-1"
-        contain
-        src="../assets/logo.png"
-        style="margin-left: 20px"
-        transition="scale-transition"
-        width="150"
+      <a href="Home"
+        ><v-img
+          alt="Neghlbouh"
+          class="shrink mr-1"
+          contain
+          src="../assets/logo.png"
+          style="margin-left: 20px"
+          transition="scale-transition"
+          width="150"
       /></a>
       <v-toolbar-title class="d-none d-md-flex">
         <!--  User Dashboard --->
@@ -85,7 +86,13 @@
                 'Navbar  cool-link '
               )
             "
-            :to="{ name: item.link }"
+            :to="
+              item.name === $store.state.langPack.HeaderMenu.demande
+                ? $store.state.currentUser !== undefined
+                  ? 'FormPage'
+                  : 'Home'
+                : { name: item.link }
+            "
             depressed
             elevation="0"
             v-ripple="false"
@@ -265,7 +272,13 @@
                     'Navbar  cool-link listItem '
                   )
                 "
-                :to="{ name: item.link }"
+                :to="
+                  item.name === $store.state.langPack.HeaderMenu.demande
+                    ? $store.state.currentUser !== undefined
+                      ? 'FormPage'
+                      : 'Home'
+                    : { name: item.link }
+                "
                 depressed
                 elevation="0"
                 v-ripple="false"
@@ -366,7 +379,8 @@ export default {
         {
           name: this.$store.state.langPack.HeaderMenu.demande,
           icon: "fas fa-paper-plane",
-          link: "FormPage"
+          link:
+            this.$store.state.currentUser !== undefined ? "FormPage" : "Home"
         },
         {
           name: this.$store.state.langPack.HeaderMenu.infoPage,

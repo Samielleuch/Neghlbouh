@@ -25,7 +25,11 @@
                 :zoom="zoom"
                 container="map"
               >
-                <MglGeolocateControl position="top-right" show="true" />
+                <MglGeolocateControl
+                  position="top-right"
+                  show="true"
+                  class="fas fa-crosshairs"
+                />
                 <MglScaleControl />
                 <MglMarker
                   :coordinates="myCoordinate"
@@ -55,21 +59,29 @@
             </div>
           </v-col>
         </v-row>
-        <v-row class="mr-12 ml-12">
-          <v-col cols="4">
-            <div class="text-center">
-              <v-sheet color="red lighten-5"> اقل 20 مواطن</v-sheet>
-            </div>
-          </v-col>
-          <v-col cols="4">
-            <div class="text-center">
-              <v-sheet color="red lighten-4"> بين 20 و 50 مواطن</v-sheet>
-            </div>
-          </v-col>
-          <v-col cols="4">
-            <div class="text-center">
-              <v-sheet color="red lighten-2"> اكثر من 50</v-sheet>
-            </div>
+        <v-row justify="center">
+          <v-col cols="10" align-self="center">
+            <v-row>
+              <v-col cols="4">
+                <div class="text-center fill-height">
+                  <v-sheet color="red lighten-5 " class="fill-height">
+                    اقل 20 مواطن</v-sheet
+                  >
+                </div>
+              </v-col>
+              <v-col cols="4">
+                <div class="text-center fill-height">
+                  <v-sheet color="red lighten-4"> بين 20 و 50 مواطن</v-sheet>
+                </div>
+              </v-col>
+              <v-col cols="4">
+                <div class="text-center fill-height">
+                  <v-sheet color="red lighten-2" class="fill-height">
+                    اكثر من 50</v-sheet
+                  >
+                </div>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-col>
@@ -231,6 +243,9 @@ export default {
   border: 3px red solid;
   width: 100%;
   height: 900px;
+}
+.mapboxgl-ctrl-geolocate {
+  background-image: url("../assets/target.svg") !important;
 }
 .font {
   font-size: 1.2em;

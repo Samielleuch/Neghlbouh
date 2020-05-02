@@ -18,7 +18,12 @@
         <v-btn class="btnHome ml-4" dark rounded to="LiveMap">
           {{ HomePageBanner.btn1 }}
         </v-btn>
-        <v-btn class="btnHome mr-4" dark rounded>
+        <v-btn
+          class="btnHome mr-4"
+          dark
+          rounded
+          :to="$store.state.currentUser !== undefined ? 'FormPage' : 'Home'"
+        >
           {{ HomePageBanner.btn2 }}
         </v-btn>
       </v-row>

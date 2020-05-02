@@ -84,18 +84,19 @@
                 >
                   <v-row align="center" justify="center">
                     <v-col
-                      :md="item.state === 1 ? 5 : 5"
+                      md="6"
                       align="center"
                       class="pb-0 mb-0"
                       cols="12"
                       justify="center"
                     >
-                      <div class="mb-0 font">
+                      <div class="mb-0 font ">
                         <v-alert
                           :color="getColorState(item.state)"
                           width="90%"
                           dense
                           outlined
+                          class="text-center "
                         >
                           {{ states[item.state] }}
                         </v-alert>
@@ -219,7 +220,7 @@ export default {
 }
 
 .font {
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-weight: bold;
   font-family: Cairo;
 }

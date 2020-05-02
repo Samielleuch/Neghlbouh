@@ -5,6 +5,7 @@
       class="mx-auto cardc"
       dir="rtl"
       max-width="700"
+      max-height="550"
     >
       <div>
         <v-form class="form" ref="form" method="put">
@@ -168,6 +169,14 @@ export default {
     updatePass() {
       this.isClicked = !this.isClicked;
     },
+    updateCurrentState({ name, email, city, cin, area, phone }) {
+      this.$store.state.currentUser.name = name;
+      this.$store.state.currentUser.email = email;
+      this.$store.state.currentUser.city = city;
+      this.$store.state.currentUser.cin = cin;
+      this.$store.state.currentUser.area = area;
+      this.$store.state.currentUser.phone = phone;
+    },
     async validate() {
       this.$refs.form.validate();
       if (this.valid) {
@@ -183,6 +192,15 @@ export default {
             area: this.area,
             phone: this.phone
           });
+          this.updateCurrentState({
+            name: this.name,
+            email: this.email,
+            city: this.city,
+            cin: this.cin,
+            area: this.area,
+            phone: this.phone
+          });
+          this.$store.state.currentUser;
           this.loading = false;
           this.done = true;
         } catch (e) {

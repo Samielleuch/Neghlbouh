@@ -17,11 +17,11 @@
             required
             v-model="reason"
           ></v-text-field>
-          <v-row>
-            <div class="col-md-4">
-              <v-label><h3>وقت العودة</h3></v-label>
-            </div>
-            <div class="col-md-6 ">
+          <div class="col-md-4 ">
+            <v-label><h3>وقت العودة</h3></v-label>
+          </div>
+          <v-row justify="center" align="center">
+            <v-col md="6" align="center" justify="center">
               <v-time-picker
                 @click:hour="HandleHours"
                 color="#d41b45"
@@ -31,7 +31,7 @@
                 :allowed-hours="getAllowedHours"
                 :allowed-minutes="getAllowedMinutes"
               ></v-time-picker>
-            </div>
+            </v-col>
           </v-row>
           <v-label><h3>الوجهة</h3></v-label>
           <v-select
